@@ -38,7 +38,7 @@ public class ControllerInput : MonoBehaviour {
     Quaternion startAnimPaddleRot;
 
 	void Awake () {
-        FindUI();
+        // FindUI();
         player = ReInput.players.GetPlayer (playerID);
 		boat = this.GetComponentInParent<Boat> ().gameObject;
         initRot = paddle.transform.localRotation;

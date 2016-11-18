@@ -9,11 +9,13 @@ public class GameController : MonoBehaviour {
 
 	[SerializeField] GameObject team1Boat;
 	[SerializeField] GameObject team2Boat;
-	[SerializeField] Text winnerText;
-	[SerializeField] Text endPromptText;
-
+	[SerializeField] GameObject endPromptText;
+    [SerializeField] GameObject team1WinBoard;
+    [SerializeField] GameObject team2WinBoard;
+    
 	Player firstPlayer;
 	bool waitingForEndPrompt = false;
+    bool roundFinished = false;
 	int winningTeam = 0;
 
 
@@ -31,28 +33,28 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void Team1Wins () {
-
-		winnerText.gameObject.SetActive (true);
-		winningTeam = 1;
-		winnerText.text = "Team 1 Wins!";
-		StartCoroutine (DelayEndPromptToggle ());
+        if (!roundFinished) {
+            Debug.Log("Win");
+            roundFinished = true;
+            StartCoroutine(DelayEndPromptToggle(team1WinBoard));
+        }
 	}
 
 	public void Team2Wins () {
-
-		winnerText.gameObject.SetActive (true);
-		winningTeam = 2;
-		winnerText.text = "Team 2 Wins!";
-		StartCoroutine (DelayEndPromptToggle ());
+        if (!roundFinished) {
+            Debug.Log("Win");
+            roundFinished = true;
+            StartCoroutine(DelayEndPromptToggle(team2WinBoard));
+        }
 	}
 
-	IEnumerator DelayEndPromptToggle () {
+	IEnumerator DelayEndPromptToggle (GameObject ToggleUI) {
 
 		Time.timeScale = 0.4f;
 
 		GameObject camera = Camera.main.gameObject;
 
-		while (camera.transform.position.y > 20) {
+		while (camera.transform.position.y > 35) {
 
 			Vector3 cameraTarget = (winningTeam == 1) ? team1Boat.transform.position : team2Boat.transform.position;
 
@@ -61,6 +63,10 @@ public class GameController : MonoBehaviour {
 			Debug.Log ("camera: " + camera.transform.position);
 			yield return null;
 		}
+
+        yield return new WaitForSeconds(0.5f);
+
+        ToggleUI.SetActive(true);
 
 		yield return new WaitForSeconds (1);
 
