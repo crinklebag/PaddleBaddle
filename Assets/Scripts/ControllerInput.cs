@@ -98,17 +98,7 @@ public class ControllerInput : MonoBehaviour {
         CheckForJoystickRotation();
         RotatePaddle();
         Attack();
-
-        /// REMEMBER TO REMOVE THIS AND REPLACE WITH MORE ROBUST VERSION AFTER EPM!!!!
-        /// 
-        if (player.GetButtonDown("Attack"))
-        {
-            GameObject endPrompt = GameObject.Find("End Prompt");
-            if (endPrompt != null)
-            {
-                endPrompt.SendMessage("PlayAgain", null, SendMessageOptions.DontRequireReceiver);
-            }
-        }
+        
 	}
 
     IEnumerator StopTauntAnim() {

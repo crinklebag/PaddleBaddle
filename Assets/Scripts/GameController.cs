@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour {
 
 		if (waitingForEndPrompt && firstPlayer.GetButtonDown("Attack")) {
 			
-			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+			SceneManager.LoadScene ("Character Select",LoadSceneMode.Single);
 		}
 	}
 
