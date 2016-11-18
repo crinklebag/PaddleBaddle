@@ -24,7 +24,14 @@ public class LobbyController : MonoBehaviour {
             Debug.Log("Start Game");
             SceneManager.LoadScene("TestScene");
         }
-	}
+
+        if ((players[0].GetButton("Select") || players[1].GetButton("Select") || players[2].GetButton("Select") || players[3].GetButton("Select")))
+        {
+            // Start Game
+            Debug.Log("Start Game Early");
+            SceneManager.LoadScene("TestScene");
+        }
+    }
 
     public void AddPlayer() {
         playersIn++;
