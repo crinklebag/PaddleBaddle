@@ -20,6 +20,7 @@ public class ControllerInput : MonoBehaviour {
 
 	Player player;
 	GameObject boat;
+	Boat boatInfo;
     Animator paddleAnimator;
 	float angleTraversed = 0;
 	float previousAngle = -1;
@@ -31,6 +32,7 @@ public class ControllerInput : MonoBehaviour {
 	System.TimeSpan timeStartedRotation;
 	List<int> quadrantsHit = new List<int>();
     Quaternion initRot;
+	Dictionary<string, System.Action> powerupActions = new Dictionary<string, System.Action> ();
 
     Vector3 startPosPaddle;
     Vector3 startRotPaddle;
@@ -41,6 +43,7 @@ public class ControllerInput : MonoBehaviour {
         // FindUI();
         player = ReInput.players.GetPlayer (playerID);
 		boat = this.GetComponentInParent<Boat> ().gameObject;
+		boatInfo = boat.GetComponent<Boat> ();
         initRot = paddle.transform.localRotation;
         
         // Initialize Paddle Variables
@@ -48,6 +51,10 @@ public class ControllerInput : MonoBehaviour {
         paddleAnimator = paddle.transform.GetComponentInParent<Animator>();
         startAnimPaddlePos = paddle.transform.GetComponentInParent<Transform>().localPosition;
         startAnimPaddleRot = paddle.transform.GetComponentInParent<Transform>().localRotation;
+
+		powerupActions.Add ("speed", speedBoost);
+		powerupActions.Add ("strength", strengthBoost);
+		powerupActions.Add ("", missingAction);
     }
 
 	void OnDrawGizmosSelected() {
@@ -94,6 +101,11 @@ public class ControllerInput : MonoBehaviour {
             paddleAnimator.SetBool("taunting", true);
             StartCoroutine(StopTauntAnim());
         }
+
+		if (player.GetButtonDown ("Powerup") && boatInfo.hasPowerUp) 
+		{
+			powerupActions [boatInfo.powerUpType] ();
+		}
 
         CheckForJoystickRotation();
         RotatePaddle();
@@ -217,4 +229,19 @@ public class ControllerInput : MonoBehaviour {
             }
         }
     }
+
+	void speedBoost()
+	{
+		Debug.Log ("This is a speedboost!");
+	}
+
+	void strengthBoost()
+	{
+		Debug.Log ("This is a strength boost!");
+	}
+
+	void missingAction()
+	{
+		Debug.Log ("A powerup with an empty string got called?");
+	}
 }

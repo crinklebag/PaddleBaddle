@@ -2,10 +2,14 @@
 using System.Collections;
 
 public class Pickup : MonoBehaviour {
-	public string type;
+	public string type = "";
 
 	void OnTriggerEnter(Collider other)
 	{
 		Debug.Log ("Do the pickup thing");
+		if (other.CompareTag ("Player")) {
+			other.GetComponent<Boat> ().hasPowerUp = true;
+			other.GetComponent<Boat> ().powerUpType = type;
+		}
 	}
 }
