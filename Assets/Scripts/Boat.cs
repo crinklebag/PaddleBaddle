@@ -10,6 +10,8 @@ public class Boat : MonoBehaviour {
 	[SerializeField] Transform flipCheck;
 
 	bool isFlipped = false;
+	public bool hasPowerUp = false;
+	public string powerUpType = "";
 
 
 	// Use this for initialization
