@@ -1,15 +1,42 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PickupSpawner : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
+	GameObject pickupPrefab;
+	public bool running = true;
+	[SerializeField] private int numPickups = 2;
+	[SerializeField] private float spawnRateLowerBound = 5f;
+	[SerializeField] private float spawnRateUpperBound = 10f;
+	[SerializeField] private float timeBeforeStart = 5f;
+	[SerializeField] private List<GameObject> powerups;
+
+	void Start()
+	{
+		Debug.Log ("Spawner is alive");
+		StartCoroutine (spawning());
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
+	IEnumerator spawning()
+	{
+		Debug.Log ("Waiting to start for: " + timeBeforeStart);
+		yield return new WaitForSeconds (timeBeforeStart);
+		while (running) {
+			GameObject thisPickup;
+
+			if (powerups.Count == 0) { 
+				running = false;
+				return false;
+			} else if (powerups.Count > 1) {
+				Instantiate (powerups [(int)(Random.value * 10) % powerups.Count],
+				 transform.position, transform.rotation);
+			} else {
+				Instantiate (powerups [0], transform.position, transform.rotation);
+			}
+				
+
+			yield return new WaitForSeconds(Random.Range (spawnRateLowerBound, spawnRateUpperBound));
+		}
 	}
 }
