@@ -15,7 +15,8 @@ public class ControllerInput : MonoBehaviour {
 	[SerializeField] float maxDeltaAngle = 30;
 	[SerializeField] float paddleRotationForce = 10000;
     [SerializeField] float paddleForwardForce;
-	[SerializeField] float speedBoostMult = 30;
+	[SerializeField] float speedBoostForce = 30000;
+	[SerializeField] float strengthBoostForce = 40;
 	[SerializeField] float attackForce = 15;
     [SerializeField] float paddleRoationSpeed;
 
@@ -226,7 +227,13 @@ public class ControllerInput : MonoBehaviour {
                     Vector3 differenceVector = hitColliders[i].transform.position - paddle.transform.position;
 
                     hitColliders[i].GetComponent<Rigidbody>().AddForceAtPosition(attackForce * Vector3.down, differenceVector, ForceMode.Impulse);
-                    Debug.Log("Force applied");
+                    Debug.Log("Force applied: "+ attackForce);
+
+					// Removing strength powerup effect if we just used the strong attack
+					if (attackForce > strengthBoostForce) {
+						Debug.Break ();
+						attackForce -= strengthBoostForce;
+					}
                 }
             }
         }
@@ -235,13 +242,16 @@ public class ControllerInput : MonoBehaviour {
 	void speedBoost()
 	{
 		Debug.Log ("This is a speedboost!");
-		gameObject.GetComponent<Rigidbody> ().AddForce (transform.up * paddleForwardForce * speedBoostMult, ForceMode.Impulse);
-
+		gameObject.GetComponent<Rigidbody> ().AddForce (transform.up * speedBoostForce, ForceMode.Impulse);
+		removePowerUp ();
 	}
 
 	void strengthBoost()
 	{
 		Debug.Log ("This is a strength boost!");
+		attackForce += strengthBoostForce;
+		Debug.Break ();
+		removePowerUp ();
 	}
 
 	void removePowerUp()
