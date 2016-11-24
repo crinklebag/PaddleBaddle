@@ -25,8 +25,8 @@ public class Boat : MonoBehaviour {
 
 			// Turn off controller input
 			ControllerInput[] controllers = this.GetComponentsInChildren<ControllerInput> ();
-			foreach (ControllerInput controller in controllers) {
-
+			foreach (ControllerInput controller in controllers)
+            {
 				controller.enabled = false;
 			}
 
@@ -35,14 +35,13 @@ public class Boat : MonoBehaviour {
 			if(player2) player2.transform.SetParent (null);
 
 			// Send data to game controller
-			GameController gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-			if (isTeam1) {
-
-				gameController.Team1Wins ();
+			if (isTeam1)
+            {
+				GameController.Instance.Team1Wins ();
 			}
-			else {
-
-				gameController.Team2Wins ();
+			else
+            {
+				GameController.Instance.Team2Wins();
 			}
 		}
 	}

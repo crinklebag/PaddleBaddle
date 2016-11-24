@@ -77,28 +77,35 @@ public class ControllerInput : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (player.GetButtonDown("Increase Speed") && canPaddle && !taunting) {
-            //Go Forward
-            dir = 1;
-            MoveCanoe();
-        }
+        if (GameController.HasInstance && GameController.Instance.RoundStarted)
+        {
 
-        if (player.GetButtonDown("Decrease Speed") && canPaddle && !taunting) {
-            // Go Backward
-            dir = -1;
-            MoveCanoe();
-        }
+            if (player.GetButtonDown("Increase Speed") && canPaddle && !taunting)
+            {
+                //Go Forward
+                dir = 1;
+                MoveCanoe();
+            }
 
-        if (player.GetButtonDown("Taunt") && !taunting) {
-            taunting = true;
-            paddleAnimator.SetBool("taunting", true);
-            StartCoroutine(StopTauntAnim());
-        }
+            if (player.GetButtonDown("Decrease Speed") && canPaddle && !taunting)
+            {
+                // Go Backward
+                dir = -1;
+                MoveCanoe();
+            }
 
-        CheckForJoystickRotation();
-        RotatePaddle();
-        Attack();
-        
+            if (player.GetButtonDown("Taunt") && !taunting)
+            {
+                taunting = true;
+                paddleAnimator.SetBool("taunting", true);
+                StartCoroutine(StopTauntAnim());
+            }
+
+            CheckForJoystickRotation();
+            RotatePaddle();
+            Attack();
+
+        }        
 	}
 
     IEnumerator StopTauntAnim() {
