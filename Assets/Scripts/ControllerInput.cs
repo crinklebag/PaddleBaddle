@@ -98,6 +98,7 @@ public class ControllerInput : MonoBehaviour {
         CheckForJoystickRotation();
         RotatePaddle();
         Attack();
+        
 	}
 
     IEnumerator StopTauntAnim() {

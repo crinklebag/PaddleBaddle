@@ -22,9 +22,16 @@ public class LobbyController : MonoBehaviour {
         if ((players[0].GetButton("Attack") || players[1].GetButton("Attack") || players[2].GetButton("Attack") || players[3].GetButton("Attack")) && startGame.activeSelf) {
             // Start Game
             Debug.Log("Start Game");
-            SceneManager.LoadScene("TestScene");
+            SceneManager.LoadScene("Rebecca_Scene");
         }
-	}
+
+        if ((players[0].GetButton("Select")))
+        {
+            // Start Game
+            Debug.Log("Start Game Early");
+            startGame.SetActive(true);
+        }
+    }
 
     public void AddPlayer() {
         playersIn++;

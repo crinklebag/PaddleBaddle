@@ -27,8 +27,9 @@ public class GameController : MonoBehaviour {
 	void Update () {
 
 		if (waitingForEndPrompt && firstPlayer.GetButtonDown("Attack")) {
-			
-			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+
+            Time.timeScale = 1.0f;
+			SceneManager.LoadScene ("Character Select",LoadSceneMode.Single);
 		}
 	}
 
