@@ -15,6 +15,7 @@ public class ControllerInput : MonoBehaviour {
 	[SerializeField] float maxDeltaAngle = 30;
 	[SerializeField] float paddleRotationForce = 10000;
     [SerializeField] float paddleForwardForce;
+	[SerializeField] float speedBoostMult = 30;
 	[SerializeField] float attackForce = 15;
     [SerializeField] float paddleRoationSpeed;
 
@@ -104,6 +105,7 @@ public class ControllerInput : MonoBehaviour {
 
 		if (player.GetButtonDown ("Powerup") && boatInfo.hasPowerUp) 
 		{
+			Debug.Log (boatInfo.powerUpType);
 			powerupActions [boatInfo.powerUpType] ();
 		}
 
@@ -233,6 +235,8 @@ public class ControllerInput : MonoBehaviour {
 	void speedBoost()
 	{
 		Debug.Log ("This is a speedboost!");
+		gameObject.GetComponent<Rigidbody> ().AddForce (transform.up * paddleForwardForce * speedBoostMult, ForceMode.Impulse);
+
 	}
 
 	void strengthBoost()
@@ -240,6 +244,11 @@ public class ControllerInput : MonoBehaviour {
 		Debug.Log ("This is a strength boost!");
 	}
 
+	void removePowerUp()
+	{
+		boatInfo.hasPowerUp = false;
+		Destroy (transform.GetChild (transform.childCount - 1).gameObject);
+	}
 	void missingAction()
 	{
 		Debug.Log ("A powerup with an empty string got called?");

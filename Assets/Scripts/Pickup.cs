@@ -6,7 +6,6 @@ public class Pickup : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
 	{
-		Debug.Log ("Do the pickup thing");
 		if (other.CompareTag ("Player"))
 		{
 			other.GetComponent<Boat> ().hasPowerUp = true;
