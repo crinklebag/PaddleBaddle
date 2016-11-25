@@ -189,7 +189,8 @@ public class RealisticBuoyancy : MonoBehaviour
 	}
 	#endif
 
-	private void setup()
+	// Jacob changed this from private to public
+	public void setup()
 	{
 		//Eanble support
 		#if PW

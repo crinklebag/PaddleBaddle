@@ -29,12 +29,15 @@ public class PickupSpawner : MonoBehaviour {
 				running = false;
 				return false;
 			} else if (powerups.Count > 1) {
-				Instantiate (powerups [(int)(Random.value * 10) % powerups.Count],
-				 transform.position, transform.rotation);
+				thisPickup = Instantiate (powerups [(int)(Random.value * 10) % powerups.Count],
+					transform.position, transform.rotation) as GameObject;
 			} else {
-				Instantiate (powerups [0], transform.position, transform.rotation);
+				thisPickup = Instantiate (powerups [0], transform.position, transform.rotation) as GameObject;
 			}
-				
+
+			thisPickup.GetComponent<RealisticBuoyancy> ().setup ();
+
+			Debug.Break ();
 
 			yield return new WaitForSeconds(Random.Range (spawnRateLowerBound, spawnRateUpperBound));
 		}
