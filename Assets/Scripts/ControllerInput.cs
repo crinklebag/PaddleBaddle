@@ -106,7 +106,6 @@ public class ControllerInput : MonoBehaviour {
 
 		if (player.GetButtonDown ("Powerup") && boatInfo.hasPowerUp) 
 		{
-			Debug.Log (boatInfo.powerUpType);
 			powerupActions [boatInfo.powerUpType] ();
 		}
 
@@ -231,7 +230,6 @@ public class ControllerInput : MonoBehaviour {
 
 					// Removing strength powerup effect if we just used the strong attack
 					if (attackForce > strengthBoostForce) {
-						Debug.Break ();
 						attackForce -= strengthBoostForce;
 					}
                 }
@@ -241,16 +239,14 @@ public class ControllerInput : MonoBehaviour {
 
 	void speedBoost()
 	{
-		Debug.Log ("This is a speedboost!");
+		Debug.Log ("Adding " + speedBoostForce + " for speedboost!");
 		gameObject.GetComponent<Rigidbody> ().AddForce (transform.up * speedBoostForce, ForceMode.Impulse);
 		removePowerUp ();
 	}
 
 	void strengthBoost()
 	{
-		Debug.Log ("This is a strength boost!");
-		attackForce += strengthBoostForce;
-		Debug.Break ();
+		attackForce = (attackForce > strengthBoostForce) ? attackForce : attackForce + strengthBoostForce;
 		removePowerUp ();
 	}
 

@@ -45,6 +45,9 @@ public class RealisticBuoyancy : MonoBehaviour
 	[Range(0,100)][Tooltip("Less solid is lighter object.")]
 	public int percentageSolid = 100;
 
+	[HideInInspector]
+	public float waterLevelOverride = -1f;
+
 	private bool inWater = false;
 	
 	private float density;
@@ -556,6 +559,11 @@ public class RealisticBuoyancy : MonoBehaviour
 		//If code ends up here, that means no support is enabled :P Cheap version to check hehe
 		//If you have a external water level manager you need to keep this!
 		//Read the HowToUse file for more info!
+
+		//Jacob added this check in case you WANT to override the water level for some reason 
+		if (waterLevelOverride != -1f)
+			return waterLevelOverride;
+		
 		return RealisticWaterPhysics.currentWaterLevel;
 
 

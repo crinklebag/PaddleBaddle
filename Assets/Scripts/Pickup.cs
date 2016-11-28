@@ -8,17 +8,20 @@ public class Pickup : MonoBehaviour {
 	{
 		if (other.CompareTag ("Player"))
 		{
-			other.GetComponent<Boat> ().hasPowerUp = true;
-			other.GetComponent<Boat> ().powerUpType = type;
+			if (other.GetComponent<Boat> ().hasPowerUp == false) 
+			{
+				other.GetComponent<Boat> ().hasPowerUp = true;
+				other.GetComponent<Boat> ().powerUpType = type;
 
-			gameObject.GetComponent<Collider> ().isTrigger = false;
-			transform.parent = other.transform;
+				gameObject.GetComponent<Collider> ().isTrigger = false;
+				transform.parent = other.transform;
 
-			transform.localPosition = new Vector3 (0, 0, 0.5f);
-			transform.localRotation = Quaternion.identity;
+				transform.localPosition = new Vector3 (0, 0, 0.5f);
+				transform.localRotation = Quaternion.identity;
 
-			Destroy (gameObject.GetComponent<RealisticBuoyancy> ());
-			Destroy(gameObject.GetComponent<Rigidbody>());
+				Destroy (gameObject.GetComponent<RealisticBuoyancy> ());
+				Destroy (gameObject.GetComponent<Rigidbody> ());
+			}
 		}
 	}
 }
