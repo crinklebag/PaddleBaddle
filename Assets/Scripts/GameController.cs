@@ -6,13 +6,14 @@ using System;
 using System.Collections;
 
 [DisallowMultipleComponent]
-public class GameController : MonoSingleton<GameController> {
+public class GameController : MonoBehaviour
+{
 
-    [SerializeField] private GameObject team1Boat;
-    [SerializeField] private GameObject team2Boat;
+    [SerializeField] private GameObject[] teamBoats;
 
-    [SerializeField] private GameObject team1WinBoard;
-    [SerializeField] private GameObject team2WinBoard;
+    [SerializeField] private GameObject[] teamWinBoards;
+
+    [SerializeField] private GameObject[] teamScoreBoards;
 
     [SerializeField] private Text roundBeginTimerText;
     [SerializeField] private Text roundEndTimerText;
@@ -35,6 +36,11 @@ public class GameController : MonoSingleton<GameController> {
 	private int winningTeam = -1;
 
     /// <summary>
+    /// Current team points. Whoever has the most at the end of the round wins
+    /// </summary>
+    private int[] teamPoints = { 0, 0 };
+
+    /// <summary>
     /// Returns if the round is currently in action. This prevents the players from moving, hazards from spawning, and time from counting down.
     /// </summary>
     public bool RoundStarted { get; private set; }
@@ -52,7 +58,7 @@ public class GameController : MonoSingleton<GameController> {
     /// <summary>
     /// Time before round ends.
     /// </summary>
-    private int roundEndTimer = 12;
+    public int roundEndTimer = 80;
 
     /// <summary>
     /// Returns whether the round is in "Hurry Up" mode: adds sudden death effects and timer effects.
@@ -64,9 +70,15 @@ public class GameController : MonoSingleton<GameController> {
     /// </summary>
     private float roundEndTimerShake = 0.0f;
 
-    [SerializeField] private float shakeRate = 10.0f;
+    /// <summary>
+    /// How fast the timer text shakes.
+    /// </summary>
+    private float shakeRate = 12.0f;
 
-    [SerializeField] private float shakeScale = 0.1f;
+    /// <summary>
+    /// How big the scale variance is when the screen shakes.
+    /// </summary>
+    private float shakeScale = 0.034f;
 
     /// <summary>
     /// MonoBehaviour Awake Event
@@ -108,32 +120,57 @@ public class GameController : MonoSingleton<GameController> {
 	}
 
     /// <summary>
-    /// 
+    /// Designates that a team has won.
     /// </summary>
-	public void Team1Wins ()
+    /// <param name="team">The team that won.</param>
+    public void TeamWin (int team)
+    {
+        if(!RoundFinished)
+        {
+            roundEndTimerText.gameObject.SetActive(false);
+            Debug.Log("Win");
+            RoundFinished = true;
+            StartCoroutine(DelayEndPromptToggle(teamWinBoards[team]));
+        }
+    }
+
+	[Obsolete("Please use TeamWin(0) instead")] public void Team1Wins ()
     {
         if (!RoundFinished)
         {
             roundEndTimerText.gameObject.SetActive(false);
             Debug.Log("Win");
             RoundFinished = true;
-            StartCoroutine(DelayEndPromptToggle(team1WinBoard));
+            StartCoroutine(DelayEndPromptToggle(teamWinBoards[0]));
+        }
+	}
+
+	[Obsolete("Please use TeamWin(1) instead")] public void Team2Wins ()
+    {
+        if (!RoundFinished)
+        {
+            roundEndTimerText.gameObject.SetActive(false);
+            Debug.Log("Win");
+            RoundFinished = true;
+            StartCoroutine(DelayEndPromptToggle(teamWinBoards[1]));
         }
 	}
 
     /// <summary>
-    /// 
+    /// Adds a point to a team. The team with the most points at round end wins.
     /// </summary>
-	public void Team2Wins ()
+    /// <param name="team">The given team; 0 for team 1, 1 for team 2, etc.</param>
+    /// <param name="points">The number of points to award.</param>
+    public void AddTeamPoint (int team, int points)
     {
-        if (!RoundFinished)
+        if (team >= 0 && team < teamBoats.Length)
         {
-            roundEndTimerText.gameObject.SetActive(false);
-            Debug.Log("Win");
-            RoundFinished = true;
-            StartCoroutine(DelayEndPromptToggle(team2WinBoard));
+            teamPoints[team] += points;
+
+            Text teamScoreDisplay = teamScoreBoards[team].GetComponentInChildren<Text>();
+            teamScoreDisplay.text = teamPoints[team].ToString();
         }
-	}
+    }
 
     IEnumerator StartRound()
     {
@@ -145,12 +182,12 @@ public class GameController : MonoSingleton<GameController> {
             //
             roundBeginTimerText.text = roundBeginTimer.ToString() + "...";
             //
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSecondsRealtime(1);
             roundBeginTimer -= 1;
         }
 
         roundBeginTimerText.text = "Start!";
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSecondsRealtime(1);
 
         RoundStarted = true;
         roundBeginTimerText.gameObject.SetActive(false);
@@ -163,18 +200,37 @@ public class GameController : MonoSingleton<GameController> {
     {
         while (roundEndTimer >= 0 && !RoundFinished)
         {
-
-            if (roundEndTimer <= 0)
-            {
-                RoundFinished = true;
-            }
-
             TimeSpan t = TimeSpan.FromSeconds(roundEndTimer);
 
             roundEndTimerText.text = String.Format("{0}:{1:00}", t.Minutes, t.Seconds);
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSecondsRealtime(1);
             roundEndTimer -= 1;
+        }
+
+        roundEndTimerText.gameObject.SetActive(false);
+        roundBeginTimerText.gameObject.SetActive(true);
+        roundBeginTimerText.text = "Finished!";
+
+        yield return new WaitForSecondsRealtime(2);
+
+        roundBeginTimerText.gameObject.SetActive(false);
+
+        if (teamPoints[0] > teamPoints[1])
+        {
+            Debug.Log("Team 1 won");
+            TeamWin(0);
+        }
+        else if (teamPoints[1] > teamPoints[0])
+        {
+            Debug.Log("Team 2 won");
+            TeamWin(1);
+        }
+        else
+        {
+            roundBeginTimerText.text = "Tie Game!";
+            yield return new WaitForSecondsRealtime(3);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
         }
     }
 
@@ -186,7 +242,7 @@ public class GameController : MonoSingleton<GameController> {
 
 		while (camera.transform.position.y > 35) {
 
-			Vector3 cameraTarget = (winningTeam == 1) ? team1Boat.transform.position : team2Boat.transform.position;
+			Vector3 cameraTarget = (winningTeam == 1) ? teamBoats[0].transform.position : teamBoats[1].transform.position;
 
 			camera.transform.position = Vector3.MoveTowards (camera.transform.position, cameraTarget, 0.5f);
 			//camera.transform.Translate (camera.transform.forward);

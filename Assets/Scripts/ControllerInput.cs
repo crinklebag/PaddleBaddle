@@ -77,35 +77,41 @@ public class ControllerInput : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (GameController.HasInstance && GameController.Instance.RoundStarted)
+        GameObject gameControllerObject = GameObject.Find("GameController");
+        if (gameControllerObject != null)
         {
+            GameController gameController = gameControllerObject.GetComponent<GameController>();
 
-            if (player.GetButtonDown("Increase Speed") && canPaddle && !taunting)
+            if (gameController != null && gameController.RoundStarted)
             {
-                //Go Forward
-                dir = 1;
-                MoveCanoe();
+
+                if (player.GetButtonDown("Increase Speed") && canPaddle && !taunting)
+                {
+                    //Go Forward
+                    dir = 1;
+                    MoveCanoe();
+                }
+
+                if (player.GetButtonDown("Decrease Speed") && canPaddle && !taunting)
+                {
+                    // Go Backward
+                    dir = -1;
+                    MoveCanoe();
+                }
+
+                if (player.GetButtonDown("Taunt") && !taunting)
+                {
+                    taunting = true;
+                    paddleAnimator.SetBool("taunting", true);
+                    StartCoroutine(StopTauntAnim());
+                }
+
+                CheckForJoystickRotation();
+                RotatePaddle();
+                Attack();
+
             }
-
-            if (player.GetButtonDown("Decrease Speed") && canPaddle && !taunting)
-            {
-                // Go Backward
-                dir = -1;
-                MoveCanoe();
-            }
-
-            if (player.GetButtonDown("Taunt") && !taunting)
-            {
-                taunting = true;
-                paddleAnimator.SetBool("taunting", true);
-                StartCoroutine(StopTauntAnim());
-            }
-
-            CheckForJoystickRotation();
-            RotatePaddle();
-            Attack();
-
-        }        
+        }      
 	}
 
     IEnumerator StopTauntAnim() {
@@ -217,10 +223,13 @@ public class ControllerInput : MonoBehaviour {
 
                 if (hitColliders[i].gameObject != this.gameObject && hitColliders[i].GetComponent<Boat>()) {
 
-                    Vector3 differenceVector = hitColliders[i].transform.position - paddle.transform.position;
+                    if (hitColliders[i].GetComponent<Boat>().Invincible == false)
+                    {
+                        Vector3 differenceVector = hitColliders[i].transform.position - paddle.transform.position;
 
-                    hitColliders[i].GetComponent<Rigidbody>().AddForceAtPosition(attackForce * Vector3.down, differenceVector, ForceMode.Impulse);
-                    Debug.Log("Force applied");
+                        hitColliders[i].GetComponent<Rigidbody>().AddForceAtPosition(attackForce * Vector3.down, differenceVector, ForceMode.Impulse);
+                        Debug.Log("Force applied");
+                    }
                 }
             }
         }
