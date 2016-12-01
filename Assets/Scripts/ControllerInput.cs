@@ -34,6 +34,7 @@ public class ControllerInput : MonoBehaviour {
 	System.TimeSpan timeStartedRotation;
 	List<int> quadrantsHit = new List<int>();
     Quaternion initRot;
+	// This is a dictionary that stores string keys and functions
 	Dictionary<string, System.Action> powerupActions = new Dictionary<string, System.Action> ();
 
     Vector3 startPosPaddle;
@@ -54,6 +55,7 @@ public class ControllerInput : MonoBehaviour {
         startAnimPaddlePos = paddle.transform.GetComponentInParent<Transform>().localPosition;
         startAnimPaddleRot = paddle.transform.GetComponentInParent<Transform>().localRotation;
 
+		// Manually adding all of the functions to the dictionary
 		powerupActions.Add ("speed", speedBoost);
 		powerupActions.Add ("strength", strengthBoost);
 		powerupActions.Add ("", missingAction);
@@ -104,9 +106,10 @@ public class ControllerInput : MonoBehaviour {
             StartCoroutine(StopTauntAnim());
         }
 
+		// Hit the powerup button && the boat has a powerup active
 		if (player.GetButtonDown ("Powerup") && boatInfo.hasPowerUp) 
 		{
-			powerupActions [boatInfo.powerUpType] ();
+			powerupActions [boatInfo.powerUpType] (); // call the function that matches the string the boat has
 		}
 
         CheckForJoystickRotation();
@@ -237,6 +240,7 @@ public class ControllerInput : MonoBehaviour {
         }
     }
 
+	// Adding force to the boat for the speed boost
 	void speedBoost()
 	{
 		Debug.Log ("Adding " + speedBoostForce + " for speedboost!");
@@ -244,17 +248,21 @@ public class ControllerInput : MonoBehaviour {
 		removePowerUp ();
 	}
 
+	// Add force for the next attack
 	void strengthBoost()
 	{
 		attackForce = (attackForce > strengthBoostForce) ? attackForce : attackForce + strengthBoostForce;
 		removePowerUp ();
 	}
 
+	// Remove the powerup from the boat
 	void removePowerUp()
 	{
 		boatInfo.hasPowerUp = false;
 		Destroy (transform.GetChild (transform.childCount - 1).gameObject);
 	}
+
+	// Something went wrong
 	void missingAction()
 	{
 		Debug.Log ("A powerup with an empty string got called?");

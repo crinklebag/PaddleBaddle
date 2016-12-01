@@ -9,6 +9,7 @@ public class Boat : MonoBehaviour {
 	[SerializeField] GameObject player2;
 	[SerializeField] Transform flipCheck;
 
+	// Information for powerups
 	bool isFlipped = false;
 	public bool hasPowerUp = false;
 	public string powerUpType = "";
