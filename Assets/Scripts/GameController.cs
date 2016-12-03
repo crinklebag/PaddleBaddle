@@ -8,32 +8,46 @@ using System.Collections;
 [DisallowMultipleComponent]
 public class GameController : MonoBehaviour
 {
-
+    /// <summary>
+    /// Array of currently active boats.
+    /// </summary>
     [SerializeField] private GameObject[] teamBoats;
 
-    [SerializeField] private GameObject[] teamWinBoards;
-
-    [SerializeField] private GameObject[] teamScoreBoards;
-
-    [SerializeField] private Text roundBeginTimerText;
-    [SerializeField] private Text roundEndTimerText;
-
-    [SerializeField] private GameObject endPromptText;
+    [Obsolete("Please use teamBoats[0] instead")] GameObject team1Boat { get { return teamBoats[0]; } }
+    [Obsolete("Please use teamBoats[1] instead")] GameObject team2Boat { get { return teamBoats[1]; } }
 
     /// <summary>
-    /// First player component. Used to get input to restart the game.
+    /// The different winning screens for each team.
     /// </summary>
-    private Player firstPlayer;
+    [SerializeField] private GameObject[] teamWinBoards;
+
+    [Obsolete("Please use teamWinBoards[0] instead")] GameObject team1WinBoard { get { return teamWinBoards[0]; } }
+    [Obsolete("Please use teamWinBoards[1] instead")] GameObject team2WinBoard { get { return teamWinBoards[1]; } }
+
+    /// <summary>
+    /// In-game HUD score boards for each team.
+    /// </summary>
+    [SerializeField] private GameObject[] teamScoreBoards;
+
+    /// <summary>
+    /// Round begin timer text. Large and in the center.
+    /// </summary>
+    [SerializeField] private Text roundBeginTimerText;
+
+    /// <summary>
+    /// Round end timer text. Small and at the top.
+    /// </summary>
+    [SerializeField] private Text roundEndTimerText;
+
+    /// <summary>
+    /// Game end prompt.
+    /// </summary>
+    [SerializeField] private GameObject endPromptText;
 
     /// <summary>
     /// Will be true when the entire end prompt has been displayed (including the "Press 'A' to Continue" notification)
     /// </summary>
 	private bool waitingForEndPrompt = false;
-    
-    /// <summary>
-    /// Winning team integer. -1 is no team (or tie), 0 is team 1, 1 is team 2, etc.
-    /// </summary>
-	private int winningTeam = -1;
 
     /// <summary>
     /// Current team points. Whoever has the most at the end of the round wins
@@ -41,29 +55,49 @@ public class GameController : MonoBehaviour
     private int[] teamPoints = { 0, 0 };
 
     /// <summary>
+    /// First player component. Used to get input to restart the game.
+    /// </summary>
+    private Player firstPlayer;
+
+    /// <summary>
     /// Returns if the round is currently in action. This prevents the players from moving, hazards from spawning, and time from counting down.
     /// </summary>
-    public bool RoundStarted { get; private set; }
+    public bool RoundStarted { get { return roundStarted; } }
+    private bool roundStarted = false;
 
     /// <summary>
     /// Will be true when the round is completed.
     /// </summary>
-    public bool RoundFinished { get; private set; }
+    public bool RoundFinished { get { return roundFinished; } }
+    private bool roundFinished = false;
+
+    /// <summary>
+    /// Winning team integer. -1 is no team (or tie), 0 is team 1, 1 is team 2, etc.
+    /// </summary>
+    public int WinningTeam { get { return winningTeam; } }
+    private int winningTeam = -1;
 
     /// <summary>
     /// Time before round begins.
     /// </summary>
-    private int roundBeginTimer = 3;
+    public int TimeUntilRoundStart { get { return timeUntilRoundStart; } }
+    [SerializeField] private int timeUntilRoundStart = 3;
 
     /// <summary>
     /// Time before round ends.
     /// </summary>
-    public int roundEndTimer = 80;
+    public int TimeUntilRoundEnd { get { return timeUntilRoundEnd; } }
+    [SerializeField] private int timeUntilRoundEnd = 80;
 
     /// <summary>
     /// Returns whether the round is in "Hurry Up" mode: adds sudden death effects and timer effects.
     /// </summary>
-    public bool RoundHurryUp { get { return roundEndTimer <= 10; } }
+    public bool RoundHurryUp { get { return timeUntilRoundEnd <= hurryUpTime; } }
+
+    /// <summary>
+    /// Time at which the round is in "Hurry Up" mode.
+    /// </summary>
+    [SerializeField] private int hurryUpTime = 10;
 
     /// <summary>
     /// Used for shaking and rotating the timer slightly.
@@ -110,7 +144,7 @@ public class GameController : MonoBehaviour
 
         if (RoundHurryUp)
         {
-            roundEndTimerShake += (Time.deltaTime * shakeRate);
+            roundEndTimerShake = (Time.timeSinceLevelLoad * shakeRate);
             float shakeVal = Mathf.Cos(roundEndTimerShake);
 
             roundEndTimerText.color = new Color(1, shakeVal, shakeVal);
@@ -129,7 +163,7 @@ public class GameController : MonoBehaviour
         {
             roundEndTimerText.gameObject.SetActive(false);
             Debug.Log("Win");
-            RoundFinished = true;
+            roundFinished = true;
             StartCoroutine(DelayEndPromptToggle(teamWinBoards[team]));
         }
     }
@@ -140,7 +174,7 @@ public class GameController : MonoBehaviour
         {
             roundEndTimerText.gameObject.SetActive(false);
             Debug.Log("Win");
-            RoundFinished = true;
+            roundFinished = true;
             StartCoroutine(DelayEndPromptToggle(teamWinBoards[0]));
         }
 	}
@@ -151,7 +185,7 @@ public class GameController : MonoBehaviour
         {
             roundEndTimerText.gameObject.SetActive(false);
             Debug.Log("Win");
-            RoundFinished = true;
+            roundFinished = true;
             StartCoroutine(DelayEndPromptToggle(teamWinBoards[1]));
         }
 	}
@@ -163,7 +197,7 @@ public class GameController : MonoBehaviour
     /// <param name="points">The number of points to award.</param>
     public void AddTeamPoint (int team, int points)
     {
-        if (team >= 0 && team < teamBoats.Length)
+        if (team >= 0 && team < teamBoats.Length && RoundStarted && !RoundFinished)
         {
             teamPoints[team] += points;
 
@@ -174,22 +208,22 @@ public class GameController : MonoBehaviour
 
     IEnumerator StartRound()
     {
-        RoundStarted = false;
+        roundStarted = false;
         roundBeginTimerText.gameObject.SetActive(true);
 
-        while (roundBeginTimer > 0)
+        while (timeUntilRoundStart > 0)
         {
             //
-            roundBeginTimerText.text = roundBeginTimer.ToString() + "...";
+            roundBeginTimerText.text = timeUntilRoundStart.ToString() + "...";
             //
             yield return new WaitForSecondsRealtime(1);
-            roundBeginTimer -= 1;
+            timeUntilRoundStart -= 1;
         }
 
         roundBeginTimerText.text = "Start!";
         yield return new WaitForSecondsRealtime(1);
 
-        RoundStarted = true;
+        roundStarted = true;
         roundBeginTimerText.gameObject.SetActive(false);
         roundEndTimerText.gameObject.SetActive(true);
 
@@ -198,14 +232,14 @@ public class GameController : MonoBehaviour
 
     IEnumerator RoundSecondTick()
     {
-        while (roundEndTimer >= 0 && !RoundFinished)
+        while (timeUntilRoundEnd >= 0 && !RoundFinished)
         {
-            TimeSpan t = TimeSpan.FromSeconds(roundEndTimer);
+            TimeSpan t = TimeSpan.FromSeconds(timeUntilRoundEnd);
 
             roundEndTimerText.text = String.Format("{0}:{1:00}", t.Minutes, t.Seconds);
 
             yield return new WaitForSecondsRealtime(1);
-            roundEndTimer -= 1;
+            timeUntilRoundEnd -= 1;
         }
 
         roundEndTimerText.gameObject.SetActive(false);
@@ -213,18 +247,18 @@ public class GameController : MonoBehaviour
         roundBeginTimerText.text = "Finished!";
 
         yield return new WaitForSecondsRealtime(2);
-
-        roundBeginTimerText.gameObject.SetActive(false);
-
+        
         if (teamPoints[0] > teamPoints[1])
         {
             Debug.Log("Team 1 won");
             TeamWin(0);
+            teamBoats[1].SendMessage("FlipBoat");
         }
         else if (teamPoints[1] > teamPoints[0])
         {
             Debug.Log("Team 2 won");
             TeamWin(1);
+            teamBoats[0].SendMessage("FlipBoat");
         }
         else
         {
@@ -234,7 +268,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-	IEnumerator DelayEndPromptToggle (GameObject ToggleUI)
+	IEnumerator DelayEndPromptToggle(GameObject ToggleUI)
     {
 		Time.timeScale = 0.4f;
 
@@ -250,11 +284,14 @@ public class GameController : MonoBehaviour
 			yield return null;
 		}
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSecondsRealtime(2);
 
         ToggleUI.SetActive(true);
 
-		yield return new WaitForSeconds (1);
+        GameObject.Find("End Score Team 1").GetComponent<Text>().text = teamPoints[0] + " Points";
+        GameObject.Find("End Score Team 2").GetComponent<Text>().text = teamPoints[1] + " Points";
+
+        yield return new WaitForSecondsRealtime(2);
 
 		endPromptText.gameObject.SetActive (true);
 		waitingForEndPrompt = true;

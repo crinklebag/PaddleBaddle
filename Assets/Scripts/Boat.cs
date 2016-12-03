@@ -50,6 +50,16 @@ public class Boat : MonoBehaviour {
 		}
 	}
 
+    public void FlipBoat()
+    {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        { 
+            rb.AddForceAtPosition(Vector3.down * 175, transform.right, ForceMode.Impulse);
+            
+        }
+    }
+
     IEnumerator Respawn()
     {
         ControllerInput[] controllers = this.GetComponentsInChildren<ControllerInput>();
@@ -70,7 +80,14 @@ public class Boat : MonoBehaviour {
 
         transform.position = respawnPoint;
         transform.rotation = Quaternion.Euler(-90, 0, 0);
-        
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
         foreach (ControllerInput controller in controllers)
         {
             controller.enabled = true;
