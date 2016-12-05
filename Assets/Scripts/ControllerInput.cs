@@ -15,11 +15,14 @@ public class ControllerInput : MonoBehaviour {
 	[SerializeField] float maxDeltaAngle = 30;
 	[SerializeField] float paddleRotationForce = 10000;
     [SerializeField] float paddleForwardForce;
+	[SerializeField] float speedBoostForce = 30000;
+	[SerializeField] float strengthBoostForce = 40;
 	[SerializeField] float attackForce = 15;
     [SerializeField] float paddleRoationSpeed;
 
 	Player player;
 	GameObject boat;
+	Boat boatInfo;
     Animator paddleAnimator;
 	float angleTraversed = 0;
 	float previousAngle = -1;
@@ -31,6 +34,8 @@ public class ControllerInput : MonoBehaviour {
 	System.TimeSpan timeStartedRotation;
 	List<int> quadrantsHit = new List<int>();
     Quaternion initRot;
+	// This is a dictionary that stores string keys and functions
+	Dictionary<string, System.Action> powerupActions = new Dictionary<string, System.Action> ();
 
     Vector3 startPosPaddle;
     Vector3 startRotPaddle;
@@ -41,6 +46,7 @@ public class ControllerInput : MonoBehaviour {
         // FindUI();
         player = ReInput.players.GetPlayer (playerID);
 		boat = this.GetComponentInParent<Boat> ().gameObject;
+		boatInfo = boat.GetComponent<Boat> ();
         initRot = paddle.transform.localRotation;
         
         // Initialize Paddle Variables
@@ -48,6 +54,11 @@ public class ControllerInput : MonoBehaviour {
         paddleAnimator = paddle.transform.GetComponentInParent<Animator>();
         startAnimPaddlePos = paddle.transform.GetComponentInParent<Transform>().localPosition;
         startAnimPaddleRot = paddle.transform.GetComponentInParent<Transform>().localRotation;
+
+		// Manually adding all of the functions to the dictionary
+		powerupActions.Add ("speed", speedBoost);
+		powerupActions.Add ("strength", strengthBoost);
+		powerupActions.Add ("", missingAction);
     }
 
 	void OnDrawGizmosSelected() {
@@ -94,6 +105,12 @@ public class ControllerInput : MonoBehaviour {
             paddleAnimator.SetBool("taunting", true);
             StartCoroutine(StopTauntAnim());
         }
+
+		// Hit the powerup button && the boat has a powerup active
+		if (player.GetButtonDown ("Powerup") && boatInfo.hasPowerUp) 
+		{
+			powerupActions [boatInfo.powerUpType] (); // call the function that matches the string the boat has
+		}
 
         CheckForJoystickRotation();
         RotatePaddle();
@@ -213,9 +230,42 @@ public class ControllerInput : MonoBehaviour {
                     Vector3 differenceVector = hitColliders[i].transform.position - paddle.transform.position;
 
                     hitColliders[i].GetComponent<Rigidbody>().AddForceAtPosition(attackForce * Vector3.down, differenceVector, ForceMode.Impulse);
-                    Debug.Log("Force applied");
+                    Debug.Log("Force applied: "+ attackForce);
+
+					// Removing strength powerup effect if we just used the strong attack
+					if (attackForce > strengthBoostForce) {
+						attackForce -= strengthBoostForce;
+					}
                 }
             }
         }
     }
+
+	// Adding force to the boat for the speed boost
+	void speedBoost()
+	{
+		Debug.Log ("Adding " + speedBoostForce + " for speedboost!");
+		gameObject.GetComponent<Rigidbody> ().AddForce (transform.up * speedBoostForce, ForceMode.Impulse);
+		removePowerUp ();
+	}
+
+	// Add force for the next attack
+	void strengthBoost()
+	{
+		attackForce = (attackForce > strengthBoostForce) ? attackForce : attackForce + strengthBoostForce;
+		removePowerUp ();
+	}
+
+	// Remove the powerup from the boat
+	void removePowerUp()
+	{
+		boatInfo.hasPowerUp = false;
+		Destroy (transform.GetChild (transform.childCount - 1).gameObject);
+	}
+
+	// Something went wrong
+	void missingAction()
+	{
+		Debug.Log ("A powerup with an empty string got called?");
+	}
 }
