@@ -11,14 +11,15 @@ public class ControllerInput : MonoBehaviour {
 	[Header("Parameters")]
 	[SerializeField] int playerID;
 	[SerializeField] GameObject paddle;
-    	[SerializeField] Transform pivot;
+    [SerializeField] Transform pivot;
 	[SerializeField] float maxDeltaAngle = 30;
 	[SerializeField] float paddleRotationForce = 10000;
-    	[SerializeField] float paddleForwardForce;
+    [SerializeField] float paddleForwardForce;
 	[SerializeField] float speedBoostForce = 30000;
 	[SerializeField] float strengthBoostForce = 40;
 	[SerializeField] float attackForce = 15;
-    	[SerializeField] float paddleRoationSpeed;
+    [SerializeField] float paddleRoationSpeed;
+    [SerializeField] float attackRadius;
 
     //creating an selectable object.
     public GameObject attackDisplay;
@@ -67,7 +68,7 @@ public class ControllerInput : MonoBehaviour {
 	void OnDrawGizmosSelected() {
         
 		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere (paddle.transform.position, 1);
+		Gizmos.DrawWireSphere (paddle.transform.position, attackRadius);
 	}
 
     void FindUI() {
@@ -106,15 +107,15 @@ public class ControllerInput : MonoBehaviour {
                     MoveCanoe();
                 }
                 
-		// Hit the powerup button && the boat has a powerup active
-		if (player.GetButtonDown ("Powerup") && boatInfo.hasPowerUp) 
-		{
-			powerupActions [boatInfo.powerUpType] (); // call the function that matches the string the boat has
-		}
+		        // Hit the powerup button && the boat has a powerup active
+		        if (player.GetButtonDown ("Powerup") && boatInfo.hasPowerUp) 
+		        {
+		        	powerupActions [boatInfo.powerUpType] (); // call the function that matches the string the boat has
+		        }
 
-        	CheckForJoystickRotation();
-        	RotatePaddle();
-        	Attack();
+        	    CheckForJoystickRotation();
+        	    RotatePaddle();
+        	    Attack();
 
                 if (player.GetButtonDown("Decrease Speed") && canPaddle && !taunting)
                 {
@@ -132,7 +133,7 @@ public class ControllerInput : MonoBehaviour {
 
                 CheckForJoystickRotation();
                 RotatePaddle();
-                canAttack();
+                CanAttack();
                 Attack();
 
             }
@@ -239,12 +240,12 @@ public class ControllerInput : MonoBehaviour {
         lastPaddleAngle = angle;
     }
 
-    void canAttack()
+    void CanAttack()
     {
 
         attackDisplay.SetActive(false);
 
-        Collider[] hitColliders = Physics.OverlapSphere(paddle.transform.position, 1);
+        Collider[] hitColliders = Physics.OverlapSphere(paddle.transform.position, attackRadius);
         for (int i = 0; i < hitColliders.Length; i++)
         {
             if (hitColliders[i].gameObject != this.gameObject && hitColliders[i].GetComponent<Boat>())
@@ -258,7 +259,7 @@ public class ControllerInput : MonoBehaviour {
         // Check if attacking
         if (player.GetButtonDown("Attack")) {
 
-            Collider[] hitColliders = Physics.OverlapSphere(paddle.transform.position, 5);
+            Collider[] hitColliders = Physics.OverlapSphere(paddle.transform.position, attackRadius);
 
             for (int i = 0; i < hitColliders.Length; i++) {
 
