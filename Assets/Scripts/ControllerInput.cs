@@ -102,8 +102,7 @@ public class ControllerInput : MonoBehaviour {
                     dir = 1;
                     MoveCanoe();
                 }
-
-		//<<<<<<< HEAD
+                
 		// Hit the powerup button && the boat has a powerup active
 		if (player.GetButtonDown ("Powerup") && boatInfo.hasPowerUp) 
 		{
@@ -113,8 +112,7 @@ public class ControllerInput : MonoBehaviour {
         	CheckForJoystickRotation();
         	RotatePaddle();
         	Attack();
-        
-		//=======
+
                 if (player.GetButtonDown("Decrease Speed") && canPaddle && !taunting)
                 {
                     // Go Backward

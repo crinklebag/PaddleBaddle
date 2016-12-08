@@ -8,17 +8,12 @@ public class Boat : MonoBehaviour {
 	[SerializeField] GameObject player1;
 	[SerializeField] GameObject player2;
 	[SerializeField] Transform flipCheck;
-
-	//<<<<<<< HEAD
+    
 	// Information for powerups
 	bool isFlipped = false;
 	public bool hasPowerUp = false;
 	public string powerUpType = "";
-	//=======
    	MeshRenderer meshRenderer;
-	//>>>>>>> feature/rounds
-
-    bool isFlipped = false;
 
     public bool Invincible { get; private set; }
 
