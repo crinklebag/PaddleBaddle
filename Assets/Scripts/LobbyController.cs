@@ -22,7 +22,7 @@ public class LobbyController : MonoBehaviour {
         if ((players[0].GetButton("Attack") || players[1].GetButton("Attack") || players[2].GetButton("Attack") || players[3].GetButton("Attack")) && startGame.activeSelf) {
             // Start Game
             Debug.Log("Start Game");
-            SceneManager.LoadScene("Rebecca_Scene");
+            SceneManager.LoadScene("TestBuild_Scene");
         }
 
         if ((players[0].GetButton("Select")))
