@@ -11,14 +11,14 @@ public class ControllerInput : MonoBehaviour {
 	[Header("Parameters")]
 	[SerializeField] int playerID;
 	[SerializeField] GameObject paddle;
-    [SerializeField] Transform pivot;
+    	[SerializeField] Transform pivot;
 	[SerializeField] float maxDeltaAngle = 30;
 	[SerializeField] float paddleRotationForce = 10000;
-    [SerializeField] float paddleForwardForce;
+    	[SerializeField] float paddleForwardForce;
 	[SerializeField] float speedBoostForce = 30000;
 	[SerializeField] float strengthBoostForce = 40;
 	[SerializeField] float attackForce = 15;
-    [SerializeField] float paddleRoationSpeed;
+    	[SerializeField] float paddleRoationSpeed;
 
 	Player player;
 	GameObject boat;
@@ -88,34 +88,54 @@ public class ControllerInput : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (player.GetButtonDown("Increase Speed") && canPaddle && !taunting) {
-            //Go Forward
-            dir = 1;
-            MoveCanoe();
-        }
+        GameObject gameControllerObject = GameObject.Find("GameController");
+        if (gameControllerObject != null)
+        {
+            GameController gameController = gameControllerObject.GetComponent<GameController>();
 
-        if (player.GetButtonDown("Decrease Speed") && canPaddle && !taunting) {
-            // Go Backward
-            dir = -1;
-            MoveCanoe();
-        }
+            if (gameController != null && gameController.RoundStarted)
+            {
 
-        if (player.GetButtonDown("Taunt") && !taunting) {
-            taunting = true;
-            paddleAnimator.SetBool("taunting", true);
-            StartCoroutine(StopTauntAnim());
-        }
+                if (player.GetButtonDown("Increase Speed") && canPaddle && !taunting)
+                {
+                    //Go Forward
+                    dir = 1;
+                    MoveCanoe();
+                }
 
+		//<<<<<<< HEAD
 		// Hit the powerup button && the boat has a powerup active
 		if (player.GetButtonDown ("Powerup") && boatInfo.hasPowerUp) 
 		{
 			powerupActions [boatInfo.powerUpType] (); // call the function that matches the string the boat has
 		}
 
-        CheckForJoystickRotation();
-        RotatePaddle();
-        Attack();
+        	CheckForJoystickRotation();
+        	RotatePaddle();
+        	Attack();
         
+		//=======
+                if (player.GetButtonDown("Decrease Speed") && canPaddle && !taunting)
+                {
+                    // Go Backward
+                    dir = -1;
+                    MoveCanoe();
+                }
+
+                if (player.GetButtonDown("Taunt") && !taunting)
+                {
+                    taunting = true;
+                    paddleAnimator.SetBool("taunting", true);
+                    StartCoroutine(StopTauntAnim());
+                }
+
+                CheckForJoystickRotation();
+                RotatePaddle();
+                Attack();
+
+            }
+        }      
+	//>>>>>>> feature/rounds
 	}
 
     IEnumerator StopTauntAnim() {
@@ -227,15 +247,19 @@ public class ControllerInput : MonoBehaviour {
 
                 if (hitColliders[i].gameObject != this.gameObject && hitColliders[i].GetComponent<Boat>()) {
 
-                    Vector3 differenceVector = hitColliders[i].transform.position - paddle.transform.position;
+                    if (hitColliders[i].GetComponent<Boat>().Invincible == false)
+                    {
+                        Vector3 differenceVector = hitColliders[i].transform.position - paddle.transform.position;
 
-                    hitColliders[i].GetComponent<Rigidbody>().AddForceAtPosition(attackForce * Vector3.down, differenceVector, ForceMode.Impulse);
-                    Debug.Log("Force applied: "+ attackForce);
+                   	hitColliders[i].GetComponent<Rigidbody>().AddForceAtPosition(attackForce * Vector3.down, differenceVector, ForceMode.Impulse);
+                   	Debug.Log("Force applied: "+ attackForce);
 
-					// Removing strength powerup effect if we just used the strong attack
-					if (attackForce > strengthBoostForce) {
-						attackForce -= strengthBoostForce;
-					}
+			// Removing strength powerup effect if we just used the strong attack
+			if (attackForce > strengthBoostForce) 
+			{
+				attackForce -= strengthBoostForce;
+			}
+                    }
                 }
             }
         }
