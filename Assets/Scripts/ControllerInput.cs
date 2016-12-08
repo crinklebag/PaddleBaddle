@@ -20,7 +20,10 @@ public class ControllerInput : MonoBehaviour {
 	[SerializeField] float attackForce = 15;
     	[SerializeField] float paddleRoationSpeed;
 
-	Player player;
+    //creating an selectable object.
+    public GameObject attackDisplay;
+
+    Player player;
 	GameObject boat;
 	Boat boatInfo;
     Animator paddleAnimator;
@@ -129,6 +132,7 @@ public class ControllerInput : MonoBehaviour {
 
                 CheckForJoystickRotation();
                 RotatePaddle();
+                canAttack();
                 Attack();
 
             }
@@ -233,6 +237,21 @@ public class ControllerInput : MonoBehaviour {
         }
 
         lastPaddleAngle = angle;
+    }
+
+    void canAttack()
+    {
+
+        attackDisplay.SetActive(false);
+
+        Collider[] hitColliders = Physics.OverlapSphere(paddle.transform.position, 1);
+        for (int i = 0; i < hitColliders.Length; i++)
+        {
+            if (hitColliders[i].gameObject != this.gameObject && hitColliders[i].GetComponent<Boat>())
+            {
+                attackDisplay.SetActive(true);
+            }
+        }
     }
 
     void Attack() {
