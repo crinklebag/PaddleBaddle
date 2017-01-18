@@ -16,13 +16,8 @@ public class BirdSpawner : MonoBehaviour {
     [SerializeField]
     private float waitTime = 1f;
 
-    private Vector3 startPos;
-    private Vector3 endPos;
-
     // Use this for initialization
     void Start () {
-        startPos = transform.position;
-        endPos = target.position;
 
         StartCoroutine(Spawn());
 	}
@@ -54,7 +49,7 @@ public class BirdSpawner : MonoBehaviour {
             return;
         }
 
-
+        myBird.target = target.position;
     }
 
     // Draws the line in the editor
