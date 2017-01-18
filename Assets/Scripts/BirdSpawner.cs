@@ -2,26 +2,30 @@
 using System.Collections;
 
 public class BirdSpawner : MonoBehaviour {
-    [HideInInspector]
-    public Vector3 startPos;
-    [HideInInspector]
-    public Vector3 endPos;
-
     [SerializeField]
     private Transform target;
     [SerializeField]
-    private float minTime;
+    private float minTime = 0f;
     [SerializeField]
-    private float maxTime;
+    private float maxTime = 10f;
     [SerializeField]
-    private float waitTime;
+    private float waitTime = 1f;
 
-	// Use this for initialization
-	void Start () {
+    private Vector3 startPos;
+    private Vector3 endPos;
+
+    // Use this for initialization
+    void Start () {
         startPos = transform.position;
         endPos = target.position;
 	}
 
+    IEnumerator Spawn()
+    {
+        yield return new WaitForSeconds(waitTime);
+    }
+
+    // Draws the line in the editor
     void OnDrawGizmosSelected()
     {
         if (target != null)
