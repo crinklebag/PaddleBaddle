@@ -2,6 +2,11 @@
 using System.Collections;
 
 public class BirdSpawner : MonoBehaviour {
+    [HideInInspector]
+    public bool spawning = true;
+
+    [SerializeField]
+    private GameObject birdPrefab;
     [SerializeField]
     private Transform target;
     [SerializeField]
@@ -23,6 +28,31 @@ public class BirdSpawner : MonoBehaviour {
     IEnumerator Spawn()
     {
         yield return new WaitForSeconds(waitTime);
+        while(spawning)
+        {
+            yield return new WaitForSeconds(Random.Range(minTime, maxTime));
+            makeBird();
+        }
+    }
+
+    void makeBird()
+    {
+        GameObject bird;
+        BirdBehaviour myBird;
+        bird = Instantiate(birdPrefab, transform.position, transform.rotation) as GameObject;
+
+        try
+        {
+            myBird = bird.GetComponent<BirdBehaviour>();
+        }
+        catch
+        {
+            Debug.Log("Something went wrong with spawning bird");
+            DestroyImmediate(bird);
+            return;
+        }
+
+
     }
 
     // Draws the line in the editor

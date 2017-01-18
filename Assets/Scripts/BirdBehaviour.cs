@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class BirdBehaviour : MonoBehaviour {
+    public Vector3 target;
+    public float flyTime;
 
 	// Use this for initialization
 	void Start () {
