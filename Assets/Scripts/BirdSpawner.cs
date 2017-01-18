@@ -53,7 +53,6 @@ public class BirdSpawner : MonoBehaviour {
 
         myBird.target = target.position;
         myBird.speed = birdSpeed;
-
     }
 
     // Draws the line in the editor
