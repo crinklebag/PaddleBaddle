@@ -23,6 +23,8 @@ public class BirdSpawner : MonoBehaviour {
     void Start () {
         startPos = transform.position;
         endPos = target.position;
+
+        StartCoroutine(Spawn());
 	}
 
     IEnumerator Spawn()
