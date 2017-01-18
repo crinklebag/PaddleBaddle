@@ -10,11 +10,13 @@ public class BirdSpawner : MonoBehaviour {
     [SerializeField]
     private Transform target;
     [SerializeField]
+    private float birdSpeed = 1f;
+    [SerializeField]
+    private float waitTime = 1f;
+    [SerializeField]
     private float minTime = 0f;
     [SerializeField]
     private float maxTime = 10f;
-    [SerializeField]
-    private float waitTime = 1f;
 
     // Use this for initialization
     void Start () {
@@ -50,6 +52,8 @@ public class BirdSpawner : MonoBehaviour {
         }
 
         myBird.target = target.position;
+        myBird.speed = birdSpeed;
+
     }
 
     // Draws the line in the editor
