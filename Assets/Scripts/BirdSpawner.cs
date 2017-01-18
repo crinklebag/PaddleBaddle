@@ -20,7 +20,6 @@ public class BirdSpawner : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
         StartCoroutine(Spawn());
 	}
 
@@ -38,8 +37,14 @@ public class BirdSpawner : MonoBehaviour {
     {
         GameObject bird;
         BirdBehaviour myBird;
-        bird = Instantiate(birdPrefab, transform.position, transform.rotation) as GameObject;
 
+        // only one bird at a time
+        if (gameObject.GetComponentInChildren<BirdBehaviour>())
+            return;
+
+        bird = Instantiate(birdPrefab, transform.position, transform.rotation, transform) as GameObject;
+
+        // don't reference scripts that don't exist
         try
         {
             myBird = bird.GetComponent<BirdBehaviour>();
@@ -51,6 +56,7 @@ public class BirdSpawner : MonoBehaviour {
             return;
         }
 
+        // set things here so they can be changed for all spawns from a spawner
         myBird.target = target.position;
         myBird.speed = birdSpeed;
     }
