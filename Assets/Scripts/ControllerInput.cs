@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class ControllerInput : MonoBehaviour {
 
+    enum PaddleSide { Left, Right };
+
     [Header("Player UI Reference")]
     PlayerUI playerUIController;
 
@@ -98,32 +100,46 @@ public class ControllerInput : MonoBehaviour {
             GameController gameController = gameControllerObject.GetComponent<GameController>();
 
             if (gameController != null && gameController.RoundStarted)
-            {
-
-                if (player.GetButtonDown("Increase Speed") && canPaddle && !taunting)
+            {                                            
+                if (canPaddle && !taunting)
                 {
-                    //Go Forward
-                    dir = 1;
-                    MoveCanoe();
+                    if (player.GetButtonDown("+Right Paddle"))
+                    {
+                        //paddle.transform.localScale = new Vector3(1, 1, 1);
+                        //Go Forward
+                        dir = 1;
+                        MoveCanoe();
+                    }
+                    else if (player.GetButtonDown("-Right Paddle"))
+                    {
+                        //paddle.transform.localScale = new Vector3(1, 1, 1);
+                        // Go Backward
+                        dir = -1;
+                        MoveCanoe();
+
+                    }
+                    else if (player.GetButtonDown("+Left Paddle"))
+                    {
+                        //paddle.transform.localScale = new Vector3(-1, 1, 1);
+                        //Go Forward
+                        dir = 1;
+                        MoveCanoe();
+                    }
+                    else if (player.GetButtonDown("-Left Paddle"))
+                    {
+                        //paddle.transform.localScale = new Vector3(-1, 1, 1);
+                        // Go Backward
+                        dir = -1;
+                        MoveCanoe();
+                    }
                 }
-                
+                                
 		        // Hit the powerup button && the boat has a powerup active
 		        if (player.GetButtonDown ("Powerup") && boatInfo.hasPowerUp) 
 		        {
 		        	powerupActions [boatInfo.powerUpType] (); // call the function that matches the string the boat has
 		        }
-
-        	    CheckForJoystickRotation();
-        	    RotatePaddle();
-        	    Attack();
-
-                if (player.GetButtonDown("Decrease Speed") && canPaddle && !taunting)
-                {
-                    // Go Backward
-                    dir = -1;
-                    MoveCanoe();
-                }
-
+                                
                 if (player.GetButtonDown("Taunt") && !taunting)
                 {
                     taunting = true;
