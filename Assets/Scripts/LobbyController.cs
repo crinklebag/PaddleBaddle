@@ -41,4 +41,8 @@ public class LobbyController : MonoBehaviour {
             startGame.SetActive(true);
         }
     }
+    public void RemovePlayer()
+    {
+        playersIn--;
+    }
 }

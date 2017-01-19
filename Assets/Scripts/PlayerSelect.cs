@@ -23,13 +23,26 @@ public class PlayerSelect : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (player.GetButtonDown("Attack")) {
-            if (outFace.activeSelf) {
+        if (player.GetButtonDown("Attack"))
+        {
+            if (outFace.activeSelf)
+            {
                 inFace.SetActive(true);
                 outFace.SetActive(false);
                 playerIn.sprite = playerInImage;
                 gameController.AddPlayer();
             }
         }
-	}
+        if (player.GetButtonDown("Back"))
+        {
+            Debug.Log("Donezo");
+            if (inFace.activeSelf)
+            {
+                inFace.SetActive(false);
+                outFace.SetActive(true);
+                playerIn.sprite = playerInImage;
+                gameController.RemovePlayer();
+            }
+        }
+    }
 }
