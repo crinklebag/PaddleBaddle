@@ -13,10 +13,11 @@ public class ControllerInput : MonoBehaviour {
 	[Header("Parameters")]
 	[SerializeField] int playerID;
 	[SerializeField] GameObject paddle;
-    [SerializeField] Transform pivot;
+    [SerializeField] GameObject paddlePivot;
 	[SerializeField] float maxDeltaAngle = 30;
 	[SerializeField] float paddleRotationForce = 10000;
-    [SerializeField] float paddleForwardForce;
+    [SerializeField] float paddleTorque = 250;
+    [SerializeField] float paddleForwardForce = 500;
 	[SerializeField] float speedBoostForce = 30000;
 	[SerializeField] float strengthBoostForce = 40;
 	[SerializeField] float attackForce = 15;
@@ -105,14 +106,14 @@ public class ControllerInput : MonoBehaviour {
                 {
                     if (player.GetButtonDown("+Right Paddle"))
                     {
-                        //paddle.transform.localScale = new Vector3(1, 1, 1);
+                        paddlePivot.transform.localScale = new Vector3(1, 1, 1);
                         //Go Forward
                         dir = 1;
                         MoveCanoe();
                     }
                     else if (player.GetButtonDown("-Right Paddle"))
                     {
-                        //paddle.transform.localScale = new Vector3(1, 1, 1);
+                        paddlePivot.transform.localScale = new Vector3(1, 1, 1);
                         // Go Backward
                         dir = -1;
                         MoveCanoe();
@@ -120,14 +121,14 @@ public class ControllerInput : MonoBehaviour {
                     }
                     else if (player.GetButtonDown("+Left Paddle"))
                     {
-                        //paddle.transform.localScale = new Vector3(-1, 1, 1);
+                        paddlePivot.transform.localScale = new Vector3(-1, 1, 1);
                         //Go Forward
                         dir = 1;
                         MoveCanoe();
                     }
                     else if (player.GetButtonDown("-Left Paddle"))
                     {
-                        //paddle.transform.localScale = new Vector3(-1, 1, 1);
+                        paddlePivot.transform.localScale = new Vector3(-1, 1, 1);
                         // Go Backward
                         dir = -1;
                         MoveCanoe();
@@ -165,12 +166,15 @@ public class ControllerInput : MonoBehaviour {
         paddle.transform.GetComponentInParent<Transform>().localRotation = startAnimPaddleRot;
     }
 
-    void RotatePaddle() {
-        if (!canPaddle) {
-            paddle.transform.RotateAround(pivot.position, pivot.transform.right * (dir * -1), paddleRoationSpeed * Time.deltaTime);
+    void RotatePaddle()
+    {
+        if (!canPaddle)
+        {
+            paddle.transform.RotateAround(paddlePivot.transform.position, paddlePivot.transform.right * (dir * -1), paddleRoationSpeed * Time.deltaTime);
             paddle.transform.localRotation = initRot;
             paddleRotationTimer += paddleRoationSpeed * Time.deltaTime;
-            if (paddleRotationTimer >= 360) {
+            if (paddleRotationTimer >= 360)
+            {
                 canPaddle = true;
                 paddleRotationTimer = 0;
             }
@@ -181,10 +185,15 @@ public class ControllerInput : MonoBehaviour {
         // Add force to boat by the paddle
         Debug.Log("Adding Forward Force");
         canPaddle = false;
-        float horizontalDirection = Mathf.Sign(paddle.transform.localPosition.x);
-        Vector3 forceVector = (dir * paddleForwardForce * boat.transform.up - .85f * horizontalDirection * boat.transform.right);
-        boat.transform.GetComponentInChildren<Rigidbody>().AddForceAtPosition(forceVector, boat.transform.position, ForceMode.Impulse);
-       
+
+        Vector3 finalForwardForce = dir * paddleForwardForce * boat.transform.up;
+        boat.transform.GetComponentInChildren<Rigidbody>().AddForceAtPosition(finalForwardForce, boat.transform.position, ForceMode.Impulse);
+
+
+        float horizontalDirection = Mathf.Sign(dir * paddle.transform.localPosition.x * paddlePivot.transform.localScale.x);
+        Vector3 finalHorizontalForce = horizontalDirection * paddleTorque * boat.transform.forward;
+        boat.transform.GetComponentInChildren<Rigidbody>().AddTorque(finalHorizontalForce, ForceMode.Impulse);
+
     }
 
     void CheckForJoystickRotation () {
