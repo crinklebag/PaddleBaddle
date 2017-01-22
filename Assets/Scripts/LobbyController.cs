@@ -12,37 +12,38 @@ public class LobbyController : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        startGame.SetActive(false);
         for (int i = 0; i < players.Length; i++) {
             players[i] = ReInput.players.GetPlayer(i);
         }
 	}
-	
 	// Update is called once per frame
-	void Update () {
-        if ((players[0].GetButton("Attack") || players[1].GetButton("Attack") || players[2].GetButton("Attack") || players[3].GetButton("Attack")) && startGame.activeSelf) {
-            // Start Game
-            Debug.Log("Start Game");
-            SceneManager.LoadScene("TestBuild_Scene");
-        }
-
+	void Update () {      
         if ((players[0].GetButton("Select")))
         {
             // Start Game
             Debug.Log("Start Game Early");
+            SceneManager.LoadScene("TestBuild_Scene");
+        }
+        if (playersIn >= 4)
+        {
+            // Let teh players start the game
+            Debug.Log("Can start now");
             startGame.SetActive(true);
+
+            if (players[0].GetButton("Select"))
+            {
+                startGame.SetActive(true);
+            }
         }
     }
-
     public void AddPlayer() {
         playersIn++;
-        if (playersIn == 4) {
-            // Let teh players start the game
-            Debug.Log("Donezo");
-            startGame.SetActive(true);
-        }
+        Debug.Log(playersIn);
     }
     public void RemovePlayer()
     {
+        startGame.SetActive(false);
         playersIn--;
     }
 }
