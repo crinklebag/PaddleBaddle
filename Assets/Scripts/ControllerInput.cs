@@ -24,7 +24,8 @@ public class ControllerInput : MonoBehaviour {
     [SerializeField] float paddleRoationSpeed;
     [SerializeField] float attackRadius;
     [SerializeField] float stunTime = 1f;
-    [SerializeField] float slowMod = 1f;
+    [SerializeField] float mudEffect = 0.5f;
+    float slowMod = 1f;
 
     //creating an selectable object.
     public GameObject attackDisplay;
@@ -345,7 +346,16 @@ public class ControllerInput : MonoBehaviour {
         {
             StartCoroutine(Stunning());
             Destroy(other.gameObject);
+        } else if (other.CompareTag("Mud"))
+        {
+            slowMod -= mudEffect; // lower the mod by the effect of the mud
         }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Mud"))
+            slowMod = 1f; // Just set it back to full
     }
 
     IEnumerator Stunning()
