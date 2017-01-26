@@ -33,7 +33,6 @@ public class Boat : MonoBehaviour {
         {
 			isFlipped = true;
 
-
             //// Detach players for the funnies
             //if(player1) player1.transform.SetParent (null);
             //if(player2) player2.transform.SetParent (null);

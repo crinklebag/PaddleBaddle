@@ -153,6 +153,17 @@ public class ControllerInput : MonoBehaviour {
                     StartCoroutine(StopTauntAnim());
                 }
 
+                float rightAxis = player.GetAxis("Horizontal 1");
+
+                if(rightAxis > 0.34f)
+                {
+                    SetPaddleSide(1);
+                }
+                else if(rightAxis < -0.34f)
+                {
+                    SetPaddleSide(-1);
+                }
+
                 CheckForJoystickRotation();
                 RotatePaddle();
                 CanAttack();
@@ -162,12 +173,27 @@ public class ControllerInput : MonoBehaviour {
         }      
 	}
 
-    IEnumerator StopTauntAnim() {
+    IEnumerator StopTauntAnim()
+    {
         yield return new WaitForSeconds(1f);
         taunting = false;
         paddleAnimator.SetBool("taunting", false);
         paddle.transform.GetComponentInParent<Transform>().localPosition = startAnimPaddlePos;
         paddle.transform.GetComponentInParent<Transform>().localRotation = startAnimPaddleRot;
+    }
+
+    /// <summary>
+    /// Sets the current side the paddle is on.
+    /// </summary>
+    /// <param name="side">1 for the default side; right for the front player, left for the back player.</param>
+    /// <returns>The previous side the paddle was on.</returns>
+    int SetPaddleSide(int side)
+    {
+        int oldSide = Mathf.RoundToInt(paddlePivot.transform.localScale.x);
+
+        paddlePivot.transform.localScale = new Vector3(side, 1, 1);
+
+        return oldSide;
     }
 
     void RotatePaddle()
