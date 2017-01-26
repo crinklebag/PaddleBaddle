@@ -7,6 +7,9 @@ public class BirdBehaviour : MonoBehaviour {
     [HideInInspector]
     public Vector3 target;
 
+    [SerializeField]
+    private GameObject birdPoop;
+
     private Vector3 startPos;
     private float startTime;
     private float journeyLength;
@@ -55,5 +58,6 @@ public class BirdBehaviour : MonoBehaviour {
     {
         needsAttack = false;
         Debug.Log("Attacking!");
+        Instantiate(birdPoop, transform.position, transform.rotation);
     }
 }
