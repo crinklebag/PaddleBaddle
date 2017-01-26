@@ -6,12 +6,13 @@ using UnityEngine.UI;
 public class PlayerSelect : MonoBehaviour {
 
     LobbyController gameController;
-
+    //[SerializeField] Player Identification Number.
     [SerializeField] int playerID;
-    [SerializeField] Image playerIn;
-    [SerializeField] Sprite playerInImage;
-    [SerializeField] GameObject inFace;
-    [SerializeField] GameObject outFace;
+    // Game Objects for toggling active & inactive players.
+    [SerializeField] GameObject inText;
+    [SerializeField] GameObject outText;
+    [SerializeField] GameObject inCharacter;
+    [SerializeField] GameObject outCharacter;
 
     Player player;
 
@@ -25,22 +26,23 @@ public class PlayerSelect : MonoBehaviour {
 	void Update () {
         if (player.GetButtonDown("Attack"))
         {
-            if (outFace.activeSelf)
+            if (outText.activeSelf)
             {
-                inFace.SetActive(true);
-                outFace.SetActive(false);
-                playerIn.sprite = playerInImage;
+                inText.SetActive(true);
+                outText.SetActive(false);
+                inCharacter.SetActive(true);
+                outCharacter.SetActive(false);
                 gameController.AddPlayer();
             }
         }
         if (player.GetButtonDown("Back"))
         {
-            Debug.Log("Donezo");
-            if (inFace.activeSelf)
+            if (inText.activeSelf)
             {
-                inFace.SetActive(false);
-                outFace.SetActive(true);
-                playerIn.sprite = playerInImage;
+                inText.SetActive(false);
+                outText.SetActive(true);
+                inCharacter.SetActive(false);
+                outCharacter.SetActive(true);
                 gameController.RemovePlayer();
             }
         }
