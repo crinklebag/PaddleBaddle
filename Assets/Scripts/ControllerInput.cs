@@ -348,7 +348,7 @@ public class ControllerInput : MonoBehaviour {
             Destroy(other.gameObject);
         } else if (other.CompareTag("Mud"))
         {
-            slowMod -= mudEffect; // lower the mod by the effect of the mud
+            slowMod = mudEffect; // lower the mod to the mud effect
         }
     }
 
