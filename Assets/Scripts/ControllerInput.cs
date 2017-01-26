@@ -10,22 +10,25 @@ public class ControllerInput : MonoBehaviour {
     [Header("Player UI Reference")]
     PlayerUI playerUIController;
 
-	[Header("Parameters")]
-	[SerializeField] int playerID;
-	[SerializeField] GameObject paddle;
+    [Header("Parameters")]
+    [SerializeField] int playerID;
+    [SerializeField] GameObject paddle;
     [SerializeField] GameObject paddlePivot;
-	[SerializeField] float maxDeltaAngle = 30;
-	[SerializeField] float paddleRotationForce = 10000;
+    [SerializeField] float maxDeltaAngle = 30;
+    [SerializeField] float paddleRotationForce = 10000;
     [SerializeField] float paddleTorque = 250;
     [SerializeField] float paddleForwardForce = 500;
-	[SerializeField] float speedBoostForce = 30000;
-	[SerializeField] float strengthBoostForce = 40;
-	[SerializeField] float attackForce = 15;
+    [SerializeField] float speedBoostForce = 30000;
+    [SerializeField] float strengthBoostForce = 40;
+    [SerializeField] float attackForce = 15;
     [SerializeField] float paddleRoationSpeed;
     [SerializeField] float attackRadius;
+    [SerializeField] float stunTime = 1f;
 
     //creating an selectable object.
     public GameObject attackDisplay;
+
+    public bool stunned = false;
 
     Player player;
 	GameObject boat;
@@ -94,9 +97,9 @@ public class ControllerInput : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
         GameObject gameControllerObject = GameObject.Find("GameController");
-        if (gameControllerObject != null)
+        Debug.Log((gameControllerObject != null && stunned != true) + " reported from " + gameObject.name);
+        if (gameControllerObject != null && stunned != true)
         {
             GameController gameController = gameControllerObject.GetComponent<GameController>();
 
@@ -155,7 +158,6 @@ public class ControllerInput : MonoBehaviour {
 
             }
         }      
-	//>>>>>>> feature/rounds
 	}
 
     IEnumerator StopTauntAnim() {
@@ -335,4 +337,20 @@ public class ControllerInput : MonoBehaviour {
 	{
 		Debug.Log ("A powerup with an empty string got called?");
 	}
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Poop"))
+        {
+            StartCoroutine(Stunning());
+            Destroy(other.gameObject);
+        }
+    }
+
+    IEnumerator Stunning()
+    {
+        stunned = true;
+        yield return new WaitForSeconds(stunTime);
+        stunned = false;
+    }
 }
