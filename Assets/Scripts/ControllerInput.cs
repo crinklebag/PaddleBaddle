@@ -24,6 +24,7 @@ public class ControllerInput : MonoBehaviour {
     [SerializeField] float paddleRoationSpeed;
     [SerializeField] float attackRadius;
     [SerializeField] float stunTime = 1f;
+    [SerializeField] float slowMod = 1f;
 
     //creating an selectable object.
     public GameObject attackDisplay;
@@ -188,7 +189,7 @@ public class ControllerInput : MonoBehaviour {
         Debug.Log("Adding Forward Force");
         canPaddle = false;
 
-        Vector3 finalForwardForce = dir * paddleForwardForce * boat.transform.up;
+        Vector3 finalForwardForce = dir * paddleForwardForce * boat.transform.up * slowMod;
         boat.transform.GetComponentInChildren<Rigidbody>().AddForceAtPosition(finalForwardForce, boat.transform.position, ForceMode.Impulse);
 
 
