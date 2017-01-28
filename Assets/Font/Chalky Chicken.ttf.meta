@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 016d290f6fc4d784fa777c61146b23b7
+timeCreated: 1485625107
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Chalky Chicken
+  fontNames:
+  - Chalky Chicken
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
