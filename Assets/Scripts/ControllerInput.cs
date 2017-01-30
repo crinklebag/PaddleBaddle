@@ -21,7 +21,7 @@ public class ControllerInput : MonoBehaviour {
     [SerializeField] float speedBoostForce = 30000;
     [SerializeField] float strengthBoostForce = 40;
     [SerializeField] float attackForce = 15;
-    [SerializeField] float shoveForce = 15;
+    [SerializeField] float shoveForce = 900;
     [SerializeField] float paddleRoationSpeed;
     [SerializeField] float attackRadius;
     [SerializeField] float stunTime = 1f;
