@@ -21,6 +21,7 @@ public class ControllerInput : MonoBehaviour {
     [SerializeField] float speedBoostForce = 30000;
     [SerializeField] float strengthBoostForce = 40;
     [SerializeField] float attackForce = 15;
+    [SerializeField] float shoveForce = 15;
     [SerializeField] float paddleRoationSpeed;
     [SerializeField] float attackRadius;
     [SerializeField] float stunTime = 1f;
@@ -310,7 +311,8 @@ public class ControllerInput : MonoBehaviour {
         }
     }
 
-    void Attack() {
+    void Attack()
+    {
         // Check if attacking
         if (player.GetButtonDown("Attack")) {
 
@@ -325,13 +327,44 @@ public class ControllerInput : MonoBehaviour {
                         Vector3 differenceVector = hitColliders[i].transform.position - paddle.transform.position;
 
                    	hitColliders[i].GetComponent<Rigidbody>().AddForceAtPosition(attackForce * Vector3.down, differenceVector, ForceMode.Impulse);
-                   	Debug.Log("Force applied: "+ attackForce);
+                   	Debug.Log("Attack force applied: "+ attackForce);
 
 			// Removing strength powerup effect if we just used the strong attack
 			if (attackForce > strengthBoostForce) 
 			{
 				attackForce -= strengthBoostForce;
 			}
+                    }
+                }
+            }
+        }
+    }
+
+    void Shove()
+    {
+        if (player.GetButtonDown("Shove"))
+        {
+
+            Collider[] hitColliders = Physics.OverlapSphere(paddle.transform.position, attackRadius);
+
+            for (int i = 0; i < hitColliders.Length; i++)
+            {
+
+                if (hitColliders[i].gameObject != this.gameObject && hitColliders[i].GetComponent<Boat>())
+                {
+
+                    if (hitColliders[i].GetComponent<Boat>().Invincible == false)
+                    {
+                        Vector3 differenceVector = hitColliders[i].transform.position - paddle.transform.position;
+
+                        hitColliders[i].GetComponent<Rigidbody>().AddForceAtPosition(shoveForce * Vector3.down, differenceVector, ForceMode.Impulse);
+                        Debug.Log("Shove force applied: " + attackForce);
+
+                        // Removing strength powerup effect if we just used the strong attack
+                        if (shoveForce > strengthBoostForce)
+                        {
+                            shoveForce -= strengthBoostForce;
+                        }
                     }
                 }
             }
