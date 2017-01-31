@@ -43,7 +43,7 @@ public class Boat : MonoBehaviour {
 
             // Send data to game controller if it's relevant to the gameMode
             if (gameMode == GameController.Modes.Flip)
-                FlipScoring();
+                Score();
             
             StartCoroutine(Respawn());
 		}
@@ -59,7 +59,7 @@ public class Boat : MonoBehaviour {
         }
     }
 
-    void FlipScoring()
+    void Score()
     {
         if (isTeam1)
         {
@@ -69,6 +69,12 @@ public class Boat : MonoBehaviour {
         {
             GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(0, 1);
         }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Coin") && gameMode == GameController.Modes.Pickup)
+            Score();
     }
 
     IEnumerator Respawn()
