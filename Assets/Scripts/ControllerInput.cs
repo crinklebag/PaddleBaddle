@@ -101,7 +101,7 @@ public class ControllerInput : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         GameObject gameControllerObject = GameObject.Find("GameController");
-        Debug.Log((gameControllerObject != null && stunned != true) + " reported from " + gameObject.name);
+        //Debug.Log((gameControllerObject != null && stunned != true) + " reported from " + gameObject.name);
         if (gameControllerObject != null && stunned != true)
         {
             GameController gameController = gameControllerObject.GetComponent<GameController>();
