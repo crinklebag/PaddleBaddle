@@ -228,6 +228,16 @@ public class GameController : MonoBehaviour
         roundBeginTimerText.text = "Start!";
         yield return new WaitForSecondsRealtime(1);
 
+        // Switch to perform mode specific setup
+        // Flip doesn't need anything extra
+        switch(mode)
+        {
+            case Modes.Pickup:
+                break;
+            case Modes.Race:
+                break;
+        }
+
         roundStarted = true;
         roundBeginTimerText.gameObject.SetActive(false);
         roundEndTimerText.gameObject.SetActive(true);
