@@ -44,6 +44,16 @@ public class GameController : MonoBehaviour
     /// </summary>
     [SerializeField] private GameObject endPromptText;
 
+
+
+    /// <summary>
+    /// The modes available to the controller
+    /// Private by default
+    /// </summary>
+    enum Modes { Flip, Pickup, Race };
+    [SerializeField] Modes mode;
+
+
     /// <summary>
     /// Will be true when the entire end prompt has been displayed (including the "Press 'A' to Continue" notification)
     /// </summary>
@@ -130,9 +140,6 @@ public class GameController : MonoBehaviour
         StartCoroutine(StartRound());
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
 	void Update ()
     {
 
