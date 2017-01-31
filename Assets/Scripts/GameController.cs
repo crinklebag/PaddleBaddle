@@ -44,15 +44,13 @@ public class GameController : MonoBehaviour
     /// </summary>
     [SerializeField] private GameObject endPromptText;
 
-
-
     /// <summary>
     /// The modes available to the controller
     /// Private by default
+    /// Default mode is Flip
     /// </summary>
-    enum Modes { Flip, Pickup, Race };
-    [SerializeField] Modes mode;
-
+    [HideInInspector] public enum Modes { Flip, Pickup, Race };
+    public Modes mode = Modes.Flip;
 
     /// <summary>
     /// Will be true when the entire end prompt has been displayed (including the "Press 'A' to Continue" notification)
