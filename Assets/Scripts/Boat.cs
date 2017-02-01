@@ -74,7 +74,11 @@ public class Boat : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Coin") && gameMode == GameController.Modes.Pickup)
+        {
             Score();
+            Destroy(other.gameObject); // Don't pick up twice
+        }
+            
     }
 
     IEnumerator Respawn()
