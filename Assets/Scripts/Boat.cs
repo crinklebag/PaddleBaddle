@@ -21,10 +21,14 @@ public class Boat : MonoBehaviour {
 
     private float invincibileBlink = 0.2f;
 
+    private GameController.Modes gameMode;
+
     // Use this for initialization
 	void Start ()
     {
         meshRenderer = GetComponent<MeshRenderer>();
+        // Check what the gameMode is
+        gameMode = GameObject.Find("GameController").GetComponent<GameController>().mode;
     }
 
 	void Update () {
@@ -37,15 +41,9 @@ public class Boat : MonoBehaviour {
             //if(player1) player1.transform.SetParent (null);
             //if(player2) player2.transform.SetParent (null);
 
-            // Send data to game controller
-            if (isTeam1)
-            {
-				GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(1,1);
-			}
-			else
-            {
-                GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(0,1);
-			}
+            // Send data to game controller if it's relevant to the gameMode
+            if (gameMode == GameController.Modes.Flip)
+                Score();
             
             StartCoroutine(Respawn());
 		}
@@ -59,6 +57,28 @@ public class Boat : MonoBehaviour {
             rb.AddForceAtPosition(Vector3.down * 175, transform.right, ForceMode.Impulse);
             
         }
+    }
+
+    void Score()
+    {
+        if (isTeam1)
+        {
+            GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(1, 1);
+        }
+        else
+        {
+            GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(0, 1);
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Coin") && gameMode == GameController.Modes.Pickup)
+        {
+            Score();
+            Destroy(other.gameObject); // Don't pick up twice
+        }
+            
     }
 
     IEnumerator Respawn()
