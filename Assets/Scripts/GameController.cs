@@ -45,6 +45,13 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject endPromptText;
 
     /// <summary>
+    /// Serialized vars for spawning coins
+    /// </summary>
+    [SerializeField] GameObject coinPrefab;
+    [SerializeField] float spawnRate = 3f;
+    SphereCollider respawnArea;
+
+    /// <summary>
     /// The modes available to the controller
     /// Private by default
     /// Default mode is Flip
@@ -135,6 +142,7 @@ public class GameController : MonoBehaviour
     /// </summary>
     void Start ()
     {
+        respawnArea = GameObject.Find("Respawn Area").GetComponent<SphereCollider>();
         StartCoroutine(StartRound());
     }
 
@@ -233,6 +241,7 @@ public class GameController : MonoBehaviour
         switch(mode)
         {
             case Modes.Pickup:
+                StartCoroutine(SpawnCoins());
                 break;
             case Modes.Race:
                 break;
@@ -243,6 +252,20 @@ public class GameController : MonoBehaviour
         roundEndTimerText.gameObject.SetActive(true);
 
         StartCoroutine(RoundSecondTick());
+    }
+
+    IEnumerator SpawnCoins()
+    {
+        // For simplicity we'll use Respawn area for now
+       while (!RoundFinished)
+        {
+            Vector3 spawnPoint = UnityEngine.Random.insideUnitSphere;
+            spawnPoint.Scale(new Vector3(respawnArea.radius, 0, respawnArea.radius));
+            spawnPoint += respawnArea.transform.position;
+            Instantiate(coinPrefab, spawnPoint, Quaternion.identity);
+
+            yield return new WaitForSeconds(spawnRate);
+        } 
     }
 
     IEnumerator RoundSecondTick()
