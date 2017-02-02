@@ -21,7 +21,7 @@ public class ControllerInput : MonoBehaviour {
     [SerializeField] float speedBoostForce = 30000;
     [SerializeField] float strengthBoostForce = 40;
     [SerializeField] float attackForce = 15;
-    [SerializeField] float shoveForce = 15;
+    [SerializeField] float shoveForce = 900;
     [SerializeField] float paddleRoationSpeed;
     [SerializeField] float attackRadius;
     [SerializeField] float stunTime = 1f;
@@ -101,7 +101,7 @@ public class ControllerInput : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         GameObject gameControllerObject = GameObject.Find("GameController");
-        Debug.Log((gameControllerObject != null && stunned != true) + " reported from " + gameObject.name);
+        //Debug.Log((gameControllerObject != null && stunned != true) + " reported from " + gameObject.name);
         if (gameControllerObject != null && stunned != true)
         {
             GameController gameController = gameControllerObject.GetComponent<GameController>();

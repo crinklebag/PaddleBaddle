@@ -45,6 +45,21 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject endPromptText;
 
     /// <summary>
+    /// Serialized vars for spawning coins
+    /// </summary>
+    [SerializeField] GameObject coinPrefab;
+    [SerializeField] float spawnRate = 3f;
+    SphereCollider respawnArea;
+
+    /// <summary>
+    /// The modes available to the controller
+    /// Private by default
+    /// Default mode is Flip
+    /// </summary>
+    [HideInInspector] public enum Modes { Flip, Pickup, Race };
+    public Modes mode = Modes.Flip;
+
+    /// <summary>
     /// Will be true when the entire end prompt has been displayed (including the "Press 'A' to Continue" notification)
     /// </summary>
 	private bool waitingForEndPrompt = false;
@@ -127,12 +142,10 @@ public class GameController : MonoBehaviour
     /// </summary>
     void Start ()
     {
+        respawnArea = GameObject.Find("Respawn Area").GetComponent<SphereCollider>();
         StartCoroutine(StartRound());
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
 	void Update ()
     {
 
@@ -223,11 +236,36 @@ public class GameController : MonoBehaviour
         roundBeginTimerText.text = "Start!";
         yield return new WaitForSecondsRealtime(1);
 
+        // Switch to perform mode specific setup
+        // Flip doesn't need anything extra
+        switch(mode)
+        {
+            case Modes.Pickup:
+                StartCoroutine(SpawnCoins());
+                break;
+            case Modes.Race:
+                break;
+        }
+
         roundStarted = true;
         roundBeginTimerText.gameObject.SetActive(false);
         roundEndTimerText.gameObject.SetActive(true);
 
         StartCoroutine(RoundSecondTick());
+    }
+
+    IEnumerator SpawnCoins()
+    {
+        // For simplicity we'll use Respawn area for now
+       while (!RoundFinished)
+        {
+            Vector3 spawnPoint = UnityEngine.Random.insideUnitSphere;
+            spawnPoint.Scale(new Vector3(respawnArea.radius, 0, respawnArea.radius));
+            spawnPoint += respawnArea.transform.position;
+            Instantiate(coinPrefab, spawnPoint, Quaternion.identity);
+
+            yield return new WaitForSeconds(spawnRate);
+        } 
     }
 
     IEnumerator RoundSecondTick()
