@@ -23,7 +23,7 @@ public class LobbyController : MonoBehaviour {
         {
             // Start Game
             Debug.Log("Start Game Early");
-            SceneManager.LoadScene("TestBuild_Scene");
+            SceneManager.LoadScene("Test Level");
         }
         if (playersIn >= 4)
         {

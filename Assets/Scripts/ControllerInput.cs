@@ -358,7 +358,7 @@ public class ControllerInput : MonoBehaviour {
 
                     if (otherBoat.Invincible == false)
                     {
-                        Vector3 forceVector = otherBoat.transform.position - paddle.transform.position;
+                        Vector3 forceVector = otherBoat.transform.position - transform.position;
                         forceVector.y = 0.0f;
                         forceVector.Normalize();
 

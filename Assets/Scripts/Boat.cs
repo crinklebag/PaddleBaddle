@@ -100,7 +100,7 @@ public class Boat : MonoBehaviour {
         respawnPoint += respawnArea.transform.position;
 
         transform.position = respawnPoint;
-        transform.rotation = Quaternion.Euler(-90, 0, 0);
+        transform.rotation = Quaternion.identity;
 
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)

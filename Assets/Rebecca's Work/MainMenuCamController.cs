@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Rewired;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,14 +29,23 @@ public class MainMenuCamController : MonoBehaviour {
     float journeyLength;
 
     // Use this for initialization
+
+    Player[] players = new Player[4];
+
     void Start () {
+        
+        for (int i = 0; i < players.Length; i++)
+        {
+            players[i] = ReInput.players.GetPlayer(i);
+        }
+
         currentState = CameraState.MAIN_MENU;
         SetUpMainMenu();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyUp(KeyCode.Space)) {
+        if (Input.GetKeyUp(KeyCode.Space) || players[0].GetButtonDown("Attack") || players[1].GetButtonDown("Attack") || players[2].GetButtonDown("Attack") || players[3].GetButtonDown("Attack")) {
             if (currentState == CameraState.MAIN_MENU && destination != characterSelectDestination) {
                 destination = characterSelectDestination;
                 targetSkyColor = daySkyColor;
