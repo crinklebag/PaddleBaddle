@@ -99,6 +99,7 @@ public class Boat : MonoBehaviour {
         respawnPoint.Scale(new Vector3(respawnArea.radius, 0, respawnArea.radius));
         respawnPoint += respawnArea.transform.position;
 
+        transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
         transform.position = respawnPoint;
         transform.rotation = Quaternion.identity;
 

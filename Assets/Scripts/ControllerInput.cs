@@ -221,7 +221,6 @@ public class ControllerInput : MonoBehaviour {
         Vector3 finalForwardForce = dir * paddleForwardForce * boat.transform.forward * slowMod;
         boat.transform.GetComponentInChildren<Rigidbody>().AddForceAtPosition(finalForwardForce, boat.transform.position, ForceMode.Impulse);
 
-
         float horizontalDirection = Mathf.Sign(dir * paddle.transform.localPosition.x * paddlePivot.transform.localScale.x);
         Vector3 finalHorizontalForce = horizontalDirection * paddleTorque * boat.transform.up;
         boat.transform.GetComponentInChildren<Rigidbody>().AddTorque(finalHorizontalForce, ForceMode.Impulse);
