@@ -218,12 +218,12 @@ public class ControllerInput : MonoBehaviour {
         Debug.Log("Adding Forward Force");
         canPaddle = false;
 
-        Vector3 finalForwardForce = dir * paddleForwardForce * boat.transform.up * slowMod;
+        Vector3 finalForwardForce = dir * paddleForwardForce * boat.transform.forward * slowMod;
         boat.transform.GetComponentInChildren<Rigidbody>().AddForceAtPosition(finalForwardForce, boat.transform.position, ForceMode.Impulse);
 
 
         float horizontalDirection = Mathf.Sign(dir * paddle.transform.localPosition.x * paddlePivot.transform.localScale.x);
-        Vector3 finalHorizontalForce = horizontalDirection * paddleTorque * boat.transform.forward;
+        Vector3 finalHorizontalForce = horizontalDirection * paddleTorque * boat.transform.up;
         boat.transform.GetComponentInChildren<Rigidbody>().AddTorque(finalHorizontalForce, ForceMode.Impulse);
 
     }
@@ -291,7 +291,7 @@ public class ControllerInput : MonoBehaviour {
             // Reset quandrant tracker
             quadrantsHit = new List<int>();
 
-            boat.transform.GetComponentInChildren<Rigidbody>().AddRelativeTorque(-paddleRotationForce * directionOfRotation * Vector3.forward, ForceMode.Force);
+            boat.transform.GetComponentInChildren<Rigidbody>().AddRelativeTorque(-paddleRotationForce * directionOfRotation * Vector3.up, ForceMode.Force);
         }
 
         lastPaddleAngle = angle;
