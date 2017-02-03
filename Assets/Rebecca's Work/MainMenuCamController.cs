@@ -20,6 +20,7 @@ public class MainMenuCamController : MonoBehaviour {
     [SerializeField] float dayLightIntensity2;
     [SerializeField] float speed;
 
+    bool gameStarted = false;
     bool moveCam = false;
     Transform destination;
     Color targetSkyColor;
@@ -45,7 +46,8 @@ public class MainMenuCamController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyUp(KeyCode.Space) || players[0].GetButtonDown("Attack") || players[1].GetButtonDown("Attack") || players[2].GetButtonDown("Attack") || players[3].GetButtonDown("Attack")) {
+        if ((players[0].GetButtonDown("Attack") || players[1].GetButtonDown("Attack") || players[2].GetButtonDown("Attack") || players[3].GetButtonDown("Attack")) && !gameStarted) {
+            gameStarted = true;
             if (currentState == CameraState.MAIN_MENU && destination != characterSelectDestination) {
                 destination = characterSelectDestination;
                 targetSkyColor = daySkyColor;

@@ -8,6 +8,7 @@ public class Boat : MonoBehaviour {
 	[SerializeField] GameObject player1;
 	[SerializeField] GameObject player2;
 	[SerializeField] Transform flipCheck;
+    [SerializeField] TrailRenderer trail;
     
 	// Information for powerups
 	bool isFlipped = false;

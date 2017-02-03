@@ -35,7 +35,7 @@ public class PlayerSelect : MonoBehaviour {
                 gameController.AddPlayer();
             }
         }
-        if (player.GetButtonDown("Back"))
+        if (player.GetButtonDown("Shove"))
         {
             if (inText.activeSelf)
             {
