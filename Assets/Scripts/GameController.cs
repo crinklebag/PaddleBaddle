@@ -187,10 +187,6 @@ public class GameController : MonoBehaviour
     /// <param name="team">The team that won.</param>
     public void TeamWin (int team)
     {
-        // What if it's a race though?
-        if (mode == Modes.Race)
-        { RaceWin(); }
-
         if(!RoundFinished)
         {
             roundEndTimerText.gameObject.SetActive(false);
@@ -254,6 +250,11 @@ public class GameController : MonoBehaviour
                 winningTeam = i;
             }
         }
+
+        timeUntilRoundEnd = 0;
+        if (teamPoints[winningTeam] == 0)
+        { AddTeamPoint(winningTeam, 1); }
+        StartCoroutine(DelayEndPromptToggle(teamWinBoards[winningTeam]));
     }
 
     IEnumerator StartRound()
@@ -319,7 +320,13 @@ public class GameController : MonoBehaviour
         roundBeginTimerText.text = "Finished!";
 
         yield return new WaitForSecondsRealtime(2);
-        
+
+        if (mode == Modes.Race)
+        {
+            RaceWin();
+            yield break;
+        }
+
         if (teamPoints[0] > teamPoints[1])
         {
             Debug.Log("Team 1 won");
