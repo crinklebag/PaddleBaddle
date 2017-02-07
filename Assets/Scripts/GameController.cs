@@ -238,13 +238,10 @@ public class GameController : MonoBehaviour
 
         // Switch to perform mode specific setup
         // Flip doesn't need anything extra
-        switch(mode)
+        // Neither does race, now we're using an if
+        if (mode == Modes.Pickup)
         {
-            case Modes.Pickup:
                 StartCoroutine(SpawnCoins());
-                break;
-            case Modes.Race:
-                break;
         }
 
         roundStarted = true;
