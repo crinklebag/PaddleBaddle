@@ -130,6 +130,18 @@ public class GameController : MonoBehaviour
     private float shakeScale = 0.034f;
 
     /// <summary>
+    /// bool to tell if a team has arrived at the race goal
+    /// </summary>
+    [HideInInspector]
+    public bool raceOver;
+
+    /// <summary>
+    /// Reference to the race goal
+    /// </summary>
+    [SerializeField]
+    private Transform raceGoal;
+
+    /// <summary>
     /// MonoBehaviour Awake Event
     /// </summary>
     void Awake ()
@@ -148,6 +160,9 @@ public class GameController : MonoBehaviour
 
 	void Update ()
     {
+
+        if (mode == Modes.Race && raceOver)
+        { RaceWin(); }
 
 		if (waitingForEndPrompt && firstPlayer.GetButtonDown("Attack"))
         {
@@ -219,6 +234,29 @@ public class GameController : MonoBehaviour
         }
     }
 
+    void RaceWin()
+    {
+        float minDistance = float.MaxValue;
+
+        for (int i = 0; i < teamBoats.Length; i++)
+        {
+            float thisDistance = Vector3.Distance(teamBoats[i].transform.position
+                , raceGoal.position);
+
+            // closest is winner
+            if (thisDistance < minDistance)
+            {
+                minDistance = thisDistance;
+                winningTeam = i;
+            }
+        }
+
+        timeUntilRoundEnd = 0;
+        if (teamPoints[winningTeam] == 0)
+        { AddTeamPoint(winningTeam, 1); }
+        StartCoroutine(DelayEndPromptToggle(teamWinBoards[winningTeam]));
+    }
+
     IEnumerator StartRound()
     {
         roundStarted = false;
@@ -238,13 +276,10 @@ public class GameController : MonoBehaviour
 
         // Switch to perform mode specific setup
         // Flip doesn't need anything extra
-        switch(mode)
+        // Neither does race, now we're using an if
+        if (mode == Modes.Pickup)
         {
-            case Modes.Pickup:
                 StartCoroutine(SpawnCoins());
-                break;
-            case Modes.Race:
-                break;
         }
 
         roundStarted = true;
@@ -285,7 +320,13 @@ public class GameController : MonoBehaviour
         roundBeginTimerText.text = "Finished!";
 
         yield return new WaitForSecondsRealtime(2);
-        
+
+        if (mode == Modes.Race)
+        {
+            RaceWin();
+            yield break;
+        }
+
         if (teamPoints[0] > teamPoints[1])
         {
             Debug.Log("Team 1 won");
