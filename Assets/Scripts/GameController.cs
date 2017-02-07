@@ -161,6 +161,9 @@ public class GameController : MonoBehaviour
 	void Update ()
     {
 
+        if (mode == Modes.Race && raceOver)
+        { RaceWin(); }
+
 		if (waitingForEndPrompt && firstPlayer.GetButtonDown("Attack"))
         {
             Time.timeScale = 1.0f;
@@ -184,6 +187,10 @@ public class GameController : MonoBehaviour
     /// <param name="team">The team that won.</param>
     public void TeamWin (int team)
     {
+        // What if it's a race though?
+        if (mode == Modes.Race)
+        { RaceWin(); }
+
         if(!RoundFinished)
         {
             roundEndTimerText.gameObject.SetActive(false);
@@ -228,6 +235,24 @@ public class GameController : MonoBehaviour
 
             Text teamScoreDisplay = teamScoreBoards[team].GetComponentInChildren<Text>();
             teamScoreDisplay.text = teamPoints[team].ToString();
+        }
+    }
+
+    void RaceWin()
+    {
+        float minDistance = float.MaxValue;
+
+        for (int i = 0; i < teamBoats.Length; i++)
+        {
+            float thisDistance = Vector3.Distance(teamBoats[i].transform.position
+                , raceGoal.position);
+
+            // closest is winner
+            if (thisDistance < minDistance)
+            {
+                minDistance = thisDistance;
+                winningTeam = i;
+            }
         }
     }
 
