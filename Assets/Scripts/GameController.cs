@@ -130,6 +130,18 @@ public class GameController : MonoBehaviour
     private float shakeScale = 0.034f;
 
     /// <summary>
+    /// bool to tell if a team has arrived at the race goal
+    /// </summary>
+    [HideInInspector]
+    public bool raceOver;
+
+    /// <summary>
+    /// Reference to the race goal
+    /// </summary>
+    [SerializeField]
+    private Transform raceGoal;
+
+    /// <summary>
     /// MonoBehaviour Awake Event
     /// </summary>
     void Awake ()
