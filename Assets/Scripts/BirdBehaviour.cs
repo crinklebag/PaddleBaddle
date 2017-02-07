@@ -60,4 +60,12 @@ public class BirdBehaviour : MonoBehaviour {
         Debug.Log("Attacking!");
         Instantiate(birdPoop, transform.position, transform.rotation);
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player") && needsAttack)
+        {
+            attack();
+        }
+    }
 }
