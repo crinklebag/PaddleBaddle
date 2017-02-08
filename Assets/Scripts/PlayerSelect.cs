@@ -26,12 +26,12 @@ public class PlayerSelect : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (gameController.CanSelectCharacter()) {
-            if (player.GetButtonDown("Attack"))  {
+            if (player.GetButtonDown("Attack") && gameController.CanInput())  {
                 if (outText.activeSelf) {
                     EnterGame();
                 }
             }
-            if (player.GetButtonDown("Shove")) {
+            if (player.GetButtonDown("Shove") && gameController.CanInput()) {
                 if (inText.activeSelf) {
                     ExitGame();
                 }
