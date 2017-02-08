@@ -116,7 +116,7 @@ public class Boat : MonoBehaviour {
             controller.enabled = true;
         }
 
-        GetComponent<TrailRenderer>().Clear();
+        // GetComponent<TrailRenderer>().Clear();
 
         StartCoroutine(Invincibility());
 

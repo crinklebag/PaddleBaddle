@@ -15,6 +15,7 @@ public class PlayerSelect : MonoBehaviour {
     [SerializeField] GameObject outCharacter;
 
     Player player;
+    bool inGame = false;
 
 	// Use this for initialization
 	void Start () {
@@ -24,27 +25,39 @@ public class PlayerSelect : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (player.GetButtonDown("Attack"))
-        {
-            if (outText.activeSelf)
-            {
-                inText.SetActive(true);
-                outText.SetActive(false);
-                inCharacter.SetActive(true);
-                outCharacter.SetActive(false);
-                gameController.AddPlayer();
+        if (gameController.CanSelectCharacter()) {
+            if (player.GetButtonDown("Attack"))  {
+                if (outText.activeSelf) {
+                    EnterGame();
+                }
+            }
+            if (player.GetButtonDown("Shove")) {
+                if (inText.activeSelf) {
+                    ExitGame();
+                }
             }
         }
-        if (player.GetButtonDown("Shove"))
-        {
-            if (inText.activeSelf)
-            {
-                inText.SetActive(false);
-                outText.SetActive(true);
-                inCharacter.SetActive(false);
-                outCharacter.SetActive(true);
-                gameController.RemovePlayer();
-            }
-        }
+    }
+
+    public void EnterGame() {
+        inText.SetActive(true);
+        outText.SetActive(false);
+        inCharacter.SetActive(true);
+        outCharacter.SetActive(false);
+        gameController.AddPlayer();
+        inGame = true;
+    }
+
+    public void ExitGame() {
+        inText.SetActive(false);
+        outText.SetActive(true);
+        inCharacter.SetActive(false);
+        outCharacter.SetActive(true);
+        gameController.RemovePlayer();
+        inGame = false;
+    }
+
+    public bool IsInGame() {
+        return inGame;
     }
 }
