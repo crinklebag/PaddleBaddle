@@ -13,8 +13,8 @@ public class GameController : MonoBehaviour
     /// </summary>
     [SerializeField] private GameObject[] teamBoats;
     [SerializeField] public GameObject pauseMenu;
-    public float TeamOneScore;
-    public float TeamTwoScore;
+    public float TeamOneScore = 0f;
+    public float TeamTwoScore = 0f;
     [Obsolete("Please use teamBoats[0] instead")] GameObject team1Boat { get { return teamBoats[0]; } }
     [Obsolete("Please use teamBoats[1] instead")] GameObject team2Boat { get { return teamBoats[1]; } }
 
