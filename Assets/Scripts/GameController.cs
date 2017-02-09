@@ -12,7 +12,9 @@ public class GameController : MonoBehaviour
     /// Array of currently active boats.
     /// </summary>
     [SerializeField] private GameObject[] teamBoats;
-
+    [SerializeField] public GameObject pauseMenu;
+    public float TeamOneScore;
+    public float TeamTwoScore;
     [Obsolete("Please use teamBoats[0] instead")] GameObject team1Boat { get { return teamBoats[0]; } }
     [Obsolete("Please use teamBoats[1] instead")] GameObject team2Boat { get { return teamBoats[1]; } }
 
@@ -179,8 +181,12 @@ public class GameController : MonoBehaviour
 
             roundEndTimerText.gameObject.transform.localScale += new Vector3(shakeScale,shakeScale,0) * shakeVal;
         }
-	}
-
+        if (firstPlayer.GetButtonDown("Select"))
+        {
+            Time.timeScale = 0.0f;
+            pauseMenu.SetActive(true);
+        }
+    }
     /// <summary>
     /// Designates that a team has won.
     /// </summary>
@@ -223,12 +229,15 @@ public class GameController : MonoBehaviour
     /// </summary>
     /// <param name="team">The given team; 0 for team 1, 1 for team 2, etc.</param>
     /// <param name="points">The number of points to award.</param>
+    /// 
+
     public void AddTeamPoint (int team, int points)
     {
         if (team >= 0 && team < teamBoats.Length && RoundStarted && !RoundFinished)
         {
             teamPoints[team] += points;
-
+            TeamOneScore = teamPoints[0];
+            TeamTwoScore = teamPoints[1];
             Text teamScoreDisplay = teamScoreBoards[team].GetComponentInChildren<Text>();
             teamScoreDisplay.text = teamPoints[team].ToString();
         }
@@ -318,7 +327,7 @@ public class GameController : MonoBehaviour
         roundEndTimerText.gameObject.SetActive(false);
         roundBeginTimerText.gameObject.SetActive(true);
         roundBeginTimerText.text = "Finished!";
-
+        SceneManager.LoadScene("Credits");
         yield return new WaitForSecondsRealtime(2);
 
         if (mode == Modes.Race)
@@ -342,6 +351,7 @@ public class GameController : MonoBehaviour
         else
         {
             roundBeginTimerText.text = "Tie Game!";
+            SceneManager.LoadScene("Credits");
             yield return new WaitForSecondsRealtime(3);
             SceneManager.LoadScene("Lobby Design", LoadSceneMode.Single);
         }
@@ -364,13 +374,12 @@ public class GameController : MonoBehaviour
 		}
 
         yield return new WaitForSecondsRealtime(2);
+        //ToggleUI.SetActive(true);
 
-        ToggleUI.SetActive(true);
+        //GameObject.Find("End Score Team 1").GetComponent<Text>().text = teamPoints[0] + " Points";
+        //GameObject.Find("End Score Team 2").GetComponent<Text>().text = teamPoints[1] + " Points";
 
-        GameObject.Find("End Score Team 1").GetComponent<Text>().text = teamPoints[0] + " Points";
-        GameObject.Find("End Score Team 2").GetComponent<Text>().text = teamPoints[1] + " Points";
-
-        yield return new WaitForSecondsRealtime(2);
+    yield return new WaitForSecondsRealtime(2);
 
 		endPromptText.gameObject.SetActive (true);
 		waitingForEndPrompt = true;
