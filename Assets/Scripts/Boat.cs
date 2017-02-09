@@ -38,6 +38,15 @@ public class Boat : MonoBehaviour {
         {
 			isFlipped = true;
 
+            ControllerInput[] players = GetComponents<ControllerInput>();
+
+            foreach (var player in players)
+            {
+                player.StartCoroutine("Rumble", 0.5f);
+            }
+
+            //player2.GetComponent<ControllerInput>().Rumble(3f);
+
             //// Detach players for the funnies
             //if(player1) player1.transform.SetParent (null);
             //if(player2) player2.transform.SetParent (null);

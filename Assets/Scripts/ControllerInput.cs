@@ -26,6 +26,8 @@ public class ControllerInput : MonoBehaviour {
     [SerializeField] float attackRadius;
     [SerializeField] float stunTime = 1f;
     [SerializeField] float mudEffect = 0.5f;
+    [SerializeField] float shortRumble = 0.5f;
+    [SerializeField] float longRumble = 2.0f;
     float slowMod = 1f;
 
     //creating an selectable object.
@@ -421,5 +423,21 @@ public class ControllerInput : MonoBehaviour {
         stunned = true;
         yield return new WaitForSeconds(stunTime);
         stunned = false;
+    }
+
+
+    // Controller Rumble function
+    public IEnumerator Rumble(float duration)
+    {
+        foreach (Joystick j in player.controllers.Joysticks)
+        {
+            if (!j.supportsVibration) continue;
+            j.SetVibration(1.0f, 1.0f);
+        }
+        yield return new WaitForSeconds(duration);
+        foreach (Joystick j in player.controllers.Joysticks)
+        {
+            j.StopVibration();
+        }
     }
 }
