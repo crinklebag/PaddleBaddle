@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Rewired;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ public class MainMenuCamController : MonoBehaviour {
     [SerializeField] float dayLightIntensity2;
     [SerializeField] float speed;
 
+    bool gameStarted = false;
     bool moveCam = false;
     Transform destination;
     Color targetSkyColor;
@@ -28,38 +30,39 @@ public class MainMenuCamController : MonoBehaviour {
     float journeyLength;
 
     // Use this for initialization
+
+    Player[] players = new Player[4];
+
     void Start () {
+        
+        for (int i = 0; i < players.Length; i++)
+        {
+            players[i] = ReInput.players.GetPlayer(i);
+        }
+
         currentState = CameraState.MAIN_MENU;
         SetUpMainMenu();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyUp(KeyCode.Space)) {
+        /*if ((players[0].GetButtonDown("Attack") || players[1].GetButtonDown("Attack") || players[2].GetButtonDown("Attack") || players[3].GetButtonDown("Attack")) && !gameStarted) {
+            gameStarted = true;
             if (currentState == CameraState.MAIN_MENU && destination != characterSelectDestination) {
-                destination = characterSelectDestination;
-                targetSkyColor = daySkyColor;
-                targetLightIntensity1 = dayLightIntensity1;
-                targetLightIntensity2 = dayLightIntensity2;
-                currentState = CameraState.CHARACTER_SELECT;
+                MoveToCharacterSelect();
             }
             else if (currentState == CameraState.CHARACTER_SELECT) {
-                destination = mainMenuDestination;
-                targetSkyColor = nightSkyColor;
-                targetLightIntensity1 = nightLightIntensity;
-                targetLightIntensity2 = nightLightIntensity;
-                currentState = CameraState.MAIN_MENU;
+                MoveToMainMenu();
             }
 
-            startTime = Time.time;
-            journeyLength = Vector3.Distance(this.transform.position, destination.position); 
+             
             moveCam = true;
-        }
+        }*/
 
         if (moveCam) {
-            MoveCamera();
+           MoveCamera();
         }
-	}
+    }
 
     void SetUpMainMenu() {
         this.transform.position = mainMenuDestination.position;
@@ -76,5 +79,27 @@ public class MainMenuCamController : MonoBehaviour {
         this.GetComponent<Camera>().backgroundColor = Color.Lerp(this.GetComponent<Camera>().backgroundColor, targetSkyColor, fracJourney);
         mainLight.intensity = Mathf.Lerp(mainLight.intensity, targetLightIntensity1, fracJourney);
         secondaryLight.intensity = Mathf.Lerp(secondaryLight.intensity, targetLightIntensity2, fracJourney);
+    }
+
+    public void MoveToMainMenu() {
+        destination = mainMenuDestination;
+        targetSkyColor = nightSkyColor;
+        targetLightIntensity1 = nightLightIntensity;
+        targetLightIntensity2 = nightLightIntensity;
+        currentState = CameraState.MAIN_MENU;
+        startTime = Time.time;
+        journeyLength = Vector3.Distance(this.transform.position, destination.position);
+        moveCam = true;
+    }
+
+    public void MoveToCharacterSelect() {
+        destination = characterSelectDestination;
+        targetSkyColor = daySkyColor;
+        targetLightIntensity1 = dayLightIntensity1;
+        targetLightIntensity2 = dayLightIntensity2;
+        currentState = CameraState.CHARACTER_SELECT;
+        startTime = Time.time;
+        journeyLength = Vector3.Distance(this.transform.position, destination.position);
+        moveCam = true;
     }
 }

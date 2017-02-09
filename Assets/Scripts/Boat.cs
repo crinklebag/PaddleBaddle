@@ -8,6 +8,7 @@ public class Boat : MonoBehaviour {
 	[SerializeField] GameObject player1;
 	[SerializeField] GameObject player2;
 	[SerializeField] Transform flipCheck;
+    [SerializeField] TrailRenderer trail;
     
 	// Information for powerups
 	bool isFlipped = false;
@@ -99,8 +100,9 @@ public class Boat : MonoBehaviour {
         respawnPoint.Scale(new Vector3(respawnArea.radius, 0, respawnArea.radius));
         respawnPoint += respawnArea.transform.position;
 
+        transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
         transform.position = respawnPoint;
-        transform.rotation = Quaternion.Euler(-90, 0, 0);
+        transform.rotation = Quaternion.identity;
 
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
@@ -114,7 +116,7 @@ public class Boat : MonoBehaviour {
             controller.enabled = true;
         }
 
-        GetComponent<TrailRenderer>().Clear();
+        // GetComponent<TrailRenderer>().Clear();
 
         StartCoroutine(Invincibility());
 

@@ -343,7 +343,7 @@ public class GameController : MonoBehaviour
         {
             roundBeginTimerText.text = "Tie Game!";
             yield return new WaitForSecondsRealtime(3);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+            SceneManager.LoadScene("Lobby Design", LoadSceneMode.Single);
         }
     }
 
