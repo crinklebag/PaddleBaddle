@@ -1,0 +1,775 @@
+fileFormatVersion: 2
+guid: f66a25544819d5f42ae6061a7cb79d74
+timeCreated: 1486847618
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: CTRLS
+    100004: GEO
+    100006: GLOBAL_SCALE
+    100008: JNTS
+    100010: L_ankle
+    100012: L_Arm_pvAim_GRP
+    100014: L_Arm_pvCtrl_GRP
+    100016: L_Arm_pvPos_GRP
+    100018: L_elbow
+    100020: L_hand
+    100022: L_knee
+    100024: L_Leg_pvAim_GRP
+    100026: L_Leg_pvPos_GRP
+    100028: L_pvCtrl_GRP
+    100030: L_shoulder
+    100032: L_thigh
+    100034: L_toe
+    100036: L_toeBase
+    100038: L_wrist
+    100040: neck_00
+    100042: neck_01
+    100044: neck_02
+    100046: pelvis
+    100048: R_ankle
+    100050: R_Arm_pvAim_GRP
+    100052: R_Arm_pvCtrl_GRP
+    100054: R_Arm_pvPos_GRP
+    100056: R_elbow
+    100058: R_hand
+    100060: R_knee
+    100062: R_Leg_pvAim_GRP
+    100064: R_Leg_pvPos_GRP
+    100066: R_pvCtrl_GRP
+    100068: R_shoulder
+    100070: R_thigh
+    100072: R_toe
+    100074: R_toeBase
+    100076: R_wrist
+    100078: Root
+    100080: Sphere001
+    100082: spine_00
+    100084: spine_01
+    100086: spine_02
+    100088: spine_03
+    100090: UTILITIES_DO_NOT_TOUCH
+    400000: //RootNode
+    400002: CTRLS
+    400004: GEO
+    400006: GLOBAL_SCALE
+    400008: JNTS
+    400010: L_ankle
+    400012: L_Arm_pvAim_GRP
+    400014: L_Arm_pvCtrl_GRP
+    400016: L_Arm_pvPos_GRP
+    400018: L_elbow
+    400020: L_hand
+    400022: L_knee
+    400024: L_Leg_pvAim_GRP
+    400026: L_Leg_pvPos_GRP
+    400028: L_pvCtrl_GRP
+    400030: L_shoulder
+    400032: L_thigh
+    400034: L_toe
+    400036: L_toeBase
+    400038: L_wrist
+    400040: neck_00
+    400042: neck_01
+    400044: neck_02
+    400046: pelvis
+    400048: R_ankle
+    400050: R_Arm_pvAim_GRP
+    400052: R_Arm_pvCtrl_GRP
+    400054: R_Arm_pvPos_GRP
+    400056: R_elbow
+    400058: R_hand
+    400060: R_knee
+    400062: R_Leg_pvAim_GRP
+    400064: R_Leg_pvPos_GRP
+    400066: R_pvCtrl_GRP
+    400068: R_shoulder
+    400070: R_thigh
+    400072: R_toe
+    400074: R_toeBase
+    400076: R_wrist
+    400078: Root
+    400080: Sphere001
+    400082: spine_00
+    400084: spine_01
+    400086: spine_02
+    400088: spine_03
+    400090: UTILITIES_DO_NOT_TOUCH
+    4300000: Sphere001
+    7400000: Take 001
+    7400002: Idle
+    7400004: Selected
+    7400006: Victory
+    7400008: Defeat
+    9500000: //RootNode
+    13700000: Sphere001
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 0
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 127
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: GEO
+        weight: 1
+      - path: GEO/Sphere001
+        weight: 1
+      - path: GLOBAL_SCALE
+        weight: 1
+      - path: GLOBAL_SCALE/CTRLS
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase/L_toe
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase/R_toe
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist/L_hand
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01/neck_02
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist/R_hand
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvAim_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP/L_Arm_pvCtrl_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvAim_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP/L_pvCtrl_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvAim_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP/R_Arm_pvCtrl_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvAim_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP/R_pvCtrl_GRP
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 19
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: GEO
+        weight: 1
+      - path: GEO/Sphere001
+        weight: 1
+      - path: GLOBAL_SCALE
+        weight: 1
+      - path: GLOBAL_SCALE/CTRLS
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase/L_toe
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase/R_toe
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist/L_hand
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01/neck_02
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist/R_hand
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvAim_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP/L_Arm_pvCtrl_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvAim_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP/L_pvCtrl_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvAim_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP/R_Arm_pvCtrl_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvAim_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP/R_pvCtrl_GRP
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Selected
+      takeName: Take 001
+      firstFrame: 30
+      lastFrame: 38
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: GEO
+        weight: 1
+      - path: GEO/Sphere001
+        weight: 1
+      - path: GLOBAL_SCALE
+        weight: 1
+      - path: GLOBAL_SCALE/CTRLS
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase/L_toe
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase/R_toe
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist/L_hand
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01/neck_02
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist/R_hand
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvAim_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP/L_Arm_pvCtrl_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvAim_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP/L_pvCtrl_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvAim_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP/R_Arm_pvCtrl_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvAim_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP/R_pvCtrl_GRP
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Victory
+      takeName: Take 001
+      firstFrame: 52
+      lastFrame: 72
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: GEO
+        weight: 1
+      - path: GEO/Sphere001
+        weight: 1
+      - path: GLOBAL_SCALE
+        weight: 1
+      - path: GLOBAL_SCALE/CTRLS
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase/L_toe
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase/R_toe
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist/L_hand
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01/neck_02
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist/R_hand
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvAim_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP/L_Arm_pvCtrl_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvAim_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP/L_pvCtrl_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvAim_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP/R_Arm_pvCtrl_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvAim_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP/R_pvCtrl_GRP
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Defeat
+      takeName: Take 001
+      firstFrame: 82
+      lastFrame: 127
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: GEO
+        weight: 1
+      - path: GEO/Sphere001
+        weight: 1
+      - path: GLOBAL_SCALE
+        weight: 1
+      - path: GLOBAL_SCALE/CTRLS
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase/L_toe
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase/R_toe
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist/L_hand
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01/neck_02
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist
+        weight: 1
+      - path: GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist/R_hand
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvAim_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP/L_Arm_pvCtrl_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvAim_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP/L_pvCtrl_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvAim_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP/R_Arm_pvCtrl_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvAim_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP
+        weight: 1
+      - path: GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP/R_pvCtrl_GRP
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
