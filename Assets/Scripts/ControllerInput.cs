@@ -298,7 +298,7 @@ public class ControllerInput : MonoBehaviour {
 
     void CanAttack()
     {
-
+        // Debug.Log("Can Attack");
         attackDisplay.SetActive(false);
 
         Collider[] hitColliders = Physics.OverlapSphere(paddle.transform.position, attackRadius);
