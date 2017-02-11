@@ -1,0 +1,1681 @@
+fileFormatVersion: 2
+guid: 2fcbd4cef540afd42be0696ecaf50dae
+timeCreated: 1486847929
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: CAMPER_BOY
+    100002: CTRLS
+    100004: GEO
+    100006: GLOBAL_SCALE
+    100008: JNTS
+    100010: L_ankle
+    100012: L_Arm_pvAim_GRP
+    100014: L_Arm_pvCtrl_GRP
+    100016: L_Arm_pvPos_GRP
+    100018: L_elbow
+    100020: L_hand
+    100022: L_knee
+    100024: L_Leg_pvAim_GRP
+    100026: L_Leg_pvPos_GRP
+    100028: L_pvCtrl_GRP
+    100030: L_shoulder
+    100032: L_thigh
+    100034: L_toe
+    100036: L_toeBase
+    100038: L_wrist
+    100040: neck_00
+    100042: neck_01
+    100044: neck_02
+    100046: nurbsCircle1
+    100048: //RootNode
+    100050: Paddle_A
+    100052: pelvis
+    100054: R_ankle
+    100056: R_Arm_pvAim_GRP
+    100058: R_Arm_pvCtrl_GRP
+    100060: R_Arm_pvPos_GRP
+    100062: R_elbow
+    100064: R_hand
+    100066: R_knee
+    100068: R_Leg_pvAim_GRP
+    100070: R_Leg_pvPos_GRP
+    100072: R_pvCtrl_GRP
+    100074: R_shoulder
+    100076: R_thigh
+    100078: R_toe
+    100080: R_toeBase
+    100082: R_wrist
+    100084: Root
+    100086: Sphere001
+    100088: spine_00
+    100090: spine_01
+    100092: spine_02
+    100094: spine_03
+    100096: tmButton1
+    100098: tmButton2
+    100100: tmButton3
+    100102: tmButton4
+    100104: tmButton5
+    100106: tmButton6
+    100108: tmButton7
+    100110: tmButtonRGB1
+    100112: tmButtonRGB2
+    100114: tmButtonRGB3
+    100116: tmButtonRGB4
+    100118: tmButtonRGB5
+    100120: tmButtonRGB6
+    100122: tmButtonRGB7
+    100124: tmButtons1
+    100126: tmButtonValue1
+    100128: tmButtonValue2
+    100130: tmButtonValue3
+    100132: tmButtonValue4
+    100134: tmButtonValue5
+    100136: tmButtonValue6
+    100138: tmButtonValue7
+    100140: tmButtonVis1
+    100142: tmGroups1
+    100144: tmOptions1
+    100146: tmSliderVis1
+    100148: tmXML1
+    100150: UTILITIES_DO_NOT_TOUCH
+    400000: CAMPER_BOY
+    400002: CTRLS
+    400004: GEO
+    400006: GLOBAL_SCALE
+    400008: JNTS
+    400010: L_ankle
+    400012: L_Arm_pvAim_GRP
+    400014: L_Arm_pvCtrl_GRP
+    400016: L_Arm_pvPos_GRP
+    400018: L_elbow
+    400020: L_hand
+    400022: L_knee
+    400024: L_Leg_pvAim_GRP
+    400026: L_Leg_pvPos_GRP
+    400028: L_pvCtrl_GRP
+    400030: L_shoulder
+    400032: L_thigh
+    400034: L_toe
+    400036: L_toeBase
+    400038: L_wrist
+    400040: neck_00
+    400042: neck_01
+    400044: neck_02
+    400046: nurbsCircle1
+    400048: //RootNode
+    400050: Paddle_A
+    400052: pelvis
+    400054: R_ankle
+    400056: R_Arm_pvAim_GRP
+    400058: R_Arm_pvCtrl_GRP
+    400060: R_Arm_pvPos_GRP
+    400062: R_elbow
+    400064: R_hand
+    400066: R_knee
+    400068: R_Leg_pvAim_GRP
+    400070: R_Leg_pvPos_GRP
+    400072: R_pvCtrl_GRP
+    400074: R_shoulder
+    400076: R_thigh
+    400078: R_toe
+    400080: R_toeBase
+    400082: R_wrist
+    400084: Root
+    400086: Sphere001
+    400088: spine_00
+    400090: spine_01
+    400092: spine_02
+    400094: spine_03
+    400096: tmButton1
+    400098: tmButton2
+    400100: tmButton3
+    400102: tmButton4
+    400104: tmButton5
+    400106: tmButton6
+    400108: tmButton7
+    400110: tmButtonRGB1
+    400112: tmButtonRGB2
+    400114: tmButtonRGB3
+    400116: tmButtonRGB4
+    400118: tmButtonRGB5
+    400120: tmButtonRGB6
+    400122: tmButtonRGB7
+    400124: tmButtons1
+    400126: tmButtonValue1
+    400128: tmButtonValue2
+    400130: tmButtonValue3
+    400132: tmButtonValue4
+    400134: tmButtonValue5
+    400136: tmButtonValue6
+    400138: tmButtonValue7
+    400140: tmButtonVis1
+    400142: tmGroups1
+    400144: tmOptions1
+    400146: tmSliderVis1
+    400148: tmXML1
+    400150: UTILITIES_DO_NOT_TOUCH
+    2300000: Paddle_A
+    3300000: Paddle_A
+    4300000: Sphere001
+    4300002: Paddle_A
+    7400000: Take 001
+    7400002: PaddleRight
+    7400004: PaddleLeft
+    7400006: BackPaddleRight
+    7400008: BackPaddleLeft
+    7400010: AttackRight
+    7400012: AttackLeft
+    7400014: Stunned
+    9500000: //RootNode
+    13700000: Sphere001
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 160
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: CAMPER_BOY
+        weight: 1
+      - path: CAMPER_BOY/GEO
+        weight: 1
+      - path: CAMPER_BOY/GEO/Sphere001
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/CTRLS
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase/L_toe
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase/R_toe
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist/L_hand
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01/neck_02
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist/R_hand
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP/L_Arm_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP/L_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP/R_Arm_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP/R_pvCtrl_GRP
+        weight: 1
+      - path: nurbsCircle1
+        weight: 1
+      - path: nurbsCircle1/Paddle_A
+        weight: 1
+      - path: tmXML1
+        weight: 1
+      - path: tmXML1/tmGroups1
+        weight: 1
+      - path: tmXML1/tmOptions1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1/tmButtonRGB1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1/tmButtonValue1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2/tmButtonRGB2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2/tmButtonValue2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3/tmButtonRGB3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3/tmButtonValue3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4/tmButtonRGB4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4/tmButtonValue4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5/tmButtonRGB5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5/tmButtonValue5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6/tmButtonRGB6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6/tmButtonValue6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7/tmButtonRGB7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7/tmButtonValue7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtonVis1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmSliderVis1
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: PaddleRight
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 23
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: CAMPER_BOY
+        weight: 1
+      - path: CAMPER_BOY/GEO
+        weight: 1
+      - path: CAMPER_BOY/GEO/Sphere001
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/CTRLS
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase/L_toe
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase/R_toe
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist/L_hand
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01/neck_02
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist/R_hand
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP/L_Arm_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP/L_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP/R_Arm_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP/R_pvCtrl_GRP
+        weight: 1
+      - path: nurbsCircle1
+        weight: 1
+      - path: nurbsCircle1/Paddle_A
+        weight: 1
+      - path: tmXML1
+        weight: 1
+      - path: tmXML1/tmGroups1
+        weight: 1
+      - path: tmXML1/tmOptions1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1/tmButtonRGB1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1/tmButtonValue1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2/tmButtonRGB2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2/tmButtonValue2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3/tmButtonRGB3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3/tmButtonValue3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4/tmButtonRGB4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4/tmButtonValue4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5/tmButtonRGB5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5/tmButtonValue5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6/tmButtonRGB6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6/tmButtonValue6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7/tmButtonRGB7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7/tmButtonValue7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtonVis1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmSliderVis1
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: PaddleLeft
+      takeName: Take 001
+      firstFrame: 30
+      lastFrame: 53
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: CAMPER_BOY
+        weight: 1
+      - path: CAMPER_BOY/GEO
+        weight: 1
+      - path: CAMPER_BOY/GEO/Sphere001
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/CTRLS
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase/L_toe
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase/R_toe
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist/L_hand
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01/neck_02
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist/R_hand
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP/L_Arm_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP/L_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP/R_Arm_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP/R_pvCtrl_GRP
+        weight: 1
+      - path: nurbsCircle1
+        weight: 1
+      - path: nurbsCircle1/Paddle_A
+        weight: 1
+      - path: tmXML1
+        weight: 1
+      - path: tmXML1/tmGroups1
+        weight: 1
+      - path: tmXML1/tmOptions1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1/tmButtonRGB1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1/tmButtonValue1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2/tmButtonRGB2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2/tmButtonValue2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3/tmButtonRGB3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3/tmButtonValue3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4/tmButtonRGB4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4/tmButtonValue4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5/tmButtonRGB5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5/tmButtonValue5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6/tmButtonRGB6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6/tmButtonValue6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7/tmButtonRGB7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7/tmButtonValue7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtonVis1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmSliderVis1
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: BackPaddleRight
+      takeName: Take 001
+      firstFrame: 59
+      lastFrame: 82
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: CAMPER_BOY
+        weight: 1
+      - path: CAMPER_BOY/GEO
+        weight: 1
+      - path: CAMPER_BOY/GEO/Sphere001
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/CTRLS
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase/L_toe
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase/R_toe
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist/L_hand
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01/neck_02
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist/R_hand
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP/L_Arm_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP/L_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP/R_Arm_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP/R_pvCtrl_GRP
+        weight: 1
+      - path: nurbsCircle1
+        weight: 1
+      - path: nurbsCircle1/Paddle_A
+        weight: 1
+      - path: tmXML1
+        weight: 1
+      - path: tmXML1/tmGroups1
+        weight: 1
+      - path: tmXML1/tmOptions1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1/tmButtonRGB1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1/tmButtonValue1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2/tmButtonRGB2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2/tmButtonValue2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3/tmButtonRGB3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3/tmButtonValue3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4/tmButtonRGB4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4/tmButtonValue4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5/tmButtonRGB5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5/tmButtonValue5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6/tmButtonRGB6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6/tmButtonValue6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7/tmButtonRGB7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7/tmButtonValue7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtonVis1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmSliderVis1
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: BackPaddleLeft
+      takeName: Take 001
+      firstFrame: 88
+      lastFrame: 110
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: CAMPER_BOY
+        weight: 1
+      - path: CAMPER_BOY/GEO
+        weight: 1
+      - path: CAMPER_BOY/GEO/Sphere001
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/CTRLS
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase/L_toe
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase/R_toe
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist/L_hand
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01/neck_02
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist/R_hand
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP/L_Arm_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP/L_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP/R_Arm_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP/R_pvCtrl_GRP
+        weight: 1
+      - path: nurbsCircle1
+        weight: 1
+      - path: nurbsCircle1/Paddle_A
+        weight: 1
+      - path: tmXML1
+        weight: 1
+      - path: tmXML1/tmGroups1
+        weight: 1
+      - path: tmXML1/tmOptions1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1/tmButtonRGB1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1/tmButtonValue1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2/tmButtonRGB2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2/tmButtonValue2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3/tmButtonRGB3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3/tmButtonValue3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4/tmButtonRGB4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4/tmButtonValue4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5/tmButtonRGB5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5/tmButtonValue5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6/tmButtonRGB6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6/tmButtonValue6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7/tmButtonRGB7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7/tmButtonValue7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtonVis1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmSliderVis1
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: AttackRight
+      takeName: Take 001
+      firstFrame: 114
+      lastFrame: 129
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: CAMPER_BOY
+        weight: 1
+      - path: CAMPER_BOY/GEO
+        weight: 1
+      - path: CAMPER_BOY/GEO/Sphere001
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/CTRLS
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase/L_toe
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase/R_toe
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist/L_hand
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01/neck_02
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist/R_hand
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP/L_Arm_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP/L_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP/R_Arm_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP/R_pvCtrl_GRP
+        weight: 1
+      - path: nurbsCircle1
+        weight: 1
+      - path: nurbsCircle1/Paddle_A
+        weight: 1
+      - path: tmXML1
+        weight: 1
+      - path: tmXML1/tmGroups1
+        weight: 1
+      - path: tmXML1/tmOptions1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1/tmButtonRGB1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1/tmButtonValue1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2/tmButtonRGB2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2/tmButtonValue2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3/tmButtonRGB3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3/tmButtonValue3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4/tmButtonRGB4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4/tmButtonValue4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5/tmButtonRGB5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5/tmButtonValue5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6/tmButtonRGB6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6/tmButtonValue6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7/tmButtonRGB7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7/tmButtonValue7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtonVis1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmSliderVis1
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: AttackLeft
+      takeName: Take 001
+      firstFrame: 132
+      lastFrame: 146
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: CAMPER_BOY
+        weight: 1
+      - path: CAMPER_BOY/GEO
+        weight: 1
+      - path: CAMPER_BOY/GEO/Sphere001
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/CTRLS
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase/L_toe
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase/R_toe
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist/L_hand
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01/neck_02
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist/R_hand
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP/L_Arm_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP/L_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP/R_Arm_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP/R_pvCtrl_GRP
+        weight: 1
+      - path: nurbsCircle1
+        weight: 1
+      - path: nurbsCircle1/Paddle_A
+        weight: 1
+      - path: tmXML1
+        weight: 1
+      - path: tmXML1/tmGroups1
+        weight: 1
+      - path: tmXML1/tmOptions1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1/tmButtonRGB1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1/tmButtonValue1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2/tmButtonRGB2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2/tmButtonValue2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3/tmButtonRGB3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3/tmButtonValue3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4/tmButtonRGB4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4/tmButtonValue4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5/tmButtonRGB5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5/tmButtonValue5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6/tmButtonRGB6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6/tmButtonValue6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7/tmButtonRGB7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7/tmButtonValue7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtonVis1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmSliderVis1
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Stunned
+      takeName: Take 001
+      firstFrame: 149
+      lastFrame: 160
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: CAMPER_BOY
+        weight: 1
+      - path: CAMPER_BOY/GEO
+        weight: 1
+      - path: CAMPER_BOY/GEO/Sphere001
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/CTRLS
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/L_thigh/L_knee/L_ankle/L_toeBase/L_toe
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/pelvis/R_thigh/R_knee/R_ankle/R_toeBase/R_toe
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/L_shoulder/L_elbow/L_wrist/L_hand
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/neck_00/neck_01/neck_02
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/JNTS/Root/spine_00/spine_01/spine_02/spine_03/R_shoulder/R_elbow/R_wrist/R_hand
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Arm_pvPos_GRP/L_Arm_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/L_Leg_pvPos_GRP/L_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Arm_pvPos_GRP/R_Arm_pvCtrl_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvAim_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP
+        weight: 1
+      - path: CAMPER_BOY/GLOBAL_SCALE/UTILITIES_DO_NOT_TOUCH/R_Leg_pvPos_GRP/R_pvCtrl_GRP
+        weight: 1
+      - path: nurbsCircle1
+        weight: 1
+      - path: nurbsCircle1/Paddle_A
+        weight: 1
+      - path: tmXML1
+        weight: 1
+      - path: tmXML1/tmGroups1
+        weight: 1
+      - path: tmXML1/tmOptions1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1/tmButtonRGB1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton1/tmButtonValue1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2/tmButtonRGB2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton2/tmButtonValue2
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3/tmButtonRGB3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton3/tmButtonValue3
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4/tmButtonRGB4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton4/tmButtonValue4
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5/tmButtonRGB5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton5/tmButtonValue5
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6/tmButtonRGB6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton6/tmButtonValue6
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7/tmButtonRGB7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtons1/tmButton7/tmButtonValue7
+        weight: 1
+      - path: tmXML1/tmOptions1/tmButtonVis1
+        weight: 1
+      - path: tmXML1/tmOptions1/tmSliderVis1
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
