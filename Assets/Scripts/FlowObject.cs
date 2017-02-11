@@ -14,15 +14,15 @@ class WhirlPool {
 }
 
 [System.Serializable]
-class CurrenObject {
-	public float magnitude = 0;
+class CurrentObject {
+	public float magnitude = 10000;
 }
 
 public class FlowObject : MonoBehaviour {
 	[SerializeField]
 	private WhirlPool whirlpool;
 	[SerializeField]
-	private CurrenObject current;
+	private CurrentObject current;
 
 	private bool isCurrent = false;
 	private bool isWhirlpool = false;
@@ -98,7 +98,8 @@ public class FlowObject : MonoBehaviour {
 			// Only apply ONCE to parent game object
 			Rigidbody[] rigidbodies = thing.GetComponentsInChildren<Rigidbody> ();
 			if (rigidbodies.Length > 0) {
-				rigidbodies [0].AddForce (transform.forward *  current.magnitude);
+                // He's never setting the magnitude for the current here, it is initialized to 0 so no force is being applied :) you just need to calculate a force that isn't 0 to apply to the boat now I think?
+				rigidbodies [0].AddForce (transform.forward *  current.magnitude, ForceMode.Force);
 			}
 		}
 	}
