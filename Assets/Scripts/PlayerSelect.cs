@@ -11,14 +11,14 @@ public class PlayerSelect : MonoBehaviour {
     // Game Objects for toggling active & inactive players.
     [SerializeField] GameObject inText;
     [SerializeField] GameObject outText;
-    [SerializeField] GameObject inCharacter;
-    [SerializeField] GameObject outCharacter;
 
+    Animator animator;
     Player player;
     bool inGame = false;
 
 	// Use this for initialization
 	void Start () {
+        animator = this.GetComponentInChildren<Animator>();
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<LobbyController>();
         player = ReInput.players.GetPlayer(playerID);
 	}
@@ -40,19 +40,19 @@ public class PlayerSelect : MonoBehaviour {
     }
 
     public void EnterGame() {
+
+        animator.SetBool("Selected", true);
         inText.SetActive(true);
         outText.SetActive(false);
-        inCharacter.SetActive(true);
-        outCharacter.SetActive(false);
         gameController.AddPlayer();
         inGame = true;
     }
 
     public void ExitGame() {
+
+        animator.SetBool("Selected", false);
         inText.SetActive(false);
         outText.SetActive(true);
-        inCharacter.SetActive(false);
-        outCharacter.SetActive(true);
         gameController.RemovePlayer();
         inGame = false;
     }
