@@ -164,6 +164,7 @@ public class Boat : MonoBehaviour {
             {
                 respawnPoint = GetRandomPointInCollider(selectedArea as BoxCollider);
             }
+            // need to add capsule collider later; a little more tricky
 
             // get a list of colliders this point (and a safe area around it) overlap with
 
