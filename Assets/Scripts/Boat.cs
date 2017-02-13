@@ -34,9 +34,11 @@ public class Boat : MonoBehaviour {
 
 	void Update () {
 
-		if (flipCheck.position.y < this.transform.position.y && !isFlipped)
+		if (flipCheck.position.y < this.transform.position.y && isFlipped == false)
         {
 			isFlipped = true;
+
+            SetPlayerInput(false);
 
             //// Detach players for the funnies
             //if(player1) player1.transform.SetParent (null);
@@ -48,6 +50,11 @@ public class Boat : MonoBehaviour {
             
             StartCoroutine(Respawn());
 		}
+        else
+        {
+            SetPlayerInput(true);
+            isFlipped = false;
+        }
 	}
 
     public void FlipBoat()
@@ -82,17 +89,23 @@ public class Boat : MonoBehaviour {
             
     }
 
+    void SetPlayerInput(bool value)
+    {
+        foreach (ControllerInput controller in GetComponentsInChildren<ControllerInput>())
+        {
+            controller.enabled = value;
+        }
+    }
+
+
     IEnumerator Respawn()
     {
-        ControllerInput[] controllers = this.GetComponentsInChildren<ControllerInput>();
-
-        //
-        foreach (ControllerInput controller in controllers)
-        {
-            controller.enabled = false;
-        }
-
         yield return new WaitForSeconds(3);
+
+        if(isFlipped == false)
+        {
+            yield break;
+        }
                 
         SphereCollider respawnArea = GameObject.Find("Respawn Area").GetComponent<SphereCollider>();
 
@@ -109,11 +122,6 @@ public class Boat : MonoBehaviour {
         {
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
-        }
-
-        foreach (ControllerInput controller in controllers)
-        {
-            controller.enabled = true;
         }
 
         // GetComponent<TrailRenderer>().Clear();
