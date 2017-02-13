@@ -97,6 +97,103 @@ public class Boat : MonoBehaviour {
         }
     }
 
+    public static Vector3 RandomPointInSphere(SphereCollider sphere)
+    {
+        Vector3 sLocalScale = sphere.transform.localScale;
+        Vector3 spherePosition = sphere.transform.position;
+        spherePosition += new Vector3(sLocalScale.x * sphere.center.x, 0, sLocalScale.z * sphere.center.z);
+
+        Vector3 dimensions = new Vector3(sLocalScale.x * sphere.radius,
+        0,
+        sLocalScale.z * sphere.radius);
+
+        Vector3 newPos = new Vector3(UnityEngine.Random.Range(spherePosition.x - (dimensions.x / 2), spherePosition.x + (dimensions.x / 2)),
+        spherePosition.y,
+        UnityEngine.Random.Range(spherePosition.z - (dimensions.z / 2), spherePosition.z + (dimensions.z / 2)));
+        return newPos;
+    }
+
+    public static Vector3 RandomPointInCapsule(CapsuleCollider capsule)
+    {
+        Vector3 cLocalScale = capsule.transform.localScale;
+        Vector3 cpherePosition = capsule.transform.position;
+        cpherePosition += new Vector3(cLocalScale.x * capsule.center.x, 0, cLocalScale.z * capsule.center.z);
+
+        Vector3 dimensions = new Vector3(cLocalScale.x * capsule.radius,
+        0,
+        cLocalScale.z * capsule.radius);
+
+        Vector3 newPos = new Vector3(UnityEngine.Random.Range(cpherePosition.x - (dimensions.x / 2), cpherePosition.x + (dimensions.x / 2)),
+        cpherePosition.y,
+        UnityEngine.Random.Range(cpherePosition.z - (dimensions.z / 2), cpherePosition.z + (dimensions.z / 2)));
+        return newPos;
+    }
+
+    public static Vector3 RandomPointInBox(BoxCollider box)
+    {
+        Vector3 bLocalScale = box.transform.localScale;
+        Vector3 boxPosition = box.transform.position;
+        boxPosition += new Vector3(bLocalScale.x * box.center.x, 0, bLocalScale.z * box.center.z);
+
+        Vector3 dimensions = new Vector3(bLocalScale.x * box.size.x,
+        0,
+        bLocalScale.z * box.size.z);
+
+        Vector3 newPos = new Vector3(UnityEngine.Random.Range(boxPosition.x - (dimensions.x / 2), boxPosition.x + (dimensions.x / 2)),
+        boxPosition.y,
+        UnityEngine.Random.Range(boxPosition.z - (dimensions.z / 2), boxPosition.z + (dimensions.z / 2)));
+        return newPos;
+    }
+
+    public Vector3 GetRespawnPoint(GameObject respawnAreaObject)
+    {
+        Vector3 respawnPoint = Vector3.zero;
+
+        bool excluded = false;
+
+        Collider[] allRespawnAreas = respawnAreaObject.GetComponents<Collider>();
+
+        int selectedAreaIndex = 0;
+
+        do
+        {
+            Debug.Log("Respawn attempt");
+
+            excluded = false;
+
+            selectedAreaIndex = Random.Range(0, allRespawnAreas.Length);
+
+            Collider selectedArea = allRespawnAreas[selectedAreaIndex];
+            
+            if (selectedArea is SphereCollider)
+            {
+                respawnPoint = RandomPointInSphere(selectedArea as SphereCollider);
+            }
+            else if (selectedArea is BoxCollider)
+            {
+                respawnPoint = RandomPointInBox(selectedArea as BoxCollider);
+            }
+            else if (selectedArea is CapsuleCollider)
+            {
+                respawnPoint = RandomPointInCapsule(selectedArea as CapsuleCollider);
+            }
+
+            Collider[] overlapping = Physics.OverlapSphere(respawnPoint, 0.5f, 0, QueryTriggerInteraction.Collide);
+
+            foreach(Collider col in overlapping)
+            {
+                if (col.gameObject.name.Contains("Exclude"))
+                {
+                    excluded = true; break;
+                }
+            }
+        }
+        while (excluded == true);
+
+        Debug.Log("Spawning in area " + selectedAreaIndex + " of " + (allRespawnAreas.Length-1));
+
+        return respawnPoint;
+    }
 
     IEnumerator Respawn()
     {
@@ -106,29 +203,32 @@ public class Boat : MonoBehaviour {
         {
             yield break;
         }
-                
-        SphereCollider respawnArea = GameObject.Find("Respawn Area").GetComponent<SphereCollider>();
 
-        Vector3 respawnPoint = Random.insideUnitSphere;
-        respawnPoint.Scale(new Vector3(respawnArea.radius, 0, respawnArea.radius));
-        respawnPoint += respawnArea.transform.position;
+        GameObject respawnObject = GameObject.Find("Respawn Area");
 
-        transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        transform.position = respawnPoint;
-        transform.rotation = Quaternion.identity;
-
-        Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb != null)
+        if (respawnObject != null)
         {
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
+            transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            transform.position = GetRespawnPoint(respawnObject);
+            transform.rotation = Quaternion.identity;
+
+            Rigidbody rb = GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+            }
+
+            // GetComponent<TrailRenderer>().Clear();
+
+            StartCoroutine(Invincibility());
+
+            isFlipped = false;
         }
-
-        // GetComponent<TrailRenderer>().Clear();
-
-        StartCoroutine(Invincibility());
-
-        isFlipped = false;
+        else
+        {
+            Debug.Log("FATAL ERROR: Can't respawn; no respawn area found!");
+        }
     }
 
     IEnumerator Invincibility()
