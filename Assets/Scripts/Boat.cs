@@ -149,8 +149,12 @@ public class Boat : MonoBehaviour {
         {
             excludedPoint = false;
 
+            // choose a random collider from the ones contained in Respawn Area
+
             int selectedAreaIndex = Random.Range(0, availableAreas.Length);
             Collider selectedArea = availableAreas[selectedAreaIndex];
+
+            // generate a random point depending on the type of collider it is
 
             if (selectedArea is SphereCollider)
             {
@@ -161,7 +165,11 @@ public class Boat : MonoBehaviour {
                 respawnPoint = GetRandomPointInCollider(selectedArea as BoxCollider);
             }
 
+            // get a list of colliders this point (and a safe area around it) overlap with
+
             Collider[] intersectingColliders = Physics.OverlapSphere(respawnPoint, 1.0f);
+
+            // if the game object for any of these colliders contains Exclude in its name, the point is too close / inside a respawn exclude area
 
             foreach (Collider col in intersectingColliders)
             {
@@ -170,7 +178,7 @@ public class Boat : MonoBehaviour {
         }
         while (excludedPoint == true);
 
-////////// until the point no longer intersects with excluded areas
+////////// until the point no longer intersects with any exclude areas
 
         transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
         transform.position = respawnPoint;
