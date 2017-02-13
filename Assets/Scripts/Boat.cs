@@ -97,21 +97,80 @@ public class Boat : MonoBehaviour {
         }
     }
 
+    static Vector3 GetRandomPointInCollider(SphereCollider collider)
+    {
+        Vector3 result;
+
+        Vector2 unitCircle = Random.insideUnitCircle;
+
+        result = new Vector3(unitCircle.x, 0, unitCircle.y) * collider.radius;
+        result += collider.center + collider.transform.position;
+
+        return result;
+    }
+
+    static Vector3 GetRandomPointInCollider(BoxCollider collider)
+    {
+        Vector3 result;
+
+        Vector2 unitSquare = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+
+        result = new Vector3(unitSquare.x, 0, unitSquare.y);
+        result.Scale(collider.bounds.extents);
+        result += collider.center + collider.transform.position;
+
+        return result;
+    }
 
     IEnumerator Respawn()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(3.0f);
 
-        if(isFlipped == false)
+        if (isFlipped == false)
         {
             yield break;
         }
-                
-        SphereCollider respawnArea = GameObject.Find("Respawn Area").GetComponent<SphereCollider>();
 
-        Vector3 respawnPoint = Random.insideUnitSphere;
-        respawnPoint.Scale(new Vector3(respawnArea.radius, 0, respawnArea.radius));
-        respawnPoint += respawnArea.transform.position;
+        GameObject respawnArea = GameObject.Find("Respawn Area");
+
+        if (respawnArea == null)
+        {
+            Debug.LogError("Cannot respawn; no respawn area available!"); yield break;
+        }
+
+        Collider[] availableAreas = respawnArea.GetComponents<Collider>();
+
+        Vector3 respawnPoint = Vector3.zero;
+        bool excludedPoint = false;
+
+        ////////// do all of this
+
+        do
+        {
+            excludedPoint = false;
+
+            int selectedAreaIndex = Random.Range(0, availableAreas.Length);
+            Collider selectedArea = availableAreas[selectedAreaIndex];
+
+            if (selectedArea is SphereCollider)
+            {
+                respawnPoint = GetRandomPointInCollider(selectedArea as SphereCollider);
+            }
+            else if (selectedArea is BoxCollider)
+            {
+                respawnPoint = GetRandomPointInCollider(selectedArea as BoxCollider);
+            }
+
+            Collider[] intersectingColliders = Physics.OverlapSphere(respawnPoint, 1.0f);
+
+            foreach (Collider col in intersectingColliders)
+            {
+                excludedPoint = excludedPoint || col.gameObject.name.Contains("Exclude");
+            }
+        }
+        while (excludedPoint == true);
+
+////////// until the point no longer intersects with excluded areas
 
         transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
         transform.position = respawnPoint;
