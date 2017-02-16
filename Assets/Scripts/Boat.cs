@@ -45,8 +45,6 @@ public class Boat : MonoBehaviour {
                 player.StartCoroutine("Rumble", 0.5f);
             }
 
-            //player2.GetComponent<ControllerInput>().Rumble(3f);
-
             //// Detach players for the funnies
             //if(player1) player1.transform.SetParent (null);
             //if(player2) player2.transform.SetParent (null);
