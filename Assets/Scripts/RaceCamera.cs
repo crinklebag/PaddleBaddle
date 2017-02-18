@@ -35,7 +35,8 @@ public class RaceCamera : MonoBehaviour {
     /// Targets to keep in camera view
     /// Set in editor
     /// </summary>
-    public Transform[] targets;
+    public GameObject[] targets;
+    [HideInInspector]
     public Vector3 target;
 
     /// <summary>
@@ -44,12 +45,22 @@ public class RaceCamera : MonoBehaviour {
     /// Default is on.
     /// </summary>
     public bool on = true;
+    private bool gate = false;
+    private bool change = false;
 
     /// <summary>
     /// Get the original details of the object before we start
     /// In case we need them later
     /// </summary>
     void Awake()
+    {
+        camSetup();
+    }
+
+    /// <summary>
+    /// Set up the race camera
+    /// </summary>
+    private void camSetup()
     {
         original = new GameObject();
         original = gameObject;
@@ -61,13 +72,12 @@ public class RaceCamera : MonoBehaviour {
     /// Set up the camera to be used
     /// as a dynamic race cam
     /// </summary>
-	void Start ()
+    void Start ()
     {
-        target = findCameraTarget(); // Find singular camera target
+        findCameraTarget(); // Find singular camera target
         myCam.orthographic = true;
         myCam.orthographicSize = 20;
     }
-
 
     /// <summary>
     /// Resizes camera to fit all targets
@@ -80,35 +90,50 @@ public class RaceCamera : MonoBehaviour {
         myCam.orthographicSize += Time.deltaTime * sizeRate * mod;
     }
 
-    private void stepTo(Transform camTarget)
-    {
-        transform.position = Vector3.Lerp(camTarget.position, transform.position, Time.deltaTime * moveSpeed);
-    }
-
     /// <summary>
     /// Finds a weighted center of all targets 
     /// </summary>
-    /// <returns>Position @ y = 50</returns>
-    private Vector3 findCameraTarget()
+    private void findCameraTarget()
     {
         float sumX = 0;
         //float sumY = 0;
         float sumZ = 0;
         int numSteps = 0;
 
-        foreach(Transform piece in targets)
+        foreach(GameObject piece in targets)
         {
+            Debug.Log(piece.transform.position);
             ++numSteps;
-            sumX += piece.position.x;
-            //sumY += piece.position.y;
-            sumZ += piece.position.z;
+            sumX += piece.transform.position.x;
+            //sumY += piece.transform.position.y;
+            sumZ += piece.transform.position.z;
         }
 
-        return new Vector3(sumX / numSteps, 50, sumZ / numSteps);
+        target = new Vector3(sumX / numSteps, 50, sumZ / numSteps);
     }
 
     // Update is called once per frame
-    void Update () {
-		
-	}
+    void Update ()
+    {
+        // Is the gate open or closed?
+        gate = on && change;
+
+        if (gate) // is open
+        {
+            change = !change; // close the gate
+
+            if (on)
+            { camSetup(); } // set up race camera
+            else 
+            { myCam = original.GetComponent<Camera>(); } //reset state of camera
+        }
+
+        if (on)
+        {
+            findCameraTarget();
+            transform.position = Vector3.MoveTowards(target,
+                transform.position, Time.deltaTime * moveSpeed); 
+            resize();
+        }
+    }
 }
