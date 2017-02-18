@@ -19,17 +19,19 @@ public class RaceCamera : MonoBehaviour {
     /// Serialized private vars to adjust camera behaviour in editor
     /// </summary>
     [SerializeField]
-    private float sizeRate = 2;
-    [SerializeField]
-    private float pxPadding = 150;
+    private float sizeRate = 0.5f;
+    //[SerializeField]
+    //private float pxPadding = 150;
     [SerializeField]
     private float minSize = 10;
     [SerializeField]
     private float maxSize = 100;
     [SerializeField]
-    private float moveSpeed = 10;
+    private float moveSpeed = 3;
     [SerializeField]
     private float rHeight = 50;
+    [SerializeField]
+    private float frac = 1;
 
     /// <summary>
     /// Targets to keep in camera view
@@ -66,6 +68,7 @@ public class RaceCamera : MonoBehaviour {
         original = gameObject;
 
         myCam = gameObject.GetComponent<Camera>();
+        myCam.orthographic = true;
     }
 
     /// <summary>
@@ -74,9 +77,8 @@ public class RaceCamera : MonoBehaviour {
     /// </summary>
     void Start ()
     {
-        findCameraTarget(); // Find singular camera target
-        myCam.orthographic = true;
-        myCam.orthographicSize = 20;
+        if (on)
+        { camSetup(); }
     }
 
     /// <summary>
@@ -85,9 +87,9 @@ public class RaceCamera : MonoBehaviour {
     /// </summary>
     private void resize()
     {
-        float mod = 1;
-
-        myCam.orthographicSize += Time.deltaTime * sizeRate * mod;
+        float distance = Vector3.Distance(targets[0].transform.position, targets[1].transform.position);
+        myCam.orthographicSize = Mathf.Clamp((myCam.orthographicSize + ((frac * distance) - myCam.orthographicSize) * Time.deltaTime * sizeRate),
+            minSize, maxSize);
     }
 
     /// <summary>
@@ -102,7 +104,6 @@ public class RaceCamera : MonoBehaviour {
 
         foreach(GameObject piece in targets)
         {
-            Debug.Log(piece.transform.position);
             ++numSteps;
             sumX += piece.transform.position.x;
             //sumY += piece.transform.position.y;
@@ -112,7 +113,13 @@ public class RaceCamera : MonoBehaviour {
         target = new Vector3(sumX / numSteps, 50, sumZ / numSteps);
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Determine if the script should run,
+    /// reset camera,
+    /// or set up race cam again.
+    /// 
+    /// Then do that.
+    /// </summary>
     void Update ()
     {
         // Is the gate open or closed?
