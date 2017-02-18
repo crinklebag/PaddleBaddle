@@ -8,6 +8,7 @@ public class Boat : MonoBehaviour {
 	[SerializeField] GameObject player1;
 	[SerializeField] GameObject player2;
 	[SerializeField] Transform flipCheck;
+    [SerializeField] TrailRenderer trail;
     
 	// Information for powerups
 	bool isFlipped = false;
@@ -21,35 +22,45 @@ public class Boat : MonoBehaviour {
 
     private float invincibileBlink = 0.2f;
 
+    private GameController.Modes gameMode;
+
     // Use this for initialization
 	void Start ()
     {
         meshRenderer = GetComponent<MeshRenderer>();
+        // Check what the gameMode is
+        gameMode = GameObject.Find("GameController").GetComponent<GameController>().mode;
     }
 
 	void Update () {
 
-		if (flipCheck.position.y < this.transform.position.y && !isFlipped)
+		if (flipCheck.position.y < this.transform.position.y && isFlipped == false)
         {
 			isFlipped = true;
 
+            SetPlayerInput(false);
+            ControllerInput[] players = GetComponents<ControllerInput>();
+
+            foreach (var player in players)
+            {
+                player.StartCoroutine("Rumble", 0.5f);
+            }
 
             //// Detach players for the funnies
             //if(player1) player1.transform.SetParent (null);
             //if(player2) player2.transform.SetParent (null);
 
-            // Send data to game controller
-            if (isTeam1)
-            {
-				GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(1,1);
-			}
-			else
-            {
-                GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(0,1);
-			}
+            // Send data to game controller if it's relevant to the gameMode
+            if (gameMode == GameController.Modes.Flip)
+                Score();
             
             StartCoroutine(Respawn());
 		}
+        else
+        {
+            SetPlayerInput(true);
+            isFlipped = false;
+        }
 	}
 
     public void FlipBoat()
@@ -62,26 +73,123 @@ public class Boat : MonoBehaviour {
         }
     }
 
+    void Score()
+    {
+        if (isTeam1)
+        {
+            GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(1, 1);
+        }
+        else
+        {
+            GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(0, 1);
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Coin") && gameMode == GameController.Modes.Pickup)
+        {
+            Score();
+            Destroy(other.gameObject); // Don't pick up twice
+        }
+            
+    }
+
+    void SetPlayerInput(bool value)
+    {
+        foreach (ControllerInput controller in GetComponentsInChildren<ControllerInput>())
+        {
+            controller.enabled = value;
+        }
+    }
+
+    static Vector3 GetRandomPointInCollider(SphereCollider collider)
+    {
+        Vector3 result;
+
+        Vector2 unitCircle = Random.insideUnitCircle;
+
+        result = new Vector3(unitCircle.x, 0, unitCircle.y) * collider.radius;
+        result += collider.center + collider.transform.position;
+
+        return result;
+    }
+
+    static Vector3 GetRandomPointInCollider(BoxCollider collider)
+    {
+        Vector3 result;
+
+        Vector2 unitSquare = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+
+        result = new Vector3(unitSquare.x, 0, unitSquare.y);
+        result.Scale(collider.bounds.extents);
+        result += collider.center + collider.transform.position;
+
+        return result;
+    }
+
     IEnumerator Respawn()
     {
-        ControllerInput[] controllers = this.GetComponentsInChildren<ControllerInput>();
+        yield return new WaitForSeconds(3.0f);
 
-        //
-        foreach (ControllerInput controller in controllers)
+        if (isFlipped == false)
         {
-            controller.enabled = false;
+            yield break;
         }
 
-        yield return new WaitForSeconds(3);
-                
-        SphereCollider respawnArea = GameObject.Find("Respawn Area").GetComponent<SphereCollider>();
+        GameObject respawnArea = GameObject.Find("Respawn Area");
 
-        Vector3 respawnPoint = Random.insideUnitSphere;
-        respawnPoint.Scale(new Vector3(respawnArea.radius, 0, respawnArea.radius));
-        respawnPoint += respawnArea.transform.position;
+        if (respawnArea == null)
+        {
+            Debug.LogError("Cannot respawn; no respawn area available!"); yield break;
+        }
 
+        Collider[] availableAreas = respawnArea.GetComponents<Collider>();
+
+        Vector3 respawnPoint = Vector3.zero;
+        bool excludedPoint = false;
+
+        ////////// do all of this
+
+        do
+        {
+            excludedPoint = false;
+
+            // choose a random collider from the ones contained in Respawn Area
+
+            int selectedAreaIndex = Random.Range(0, availableAreas.Length);
+            Collider selectedArea = availableAreas[selectedAreaIndex];
+
+            // generate a random point depending on the type of collider it is
+
+            if (selectedArea is SphereCollider)
+            {
+                respawnPoint = GetRandomPointInCollider(selectedArea as SphereCollider);
+            }
+            else if (selectedArea is BoxCollider)
+            {
+                respawnPoint = GetRandomPointInCollider(selectedArea as BoxCollider);
+            }
+            // need to add capsule collider later; a little more tricky
+
+            // get a list of colliders this point (and a safe area around it) overlap with
+
+            Collider[] intersectingColliders = Physics.OverlapSphere(respawnPoint, 1.0f);
+
+            // if the game object for any of these colliders contains Exclude in its name, the point is too close / inside a respawn exclude area
+
+            foreach (Collider col in intersectingColliders)
+            {
+                excludedPoint = excludedPoint || col.gameObject.name.Contains("Exclude");
+            }
+        }
+        while (excludedPoint == true);
+
+////////// until the point no longer intersects with any exclude areas
+
+        transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
         transform.position = respawnPoint;
-        transform.rotation = Quaternion.Euler(-90, 0, 0);
+        transform.rotation = Quaternion.identity;
 
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
@@ -90,12 +198,7 @@ public class Boat : MonoBehaviour {
             rb.angularVelocity = Vector3.zero;
         }
 
-        foreach (ControllerInput controller in controllers)
-        {
-            controller.enabled = true;
-        }
-
-        GetComponent<TrailRenderer>().Clear();
+        // GetComponent<TrailRenderer>().Clear();
 
         StartCoroutine(Invincibility());
 

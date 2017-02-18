@@ -14,15 +14,15 @@ class WhirlPool {
 }
 
 [System.Serializable]
-class CurrenObject {
-	public float magnitude = 0;
+class CurrentObject {
+	public float magnitude = 10000;
 }
 
 public class FlowObject : MonoBehaviour {
 	[SerializeField]
 	private WhirlPool whirlpool;
 	[SerializeField]
-	private CurrenObject current;
+	private CurrentObject current;
 
 	private bool isCurrent = false;
 	private bool isWhirlpool = false;
@@ -98,7 +98,8 @@ public class FlowObject : MonoBehaviour {
 			// Only apply ONCE to parent game object
 			Rigidbody[] rigidbodies = thing.GetComponentsInChildren<Rigidbody> ();
 			if (rigidbodies.Length > 0) {
-				rigidbodies [0].AddForce (transform.forward *  current.magnitude);
+                
+				rigidbodies [0].AddForce (transform.forward *  current.magnitude, ForceMode.Force);
 			}
 		}
 	}

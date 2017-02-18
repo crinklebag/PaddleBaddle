@@ -11,40 +11,53 @@ public class PlayerSelect : MonoBehaviour {
     // Game Objects for toggling active & inactive players.
     [SerializeField] GameObject inText;
     [SerializeField] GameObject outText;
-    [SerializeField] GameObject inCharacter;
-    [SerializeField] GameObject outCharacter;
 
+    Animator animator;
     Player player;
+    bool inGame = false;
 
 	// Use this for initialization
 	void Start () {
+        animator = this.GetComponentInChildren<Animator>();
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<LobbyController>();
         player = ReInput.players.GetPlayer(playerID);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (player.GetButtonDown("Attack"))
-        {
-            if (outText.activeSelf)
-            {
-                inText.SetActive(true);
-                outText.SetActive(false);
-                inCharacter.SetActive(true);
-                outCharacter.SetActive(false);
-                gameController.AddPlayer();
+        if (gameController.CanSelectCharacter()) {
+            if (player.GetButtonDown("Attack") && gameController.CanInput())  {
+                if (outText.activeSelf) {
+                    EnterGame();
+                }
+            }
+            if (player.GetButtonDown("Shove") && gameController.CanInput()) {
+                if (inText.activeSelf) {
+                    ExitGame();
+                }
             }
         }
-        if (player.GetButtonDown("Back"))
-        {
-            if (inText.activeSelf)
-            {
-                inText.SetActive(false);
-                outText.SetActive(true);
-                inCharacter.SetActive(false);
-                outCharacter.SetActive(true);
-                gameController.RemovePlayer();
-            }
-        }
+    }
+
+    public void EnterGame() {
+
+        animator.SetBool("Selected", true);
+        inText.SetActive(true);
+        outText.SetActive(false);
+        gameController.AddPlayer();
+        inGame = true;
+    }
+
+    public void ExitGame() {
+
+        animator.SetBool("Selected", false);
+        inText.SetActive(false);
+        outText.SetActive(true);
+        gameController.RemovePlayer();
+        inGame = false;
+    }
+
+    public bool IsInGame() {
+        return inGame;
     }
 }
