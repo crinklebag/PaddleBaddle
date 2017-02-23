@@ -18,6 +18,7 @@ public class Statistics : MonoBehaviour {
         firstPlayer = ReInput.players.GetPlayer(0);
         //Select the global game object to use its variables.
         variables = GameObject.FindGameObjectWithTag("Global");
+
         TeamOneScore = variables.GetComponent<GlobalVariables>().TeamOnePoints;
         TeamTwoScore = variables.GetComponent<GlobalVariables>().TeamTwoPoints;
         //Confirming the variables were passed from the previous scene.
