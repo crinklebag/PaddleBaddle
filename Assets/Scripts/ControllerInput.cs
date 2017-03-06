@@ -38,37 +38,25 @@ public class ControllerInput : MonoBehaviour {
     Player player;
 	GameObject boat;
 	Boat boatInfo;
-    Animator paddleAnimator;
-	float angleTraversed = 0;
-	float previousAngle = -1;
+
     float paddleRotationTimer = 0;
-    float lastPaddleAngle = 0;
+
     int dir = 0;
+
     bool canPaddle = true;
     bool taunting = false;
+
 	System.TimeSpan timeStartedRotation;
 	List<int> quadrantsHit = new List<int>();
-    Quaternion initRot;
+
 	// This is a dictionary that stores string keys and functions
 	Dictionary<string, System.Action> powerupActions = new Dictionary<string, System.Action> ();
-
-    Vector3 startPosPaddle;
-    Vector3 startRotPaddle;
-    Vector3 startAnimPaddlePos;
-    Quaternion startAnimPaddleRot;
 
 	void Awake () {
         // FindUI();
         player = ReInput.players.GetPlayer (playerID);
 		boat = this.GetComponentInParent<Boat> ().gameObject;
-		boatInfo = boat.GetComponent<Boat> ();
-        initRot = paddle.transform.localRotation;
-        
-        // Initialize Paddle Variables
-        startPosPaddle = paddle.transform.localPosition;
-        paddleAnimator = paddle.transform.GetComponentInParent<Animator>();
-        startAnimPaddlePos = paddle.transform.GetComponentInParent<Transform>().localPosition;
-        startAnimPaddleRot = paddle.transform.GetComponentInParent<Transform>().localRotation;
+		boatInfo = boat.GetComponent<Boat> ();       
 
 		// Manually adding all of the functions to the dictionary
 		powerupActions.Add ("speed", speedBoost);
@@ -152,7 +140,6 @@ public class ControllerInput : MonoBehaviour {
                 if (player.GetButtonDown("Taunt") && !taunting)
                 {
                     taunting = true;
-                    paddleAnimator.SetBool("taunting", true);
                     StartCoroutine(StopTauntAnim());
                 }
 
@@ -181,9 +168,6 @@ public class ControllerInput : MonoBehaviour {
     {
         yield return new WaitForSeconds(1f);
         taunting = false;
-        paddleAnimator.SetBool("taunting", false);
-        paddle.transform.GetComponentInParent<Transform>().localPosition = startAnimPaddlePos;
-        paddle.transform.GetComponentInParent<Transform>().localRotation = startAnimPaddleRot;
     }
 
     /// <summary>
@@ -204,8 +188,6 @@ public class ControllerInput : MonoBehaviour {
     {
         if (!canPaddle)
         {
-            paddle.transform.RotateAround(paddlePivot.transform.position, paddlePivot.transform.right * (dir * -1), paddleRoationSpeed * Time.deltaTime);
-            paddle.transform.localRotation = initRot;
             paddleRotationTimer += paddleRoationSpeed * Time.deltaTime;
             if (paddleRotationTimer >= 360)
             {
@@ -294,8 +276,7 @@ public class ControllerInput : MonoBehaviour {
 
             boat.transform.GetComponentInChildren<Rigidbody>().AddRelativeTorque(-paddleRotationForce * directionOfRotation * Vector3.up, ForceMode.Force);
         }
-
-        lastPaddleAngle = angle;
+        
     }
 
     void CanAttack()
