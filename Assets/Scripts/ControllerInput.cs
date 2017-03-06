@@ -13,7 +13,6 @@ public class ControllerInput : MonoBehaviour {
     [Header("Parameters")]
     [SerializeField] int playerID;
     [SerializeField] GameObject paddle;
-    [SerializeField] GameObject paddlePivot;
     [SerializeField] float maxDeltaAngle = 30f;
     [SerializeField] float paddleRotationForce = 5000f;
     [SerializeField] float paddleTorque = 30000f;
@@ -67,7 +66,7 @@ public class ControllerInput : MonoBehaviour {
 	void OnDrawGizmosSelected() {
         
 		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere (paddle.transform.position, attackRadius);
+		Gizmos.DrawWireSphere (GetPaddlePosition(), attackRadius);
 	}
 
     void FindUI() {
@@ -102,14 +101,12 @@ public class ControllerInput : MonoBehaviour {
                 {
                     if (player.GetButtonDown("+Right Paddle"))
                     {
-                        paddlePivot.transform.localScale = new Vector3(1, 1, 1);
                         //Go Forward
                         dir = 1;
                         MoveCanoe();
                     }
                     else if (player.GetButtonDown("-Right Paddle"))
                     {
-                        paddlePivot.transform.localScale = new Vector3(1, 1, 1);
                         // Go Backward
                         dir = -1;
                         MoveCanoe();
@@ -117,14 +114,12 @@ public class ControllerInput : MonoBehaviour {
                     }
                     else if (player.GetButtonDown("+Left Paddle"))
                     {
-                        paddlePivot.transform.localScale = new Vector3(-1, 1, 1);
                         //Go Forward
                         dir = 1;
                         MoveCanoe();
                     }
                     else if (player.GetButtonDown("-Left Paddle"))
                     {
-                        paddlePivot.transform.localScale = new Vector3(-1, 1, 1);
                         // Go Backward
                         dir = -1;
                         MoveCanoe();
@@ -177,11 +172,11 @@ public class ControllerInput : MonoBehaviour {
     /// <returns>The previous side the paddle was on.</returns>
     int SetPaddleSide(int side)
     {
-        int oldSide = Mathf.RoundToInt(paddlePivot.transform.localScale.x);
+        int oldDir = dir;
 
-        paddlePivot.transform.localScale = new Vector3(side, 1, 1);
+        dir = side;
 
-        return oldSide;
+        return oldDir;
     }
 
     void RotatePaddle()
@@ -205,7 +200,7 @@ public class ControllerInput : MonoBehaviour {
         Vector3 finalForwardForce = dir * paddleForwardForce * boat.transform.forward * slowMod;
         boat.transform.GetComponentInChildren<Rigidbody>().AddForceAtPosition(finalForwardForce, boat.transform.position, ForceMode.Impulse);
 
-        float horizontalDirection = Mathf.Sign(dir * paddle.transform.localPosition.x * paddlePivot.transform.localScale.x);
+        float horizontalDirection = Mathf.Sign(dir * paddle.transform.localPosition.x);
         Vector3 finalHorizontalForce = horizontalDirection * paddleTorque * boat.transform.up;
         boat.transform.GetComponentInChildren<Rigidbody>().AddTorque(finalHorizontalForce, ForceMode.Impulse);
 
@@ -284,7 +279,7 @@ public class ControllerInput : MonoBehaviour {
         // Debug.Log("Can Attack");
         attackDisplay.SetActive(false);
 
-        Collider[] hitColliders = Physics.OverlapSphere(paddle.transform.position, attackRadius);
+        Collider[] hitColliders = Physics.OverlapSphere(GetPaddlePosition(), attackRadius);
         for (int i = 0; i < hitColliders.Length; i++)
         {
             if (hitColliders[i].gameObject != this.gameObject && hitColliders[i].GetComponent<Boat>())
@@ -299,7 +294,7 @@ public class ControllerInput : MonoBehaviour {
         // Check if attacking
         if (player.GetButtonDown("Attack")) {
 
-            Collider[] hitColliders = Physics.OverlapSphere(paddle.transform.position, attackRadius);
+            Collider[] hitColliders = Physics.OverlapSphere(GetPaddlePosition(), attackRadius);
 
             for (int i = 0; i < hitColliders.Length; i++)
             {
@@ -309,7 +304,7 @@ public class ControllerInput : MonoBehaviour {
 
                     if (otherBoat.Invincible == false)
                     {
-                        Vector3 differenceVector = otherBoat.transform.position - paddle.transform.position;
+                        Vector3 differenceVector = otherBoat.transform.position - GetPaddlePosition();
 
                     	hitColliders[i].GetComponent<Rigidbody>().AddForceAtPosition(attackForce * Vector3.down, differenceVector, ForceMode.Impulse);
                     	Debug.Log("Attack force applied: "+ attackForce);
@@ -330,7 +325,7 @@ public class ControllerInput : MonoBehaviour {
         if (player.GetButtonDown("Shove"))
         {
 
-            Collider[] hitColliders = Physics.OverlapSphere(paddle.transform.position, attackRadius);
+            Collider[] hitColliders = Physics.OverlapSphere(GetPaddlePosition(), attackRadius);
 
             for (int i = 0; i < hitColliders.Length; i++)
             {
@@ -454,5 +449,11 @@ public class ControllerInput : MonoBehaviour {
 		}
 	}
 
+    Vector3 GetPaddlePosition()
+    {
+        Bounds paddleBounds = paddle.GetComponentInChildren<MeshFilter>().sharedMesh.bounds;
+
+        return paddle.transform.position - paddle.transform.up.normalized * paddleBounds.extents.z * 0.33f;
+    }
 
 }
