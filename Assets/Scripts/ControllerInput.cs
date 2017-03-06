@@ -9,6 +9,7 @@ public class ControllerInput : MonoBehaviour {
     PlayerUI playerUIController;
 
     [Header("Parameters")]
+    [SerializeField] GameObject playerCharacter;
     [SerializeField] int playerID;
     [SerializeField] GameObject paddle;
     [SerializeField] float maxDeltaAngle = 30f;
@@ -41,12 +42,12 @@ public class ControllerInput : MonoBehaviour {
     /// <summary>
     /// Represents the left and right facing of the paddle. -1 for left, 1 for right.
     /// </summary>
-    int currentPaddleSide;
+    int previousPaddleSide;
 
     /// <summary>
     /// Represents the current moving direction of the paddle. -1 for backwards, 0 for stationary, 1 for forwards.
     /// </summary>
-    int currentPaddleDirection;
+    int previousPaddleDirection;
 
     bool canPaddle = true;
     bool taunting = false;
@@ -103,74 +104,27 @@ public class ControllerInput : MonoBehaviour {
 
             if (gameController != null && gameController.RoundStarted)
             {                                            
-                if (canPaddle && !taunting)
-                {
-                    if (player.GetButtonDown("+Right Paddle"))
-                    {
-                        //Go Forward
-                        currentPaddleSide = 1;
-                        currentPaddleDirection = 1;
-                        MoveCanoe();
-                    }
-                    else if (player.GetButtonDown("-Right Paddle"))
-                    {
-                        // Go Backward
-                        currentPaddleSide = 1;
-                        currentPaddleDirection = -1;
-                        MoveCanoe();
-
-                    }
-                    else if (player.GetButtonDown("+Left Paddle"))
-                    {
-                        //Go Forward
-                        currentPaddleSide = -1;
-                        currentPaddleDirection = 1;
-                        MoveCanoe();
-                    }
-                    else if (player.GetButtonDown("-Left Paddle"))
-                    {
-                        // Go Backward
-                        currentPaddleSide = -1;
-                        currentPaddleDirection = -1;
-                        MoveCanoe();
-                    }
-                }
-                                
-		        // Hit the powerup button && the boat has a powerup active
-		        if (player.GetButtonDown ("Powerup") && boatInfo.hasPowerUp) 
-		        {
-		        	powerupActions [boatInfo.powerUpType] (); // call the function that matches the string the boat has
-		        }
-                                
-                if (player.GetButtonDown("Taunt") && !taunting)
-                {
-                    taunting = true;
-                    StartCoroutine(StopTauntAnim());
-                }
-
-                float rightAxis = player.GetAxis("Horizontal 1");
-
-                if(rightAxis > 0.34f)
-                {
-                    SetPaddleSide(1);
-                }
-                else if(rightAxis < -0.34f)
-                {
-                    SetPaddleSide(-1);
-                }
-
-                CheckForJoystickRotation();
+                HandleInput();
                 RotatePaddle();
                 CanAttack();
                 Attack();
                 Shove();
 
+                if (playerCharacter)
+                {
+                    Animator playerAnimator = playerCharacter.GetComponent<Animator>();
+                    if (playerAnimator)
+                    {
+                        playerAnimator.SetBool("Stunned", stunned || taunting);
+                    }
+                }                
             }
         }      
 	}
 
-    IEnumerator StopTauntAnim()
+    IEnumerator Taunt()
     {
+        taunting = true;
         yield return new WaitForSeconds(1f);
         taunting = false;
     }
@@ -182,9 +136,9 @@ public class ControllerInput : MonoBehaviour {
     /// <returns>The previous side the paddle was on.</returns>
     int SetPaddleSide(int side)
     {
-        int oldPaddleSide = currentPaddleSide;
+        int oldPaddleSide = previousPaddleSide;
 
-        currentPaddleSide = side;
+        previousPaddleSide = side;
 
         return oldPaddleSide;
     }
@@ -202,29 +156,102 @@ public class ControllerInput : MonoBehaviour {
         }
     }
 
-    void MoveCanoe() {
+    void MoveCanoe(int paddleSide, int paddleDirection)
+    {
         // Add force to boat by the paddle
         Debug.Log("Adding Forward Force");
         canPaddle = false;
 
-        Vector3 finalForwardForce = currentPaddleDirection * paddleForwardForce * boat.transform.forward * slowMod;
+        Vector3 finalForwardForce = paddleDirection * paddleForwardForce * boat.transform.forward * slowMod;
         boat.transform.GetComponentInChildren<Rigidbody>().AddForceAtPosition(finalForwardForce, boat.transform.position, ForceMode.Impulse);
         
-        Vector3 finalHorizontalForce = -currentPaddleSide * paddleTorque * boat.transform.up;
+        Vector3 finalHorizontalForce = -paddleSide * paddleTorque * boat.transform.up;
         boat.transform.GetComponentInChildren<Rigidbody>().AddTorque(finalHorizontalForce, ForceMode.Impulse);
 
+        previousPaddleSide = paddleSide;
+        previousPaddleDirection = paddleDirection;
+
+        if (playerCharacter)
+        {
+            Animator playerAnimator = playerCharacter.GetComponent<Animator>();
+
+            if (playerAnimator)
+            {
+                playerAnimator.SetInteger("Paddle Side", previousPaddleSide);
+                if(paddleDirection > 0)
+                {
+                    playerAnimator.SetTrigger("Paddle Forward");
+                }
+                else if (paddleDirection < 0)
+                {
+                    playerAnimator.SetTrigger("Paddle Backward");
+                }
+            }
+        }
     }
 
-    void CheckForJoystickRotation () {
+    void HandleInput ()
+    {
+        if (canPaddle && !taunting)
+        {
+            if (player.GetButtonDown("+Right Paddle"))
+            {
+                //Go Forward
+                MoveCanoe(1,1);
+            }
+            else if (player.GetButtonDown("-Right Paddle"))
+            {
+                // Go Backward
+                MoveCanoe(1,-1);
 
-        float verticalValue = player.GetAxis("Vertical");
-        float horizontalValue = player.GetAxis("Horizontal");
+            }
+            else if (player.GetButtonDown("+Left Paddle"))
+            {
+                //Go Forward
+                MoveCanoe(-1,1);
+            }
+            else if (player.GetButtonDown("-Left Paddle"))
+            {
+                // Go Backward
+                MoveCanoe(-1,-1);
+            }
+            else
+            {
+                // Don't move
+                previousPaddleDirection = 0;
+            }
+        }
 
-        float angle = Mathf.Atan2(verticalValue, horizontalValue) * Mathf.Rad2Deg;
+        // Hit the powerup button && the boat has a powerup active
+        if (player.GetButtonDown("Powerup") && boatInfo.hasPowerUp)
+        {
+            powerupActions[boatInfo.powerUpType](); // call the function that matches the string the boat has
+        }
+
+        if (player.GetButtonDown("Taunt") && !taunting)
+        {
+            StartCoroutine(Taunt());
+        }
+
+        float rightStickHorizontal = player.GetAxis("Horizontal 1");
+
+        if (rightStickHorizontal > 0.34f)
+        {
+            SetPaddleSide(1);
+        }
+        else if (rightStickHorizontal < -0.34f)
+        {
+            SetPaddleSide(-1);
+        }
+
+        //
+
+        float leftStickVertical = player.GetAxis("Vertical");
+        float leftStickHorizontal = player.GetAxis("Horizontal");
+
+        float angle = Mathf.Atan2(leftStickVertical, leftStickHorizontal) * Mathf.Rad2Deg;
         if (angle < 0) { angle += 360; }
-
-        // Debug.Log("Angle" + angle);
-
+        
         // Find what quadrant has been hit and apply a force accordingly
         if (angle >= 0 && angle < 90) {
             if (!quadrantsHit.Contains(1)) {
@@ -244,6 +271,7 @@ public class ControllerInput : MonoBehaviour {
             }
         }
 
+        //
         if (quadrantsHit.Contains(1) && quadrantsHit.Contains(2) &&
                quadrantsHit.Contains(3) && quadrantsHit.Contains(4))
         {
@@ -314,6 +342,8 @@ public class ControllerInput : MonoBehaviour {
 
                     if (otherBoat.Invincible == false)
                     {
+                        playerCharacter.GetComponent<Animator>().SetTrigger("Attacking");
+
                         Vector3 differenceVector = otherBoat.transform.position - GetPaddlePosition();
 
                     	hitColliders[i].GetComponent<Rigidbody>().AddForceAtPosition(attackForce * Vector3.down, differenceVector, ForceMode.Impulse);
