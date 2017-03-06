@@ -5,8 +5,6 @@ using System.Collections.Generic;
 
 public class ControllerInput : MonoBehaviour {
 
-    enum PaddleSide { Left, Right };
-
     [Header("Player UI Reference")]
     PlayerUI playerUIController;
 
@@ -40,7 +38,15 @@ public class ControllerInput : MonoBehaviour {
 
     float paddleRotationTimer = 0;
 
-    int dir = 0;
+    /// <summary>
+    /// Represents the left and right facing of the paddle. -1 for left, 1 for right.
+    /// </summary>
+    int currentPaddleSide;
+
+    /// <summary>
+    /// Represents the current moving direction of the paddle. -1 for backwards, 0 for stationary, 1 for forwards.
+    /// </summary>
+    int currentPaddleDirection;
 
     bool canPaddle = true;
     bool taunting = false;
@@ -102,26 +108,30 @@ public class ControllerInput : MonoBehaviour {
                     if (player.GetButtonDown("+Right Paddle"))
                     {
                         //Go Forward
-                        dir = 1;
+                        currentPaddleSide = 1;
+                        currentPaddleDirection = 1;
                         MoveCanoe();
                     }
                     else if (player.GetButtonDown("-Right Paddle"))
                     {
                         // Go Backward
-                        dir = -1;
+                        currentPaddleSide = 1;
+                        currentPaddleDirection = -1;
                         MoveCanoe();
 
                     }
                     else if (player.GetButtonDown("+Left Paddle"))
                     {
                         //Go Forward
-                        dir = 1;
+                        currentPaddleSide = -1;
+                        currentPaddleDirection = 1;
                         MoveCanoe();
                     }
                     else if (player.GetButtonDown("-Left Paddle"))
                     {
                         // Go Backward
-                        dir = -1;
+                        currentPaddleSide = -1;
+                        currentPaddleDirection = -1;
                         MoveCanoe();
                     }
                 }
@@ -172,11 +182,11 @@ public class ControllerInput : MonoBehaviour {
     /// <returns>The previous side the paddle was on.</returns>
     int SetPaddleSide(int side)
     {
-        int oldDir = dir;
+        int oldPaddleSide = currentPaddleSide;
 
-        dir = side;
+        currentPaddleSide = side;
 
-        return oldDir;
+        return oldPaddleSide;
     }
 
     void RotatePaddle()
@@ -197,11 +207,10 @@ public class ControllerInput : MonoBehaviour {
         Debug.Log("Adding Forward Force");
         canPaddle = false;
 
-        Vector3 finalForwardForce = dir * paddleForwardForce * boat.transform.forward * slowMod;
+        Vector3 finalForwardForce = currentPaddleDirection * paddleForwardForce * boat.transform.forward * slowMod;
         boat.transform.GetComponentInChildren<Rigidbody>().AddForceAtPosition(finalForwardForce, boat.transform.position, ForceMode.Impulse);
-
-        float horizontalDirection = Mathf.Sign(dir * paddle.transform.localPosition.x);
-        Vector3 finalHorizontalForce = horizontalDirection * paddleTorque * boat.transform.up;
+        
+        Vector3 finalHorizontalForce = -currentPaddleSide * paddleTorque * boat.transform.up;
         boat.transform.GetComponentInChildren<Rigidbody>().AddTorque(finalHorizontalForce, ForceMode.Impulse);
 
     }
@@ -210,6 +219,7 @@ public class ControllerInput : MonoBehaviour {
 
         float verticalValue = player.GetAxis("Vertical");
         float horizontalValue = player.GetAxis("Horizontal");
+
         float angle = Mathf.Atan2(verticalValue, horizontalValue) * Mathf.Rad2Deg;
         if (angle < 0) { angle += 360; }
 
