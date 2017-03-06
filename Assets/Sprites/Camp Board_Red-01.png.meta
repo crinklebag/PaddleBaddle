@@ -1,9 +1,11 @@
 fileFormatVersion: 2
 guid: 268a55ed7fe8b374780b5a93e9c43285
-timeCreated: 1487027210
+timeCreated: 1488781940
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Camp Board_Red-01_0
+    21300002: Camp Board_Red-01_1
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -76,7 +78,33 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Camp Board_Red-01_0
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 83
+        width: 2110
+        height: 4159
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Camp Board_Red-01_1
+      rect:
+        serializedVersion: 2
+        x: 2589
+        y: 1266
+        width: 1244
+        height: 1210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 

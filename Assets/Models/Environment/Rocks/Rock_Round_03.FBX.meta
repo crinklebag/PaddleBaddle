@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 6569ca922d303024a9e45ff1be3568b1
-timeCreated: 1485642831
+guid: 105caa5342e969d4282f1f27dc167518
+timeCreated: 1488744874
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,8 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Rock005
-    9500000: //RootNode
+    4300000: Rock_Round_03
   materials:
     importMaterials: 1
     materialName: 0
@@ -73,7 +72,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

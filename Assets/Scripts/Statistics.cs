@@ -14,12 +14,11 @@ public class Statistics : MonoBehaviour {
 
     private Player firstPlayer;
     // Use this for initialization
-
-    // Use this for initialization
     void Start () {
         firstPlayer = ReInput.players.GetPlayer(0);
         //Select the global game object to use its variables.
         variables = GameObject.FindGameObjectWithTag("Global");
+
         TeamOneScore = variables.GetComponent<GlobalVariables>().TeamOnePoints;
         TeamTwoScore = variables.GetComponent<GlobalVariables>().TeamTwoPoints;
         //Confirming the variables were passed from the previous scene.
@@ -34,7 +33,8 @@ public class Statistics : MonoBehaviour {
     void Update () {
         if (firstPlayer.GetButtonDown("Attack"))
         {
-            SceneManager.LoadScene("Lobby");
+            variables.GetComponent<GlobalVariables>().ResetPoints();
+            SceneManager.LoadScene("Lobby Design");
         }
         // if Team 1 has a higher score set panel 1 as active.
         if (TeamOneScore > TeamTwoScore)
@@ -43,7 +43,6 @@ public class Statistics : MonoBehaviour {
             GameObject.Find("End Score Team 1").GetComponent<Text>().text = TeamOneScore + " Points";
             GameObject.Find("End Score Team 2").GetComponent<Text>().text = TeamTwoScore + " Points";
         }
-
         else
         TeamTwoPanel.SetActive(true);
         GameObject.Find("End Score Team 1").GetComponent<Text>().text = TeamOneScore + " Points";
