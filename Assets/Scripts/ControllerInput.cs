@@ -134,13 +134,20 @@ public class ControllerInput : MonoBehaviour {
     /// </summary>
     /// <param name="side">1 for the default side; right for the front player, left for the back player.</param>
     /// <returns>The previous side the paddle was on.</returns>
-    int SetPaddleSide(int side)
+    void SetPaddleSide(int side)
     {
-        int oldPaddleSide = previousPaddleSide;
+        previousPaddleSide = side;
 
         previousPaddleSide = side;
 
-        return oldPaddleSide;
+        if(playerCharacter)
+        {
+            Animator animator = playerCharacter.GetComponent<Animator>();
+            if(animator)
+            {
+                animator.SetInteger("Paddle Side", side);
+            }
+        }
     }
 
     void RotatePaddle()
