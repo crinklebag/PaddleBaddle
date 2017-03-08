@@ -137,6 +137,28 @@ public class Boat : MonoBehaviour {
             yield break;
         }
 
+        // If it's a race
+        if (gameMode == GameController.Modes.Race)
+        {
+            // Run respawn code without picking a new position
+            transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            transform.rotation = Quaternion.identity;
+
+            Rigidbody body = GetComponent<Rigidbody>();
+            if (body != null)
+            {   
+                body.velocity = Vector3.zero;
+                body.angularVelocity = Vector3.zero;
+            }
+
+            // GetComponent<TrailRenderer>().Clear();
+
+            StartCoroutine(Invincibility());
+
+            isFlipped = false;
+            yield break;
+        }
+
         GameObject respawnArea = GameObject.Find("Respawn Area");
 
         if (respawnArea == null)
