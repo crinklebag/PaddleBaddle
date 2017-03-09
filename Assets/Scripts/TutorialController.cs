@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class TutorialController : MonoBehaviour {
 
+    [SerializeField]
+    string target2 = "Two Player Battle Arena";
+    [SerializeField]
+    string target4 = "Four Player Battle Arena";
+
 	// Use this for initialization
 	void Start () {
         StartCoroutine("DelayNextScene");
@@ -19,9 +24,9 @@ public class TutorialController : MonoBehaviour {
         yield return new WaitForSeconds(20);
 
         if (PlayerPrefs.GetInt("numPlayers") == 2) {
-            SceneManager.LoadScene("Two Player Battle Arena");
+            SceneManager.LoadScene(target2);
         } else {
-            SceneManager.LoadScene("Four Player Battle Arena");
+            SceneManager.LoadScene(target4);
         }
     }
 }

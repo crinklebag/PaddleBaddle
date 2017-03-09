@@ -13,6 +13,7 @@ public class LobbyController : MonoBehaviour {
     [SerializeField] MainMenuState currentState;
 
     [SerializeField] GameObject startGame;
+	[SerializeField] string targetName = "Tutorialish";
 
     [Header("Intro References:")]
     [SerializeField] GameObject gameNameUI;
@@ -59,7 +60,7 @@ public class LobbyController : MonoBehaviour {
         if (players[0].GetButton("Select")) {
             // Start Game
             Debug.Log("Start Game Early");
-            SceneManager.LoadScene("Tutorialish");
+			StartGame ();
         }
 
         if ((playersIn == 4 && selectedPlayerCount == 4) || (playersIn == 2 && selectedPlayerCount == 2)) {
@@ -235,7 +236,7 @@ public class LobbyController : MonoBehaviour {
     }
 
     public void StartGame() {
-        SceneManager.LoadScene("Tutorialish");
+        SceneManager.LoadScene(targetName);
     }
 
     public void AddPlayer() {
