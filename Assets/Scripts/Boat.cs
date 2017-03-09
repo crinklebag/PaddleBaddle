@@ -5,8 +5,6 @@ using System.Collections;
 public class Boat : MonoBehaviour {
 
 	[SerializeField] bool isTeam1;
-	[SerializeField] GameObject player1;
-	[SerializeField] GameObject player2;
 	[SerializeField] Transform flipCheck;
     [SerializeField] TrailRenderer trail;
     
