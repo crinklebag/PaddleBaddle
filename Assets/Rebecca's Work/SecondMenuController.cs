@@ -9,7 +9,7 @@ public class SecondMenuController : MonoBehaviour {
     [SerializeField] GameObject Team2Player4;
     [SerializeField] GameObject Team2Paddle;
 
-    bool canMove = false;
+    bool canMove = true;
     bool fourPlayers = false;
 
     bool teamOneSelected = false;

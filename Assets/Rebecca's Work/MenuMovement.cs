@@ -17,6 +17,7 @@ public class MenuMovement : MonoBehaviour {
     [SerializeField] GameObject boatContents;
        
     [Header("Movement Variables")]
+    [SerializeField] GameObject playerCharacter;
     [SerializeField] GameObject paddlePivot;
     [SerializeField] GameObject paddle;
     [SerializeField] int playerID;
@@ -26,8 +27,11 @@ public class MenuMovement : MonoBehaviour {
 
     Player player;
     GameObject boat;
+    GameObject currentBoatBody;
     Quaternion initRot;
     int dir = 0;
+    int previousPaddleSide;
+    int previousPaddleDirection;
     float paddleRotationTimer = 0;
     bool canPaddle = true;
     bool canInput = true;
@@ -42,6 +46,7 @@ public class MenuMovement : MonoBehaviour {
         player = ReInput.players.GetPlayer(playerID);
         boat = this.gameObject;
         currentBoat = BoatType.CANOE;
+        currentBoatBody = boatBody[(int)currentBoat];
         if(paddle != null) initRot = paddle.transform.localRotation;
     }
 	
@@ -51,32 +56,38 @@ public class MenuMovement : MonoBehaviour {
         {
             if (player.GetButtonDown("+Right Paddle") && canPaddle)
             {
-                paddlePivot.transform.localScale = new Vector3(1, 1, 1);
+                // paddlePivot.transform.localScale = new Vector3(1, 1, 1);
                 //Go Forward
-                dir = 1;
-                MoveCanoe();
+                // dir = 1;
+                Debug.Log("+Right Paddle");
+                MoveCanoe(1,1);
             }
             else if (player.GetButtonDown("-Right Paddle") && canPaddle)
             {
-                paddlePivot.transform.localScale = new Vector3(1, 1, 1);
+                // paddlePivot.transform.localScale = new Vector3(1, 1, 1);
                 // Go Backward
-                dir = -1;
-                MoveCanoe();
-
+                // dir = -1;
+                MoveCanoe(1, -1);
+                Debug.Log("+Right Paddle");
             }
             else if (player.GetButtonDown("+Left Paddle") && canPaddle)
             {
-                paddlePivot.transform.localScale = new Vector3(-1, 1, 1);
+                // paddlePivot.transform.localScale = new Vector3(-1, 1, 1);
                 //Go Forward
-                dir = 1;
-                MoveCanoe();
+                // dir = 1;
+                MoveCanoe(-1, 1);
             }
             else if (player.GetButtonDown("-Left Paddle") && canPaddle)
             {
-                paddlePivot.transform.localScale = new Vector3(-1, 1, 1);
+                // paddlePivot.transform.localScale = new Vector3(-1, 1, 1);
                 // Go Backward
-                dir = -1;
-                MoveCanoe();
+                // dir = -1;
+                MoveCanoe(-1, -1);
+            }
+            else
+            {
+                // Don't move
+                previousPaddleDirection = 0;
             }
         }
         else {
@@ -90,6 +101,7 @@ public class MenuMovement : MonoBehaviour {
                     boatBody[(int)currentBoat].SetActive(true);
                     boatBody[(int)currentBoat - 1].SetActive(false);
                     boatContents.transform.parent = boatBody[(int)currentBoat].transform;
+                    currentBoatBody = boatBody[(int)currentBoat];
                 } else {
                     currentBoat = BoatType.CANOE;
                     boatUI[(int)currentBoat].gameObject.SetActive(true);
@@ -97,6 +109,7 @@ public class MenuMovement : MonoBehaviour {
                     boatBody[(int)currentBoat].SetActive(true);
                     boatBody[(int)currentBoat + 1].SetActive(false);
                     boatContents.transform.parent = boatBody[(int)currentBoat].transform;
+                    currentBoatBody = boatBody[(int)currentBoat];
                 }
 
                 StartCoroutine(WaitForInput());
@@ -106,19 +119,55 @@ public class MenuMovement : MonoBehaviour {
         RotatePaddle();
     }
 
-    void MoveCanoe()
+    void MoveCanoe(int paddleSide, int paddleDirection)
     {
         // Add force to boat by the paddle
         Debug.Log("Adding Forward Force");
         canPaddle = false;
 
-        Vector3 finalForwardForce = dir * paddleForwardForce * boat.transform.forward;
-        boat.transform.GetComponentInChildren<Rigidbody>().AddForceAtPosition(finalForwardForce, boat.transform.position, ForceMode.Impulse);
+        Vector3 finalForwardForce = paddleDirection * paddleForwardForce * boat.transform.forward;
+        boat.transform.GetComponentInChildren<Rigidbody>().AddForceAtPosition(finalForwardForce, currentBoatBody.transform.position, ForceMode.Impulse);
 
-        float horizontalDirection = Mathf.Sign(dir * paddle.transform.localPosition.x * paddlePivot.transform.localScale.x);
-        Vector3 finalHorizontalForce = horizontalDirection * paddleTorque * boat.transform.up;
+        Vector3 finalHorizontalForce = -paddleSide * paddleTorque * boat.transform.up;
         boat.transform.GetComponentInChildren<Rigidbody>().AddTorque(finalHorizontalForce, ForceMode.Impulse);
 
+        previousPaddleSide = paddleSide;
+        previousPaddleDirection = paddleDirection;
+
+        if (playerCharacter)
+        {
+            Debug.Log("Found Player");
+            Animator playerAnimator = playerCharacter.GetComponent<Animator>();
+
+            if (playerAnimator)
+            {
+                playerAnimator.SetInteger("Paddle Side", previousPaddleSide);
+                if (paddleDirection > 0)
+                {
+                    playerAnimator.SetTrigger("Paddle Forward");
+                }
+                else if (paddleDirection < 0)
+                {
+                    playerAnimator.SetTrigger("Paddle Backward");
+                }
+            }
+        }
+    }
+
+    void SetPaddleSide(int side)
+    {
+        previousPaddleSide = side;
+
+        previousPaddleSide = side;
+
+        if (playerCharacter)
+        {
+            Animator animator = playerCharacter.GetComponent<Animator>();
+            if (animator)
+            {
+                animator.SetInteger("Paddle Side", side);
+            }
+        }
     }
 
     void RotatePaddle()
