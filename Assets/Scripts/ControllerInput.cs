@@ -344,7 +344,7 @@ public class ControllerInput : MonoBehaviour {
                 if (hitColliders[i].gameObject != this.gameObject && otherBoat != null)
                 {
 
-                    if (otherBoat.Invincible == false)
+                    if (otherBoat.invincible == false)
                     {
                         playerCharacter.GetComponent<Animator>().SetTrigger("Attacking");
 
@@ -380,7 +380,7 @@ public class ControllerInput : MonoBehaviour {
                 if (hitColliders[i].gameObject != this.gameObject && otherBoat != null)
                 {
 
-                    if (otherBoat.Invincible == false)
+                    if (otherBoat.invincible == false)
                     {
                         Vector3 forceVector = otherBoat.transform.position - transform.position;
                         forceVector.y = 0.0f;

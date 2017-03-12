@@ -9,12 +9,12 @@ public class Boat : MonoBehaviour {
     [SerializeField] TrailRenderer trail;
     
 	// Information for powerups
-	bool isFlipped = false;
+	public bool isFlipped { get; private set; }
 	public bool hasPowerUp = false;
 	public string powerUpType = "";
    	MeshRenderer meshRenderer;
 
-    public bool Invincible { get; private set; }
+    public bool invincible { get; private set; }
 
     private float invincibleTime = 3.0f;
 
@@ -227,7 +227,7 @@ public class Boat : MonoBehaviour {
 
     IEnumerator Invincibility()
     {
-        Invincible = true;
+        invincible = true;
 
         float t = 0.0f;
         while(t < invincibleTime)
@@ -240,6 +240,6 @@ public class Boat : MonoBehaviour {
         }
         meshRenderer.enabled = true;
 
-        Invincible = false;
+        invincible = false;
     }
 }
