@@ -51,11 +51,16 @@ public class ControllerInput : MonoBehaviour {
     bool taunting = false;
 
 	System.TimeSpan timeStartedRotation;
-	List<int> quadrantsHit = new List<int>();
+    List<int> quadrantsHit = new List<int>();
 
-	// This is a dictionary that stores string keys and functions
-	Dictionary<string, System.Action> powerupActions = new Dictionary<string, System.Action> ();
+    /// <summary>
+    /// Dictionary that stores string keys and functions
+    /// </summary>
+    Dictionary<string, System.Action> powerupActions = new Dictionary<string, System.Action> ();
 
+    /// <summary>
+    /// 
+    /// </summary>
 	void Awake ()
     {
         // FindUI();
@@ -69,6 +74,9 @@ public class ControllerInput : MonoBehaviour {
 		powerupActions.Add ("", OnMissingAction);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
 	void OnDrawGizmosSelected()
     {
         
@@ -76,6 +84,9 @@ public class ControllerInput : MonoBehaviour {
 		Gizmos.DrawWireSphere (GetPaddlePosition(), paddleData.reach);
 	}
 
+    /// <summary>
+    /// 
+    /// </summary>
     void FindUI()
     {
         switch (playerID) {
@@ -95,7 +106,9 @@ public class ControllerInput : MonoBehaviour {
         }
     }
 
-	// Update is called once per frame
+    /// <summary>
+    /// 
+    /// </summary>
 	void Update()
     {
         GameObject gameControllerObject = GameObject.Find("GameController");
