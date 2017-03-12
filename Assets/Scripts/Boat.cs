@@ -169,7 +169,7 @@ public class Boat : MonoBehaviour {
         Vector3 respawnPoint = Vector3.zero;
         bool excludedPoint = false;
 
-        ////////// do all of this
+        // do all of this
 
         do
         {
@@ -205,7 +205,7 @@ public class Boat : MonoBehaviour {
         }
         while (excludedPoint == true);
 
-////////// until the point no longer intersects with any exclude areas
+        // until the point no longer intersects with any exclude areas
 
         transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
         transform.position = respawnPoint;
