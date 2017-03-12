@@ -7,12 +7,16 @@ using Rewired;
 public class MenuMovement : MonoBehaviour {
 
     public enum BoatType { CANOE, RAFT };
-    [SerializeField] BoatType currentBoat; 
+    [SerializeField] BoatType currentBoat;
+
+    public enum TeamNumber { TeamOne, TeamTwo, TeamThree, TeamFour };
+    [SerializeField] TeamNumber teamNumber;
 
     [SerializeField] SecondMenuController menuController;
 
     [Header("Boat Selection Variables")]
     [SerializeField] Image[] boatUI;
+    [SerializeField] GameObject boatSelectedUI;
     [SerializeField] GameObject[] boatBody;
     [SerializeField] GameObject boatContents;
        
@@ -29,20 +33,17 @@ public class MenuMovement : MonoBehaviour {
     GameObject boat;
     GameObject currentBoatBody;
     Quaternion initRot;
+    string selectedBoat = "canoe";
     int dir = 0;
     int previousPaddleSide;
     int previousPaddleDirection;
     float paddleRotationTimer = 0;
     bool canPaddle = true;
     bool canInput = true;
-    bool inGame = true;
+    bool selectingBoat = true;
 
     // Use this for initialization
     void Awake () {
-        if (playerID == 1 || playerID == 3) {
-            Debug.Log("Checking");
-            inGame = menuController.IsFourPlayer();
-        }
         player = ReInput.players.GetPlayer(playerID);
         boat = this.gameObject;
         currentBoat = BoatType.CANOE;
@@ -54,45 +55,31 @@ public class MenuMovement : MonoBehaviour {
 	void Update () {
         if (menuController.CanMove())
         {
-            if (player.GetButtonDown("+Right Paddle") && canPaddle)
-            {
-                // paddlePivot.transform.localScale = new Vector3(1, 1, 1);
-                //Go Forward
-                // dir = 1;
+            if (player.GetButtonDown("+Right Paddle") && canPaddle) {
                 Debug.Log("+Right Paddle");
-                MoveCanoe(1,1);
+                if (selectedBoat == "canoe") { MoveCanoe(1, -1); }
+                else { MoveCanoe(1, 1); }
             }
-            else if (player.GetButtonDown("-Right Paddle") && canPaddle)
-            {
-                // paddlePivot.transform.localScale = new Vector3(1, 1, 1);
-                // Go Backward
-                // dir = -1;
-                MoveCanoe(1, -1);
-                Debug.Log("+Right Paddle");
+            else if (player.GetButtonDown("-Right Paddle") && canPaddle) {
+                if (selectedBoat == "canoe") { MoveCanoe(1, 1); }
+                else { MoveCanoe(1, -1); }
             }
-            else if (player.GetButtonDown("+Left Paddle") && canPaddle)
-            {
-                // paddlePivot.transform.localScale = new Vector3(-1, 1, 1);
-                //Go Forward
-                // dir = 1;
-                MoveCanoe(-1, 1);
+            else if (player.GetButtonDown("+Left Paddle") && canPaddle) {
+                if (selectedBoat == "canoe") { MoveCanoe(-1, -1); }
+                else { MoveCanoe(-1, 1); }
             }
-            else if (player.GetButtonDown("-Left Paddle") && canPaddle)
-            {
-                // paddlePivot.transform.localScale = new Vector3(-1, 1, 1);
-                // Go Backward
-                // dir = -1;
-                MoveCanoe(-1, -1);
+            else if (player.GetButtonDown("-Left Paddle") && canPaddle) {
+                if (selectedBoat == "canoe") { MoveCanoe(-1, 1); }
+                else { MoveCanoe(-1, -1); }
             }
-            else
-            {
+            else {
                 // Don't move
                 previousPaddleDirection = 0;
             }
         }
         else {
             // Swap Boats
-            if ((player.GetAxis("Horizontal 1") > 0.34f || player.GetAxis("Horizontal 1") < -0.34f) && canInput) {
+            if ((player.GetAxis("Horizontal") > 0.34f || player.GetAxis("Horizontal") < -0.34f) && canInput && selectingBoat) {
                 // Get Next Boat
                 if (currentBoat < BoatType.RAFT) {
                     currentBoat = BoatType.RAFT;
@@ -102,6 +89,7 @@ public class MenuMovement : MonoBehaviour {
                     boatBody[(int)currentBoat - 1].SetActive(false);
                     boatContents.transform.parent = boatBody[(int)currentBoat].transform;
                     currentBoatBody = boatBody[(int)currentBoat];
+                    selectedBoat = "raft";
                 } else {
                     currentBoat = BoatType.CANOE;
                     boatUI[(int)currentBoat].gameObject.SetActive(true);
@@ -110,13 +98,48 @@ public class MenuMovement : MonoBehaviour {
                     boatBody[(int)currentBoat + 1].SetActive(false);
                     boatContents.transform.parent = boatBody[(int)currentBoat].transform;
                     currentBoatBody = boatBody[(int)currentBoat];
+                    selectedBoat = "canoe";
                 }
 
                 StartCoroutine(WaitForInput());
             }
+            // 'A' press
+            if (player.GetButtonDown("Attack")) {
+                SelectBoat();
+            }
+            // 'B' press
+            if (player.GetButtonDown("Shove")) {
+                DeselectBoat();
+            }
         }
 
         RotatePaddle();
+    }
+
+    void SelectBoat() {
+        // Select Boat
+        if (teamNumber == TeamNumber.TeamOne) {
+            menuController.TeamOneSelect(selectedBoat);
+        }
+        else {
+            menuController.TeamTwoSelect(selectedBoat);
+        }
+        // Disallow Selection Input
+        selectingBoat = false;
+        // Set the UI
+        boatSelectedUI.SetActive(true);
+    }
+
+    void DeselectBoat() {
+        if (teamNumber == TeamNumber.TeamOne) {
+            menuController.TeamOneDeselect();
+        }
+        else {
+            menuController.TeamTwoDeselect();
+        }
+        selectingBoat = true;
+        // Reset the UI
+        boatSelectedUI.SetActive(false);
     }
 
     void MoveCanoe(int paddleSide, int paddleDirection)
@@ -125,11 +148,11 @@ public class MenuMovement : MonoBehaviour {
         Debug.Log("Adding Forward Force");
         canPaddle = false;
 
-        Vector3 finalForwardForce = paddleDirection * paddleForwardForce * boat.transform.forward;
-        boat.transform.GetComponentInChildren<Rigidbody>().AddForceAtPosition(finalForwardForce, currentBoatBody.transform.position, ForceMode.Impulse);
+        Vector3 finalForwardForce = paddleDirection * paddleForwardForce * currentBoatBody.transform.forward;
+        currentBoatBody.transform.GetComponentInChildren<Rigidbody>().AddForceAtPosition(finalForwardForce, currentBoatBody.transform.position, ForceMode.Impulse);
 
-        Vector3 finalHorizontalForce = -paddleSide * paddleTorque * boat.transform.up;
-        boat.transform.GetComponentInChildren<Rigidbody>().AddTorque(finalHorizontalForce, ForceMode.Impulse);
+        Vector3 finalHorizontalForce = -paddleSide * paddleTorque * currentBoatBody.transform.up;
+        currentBoatBody.transform.GetComponentInChildren<Rigidbody>().AddTorque(finalHorizontalForce, ForceMode.Impulse);
 
         previousPaddleSide = paddleSide;
         previousPaddleDirection = paddleDirection;
