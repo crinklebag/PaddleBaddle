@@ -21,6 +21,7 @@ public class ControllerInput : MonoBehaviour {
     [SerializeField] float strengthBoostForce = 200f;
     [SerializeField] float stunTime = 1f;
     [SerializeField] float mudEffect = 0.5f;
+    public bool stunned = false;
     float slowMod = 1f;
 
     [Header("Rumble")]
@@ -29,8 +30,6 @@ public class ControllerInput : MonoBehaviour {
 
     //creating an selectable object.
     public GameObject attackDisplay;
-
-    public bool stunned = false;
 
     Player player;
 	GameObject boat;
@@ -57,25 +56,28 @@ public class ControllerInput : MonoBehaviour {
 	// This is a dictionary that stores string keys and functions
 	Dictionary<string, System.Action> powerupActions = new Dictionary<string, System.Action> ();
 
-	void Awake () {
+	void Awake ()
+    {
         // FindUI();
         player = ReInput.players.GetPlayer (playerID);
 		boat = this.GetComponentInParent<Boat> ().gameObject;
 		boatInfo = boat.GetComponent<Boat> ();       
 
 		// Manually adding all of the functions to the dictionary
-		powerupActions.Add ("speed", speedBoost);
-		powerupActions.Add ("strength", strengthBoost);
-		powerupActions.Add ("", missingAction);
+		powerupActions.Add ("speed", SpeedBoost);
+		powerupActions.Add ("strength", StrengthBoost);
+		powerupActions.Add ("", OnMissingAction);
     }
 
-	void OnDrawGizmosSelected() {
+	void OnDrawGizmosSelected()
+    {
         
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireSphere (GetPaddlePosition(), paddleData.reach);
 	}
 
-    void FindUI() {
+    void FindUI()
+    {
         switch (playerID) {
             case 0:
                 playerUIController = GameObject.FindGameObjectWithTag("Player 1 UI").GetComponent<PlayerUI>();
@@ -94,7 +96,8 @@ public class ControllerInput : MonoBehaviour {
     }
 
 	// Update is called once per frame
-	void Update () {
+	void Update()
+    {
         GameObject gameControllerObject = GameObject.Find("GameController");
         //Debug.Log((gameControllerObject != null && stunned != true) + " reported from " + gameObject.name);
         if (gameControllerObject != null && stunned != true)
@@ -395,26 +398,26 @@ public class ControllerInput : MonoBehaviour {
     /// <summary>
     /// Adding force to the boat for the speed boost
     /// </summary>
-    void speedBoost()
+    void SpeedBoost()
 	{
 		Debug.Log ("Adding " + speedBoostForce + " for speedboost!");
 		gameObject.GetComponent<Rigidbody> ().AddForce (transform.up * speedBoostForce, ForceMode.Impulse);
-		removePowerUp ();
+		RemovePowerUp();
 	}
 
     /// <summary>
 	/// Add force for the next attack
     /// </summary>
-	void strengthBoost()
+	void StrengthBoost()
 	{
         paddleData.attackForce = (paddleData.attackForce > strengthBoostForce) ? paddleData.attackForce : paddleData.attackForce + strengthBoostForce;
-		removePowerUp ();
+		RemovePowerUp();
 	}
 
     /// <summary>
     /// Remove the powerup from the boat
     /// </summary>
-    void removePowerUp()
+    void RemovePowerUp()
 	{
 		boatInfo.hasPowerUp = false;
 		Destroy (transform.GetChild (transform.childCount - 1).gameObject);
@@ -423,7 +426,7 @@ public class ControllerInput : MonoBehaviour {
     /// <summary>
     /// Something went wrong
     /// </summary>
-    void missingAction()
+    void OnMissingAction()
 	{
 		Debug.Log ("A powerup with an empty string got called?");
 	}
@@ -436,7 +439,7 @@ public class ControllerInput : MonoBehaviour {
     {
         if (other.CompareTag("Poop"))
         {
-            StartCoroutine(Stunning());
+            StartCoroutine(Stun());
             Destroy(other.gameObject);
         } else if (other.CompareTag("Mud"))
         {
@@ -480,7 +483,7 @@ public class ControllerInput : MonoBehaviour {
     /// 
     /// </summary>
     /// <returns></returns>
-    IEnumerator Stunning()
+    IEnumerator Stun()
     {
         stunned = true;
         yield return new WaitForSeconds(stunTime);
