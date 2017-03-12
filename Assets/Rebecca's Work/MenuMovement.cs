@@ -13,6 +13,7 @@ public class MenuMovement : MonoBehaviour {
     [SerializeField] TeamNumber teamNumber;
 
     [SerializeField] SecondMenuController menuController;
+    [SerializeField] InstructionPanel instructionsPanel;
 
     [Header("Boat Selection Variables")]
     [SerializeField] Image[] boatUI;
@@ -56,19 +57,23 @@ public class MenuMovement : MonoBehaviour {
         if (menuController.CanMove())
         {
             if (player.GetButtonDown("+Right Paddle") && canPaddle) {
-                Debug.Log("+Right Paddle");
+                // Debug.Log("+Right Paddle");
+                if (instructionsPanel.gameObject.activeSelf) { instructionsPanel.PulledTrigger(playerID); }
                 if (selectedBoat == "canoe") { MoveCanoe(1, -1); }
                 else { MoveCanoe(1, 1); }
             }
             else if (player.GetButtonDown("-Right Paddle") && canPaddle) {
+                if (instructionsPanel.gameObject.activeSelf) { instructionsPanel.PulledBumper(playerID); }
                 if (selectedBoat == "canoe") { MoveCanoe(1, 1); }
                 else { MoveCanoe(1, -1); }
             }
             else if (player.GetButtonDown("+Left Paddle") && canPaddle) {
+                if (instructionsPanel.gameObject.activeSelf) { instructionsPanel.PulledTrigger(playerID); }
                 if (selectedBoat == "canoe") { MoveCanoe(-1, -1); }
                 else { MoveCanoe(-1, 1); }
             }
             else if (player.GetButtonDown("-Left Paddle") && canPaddle) {
+                if (instructionsPanel.gameObject.activeSelf) { instructionsPanel.PulledBumper(playerID); }
                 if (selectedBoat == "canoe") { MoveCanoe(-1, 1); }
                 else { MoveCanoe(-1, -1); }
             }
@@ -145,7 +150,7 @@ public class MenuMovement : MonoBehaviour {
     void MoveCanoe(int paddleSide, int paddleDirection)
     {
         // Add force to boat by the paddle
-        Debug.Log("Adding Forward Force");
+        // Debug.Log("Adding Forward Force");
         canPaddle = false;
 
         Vector3 finalForwardForce = paddleDirection * paddleForwardForce * currentBoatBody.transform.forward;
@@ -159,7 +164,7 @@ public class MenuMovement : MonoBehaviour {
 
         if (playerCharacter)
         {
-            Debug.Log("Found Player");
+            // Debug.Log("Found Player");
             Animator playerAnimator = playerCharacter.GetComponent<Animator>();
 
             if (playerAnimator)
@@ -216,5 +221,9 @@ public class MenuMovement : MonoBehaviour {
 
         canInput = true;
 
+    }
+
+    public int GetPlayerID() {
+        return playerID;
     }
 }
