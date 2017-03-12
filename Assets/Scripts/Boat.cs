@@ -3,8 +3,8 @@ using System.Collections;
 
 [DisallowMultipleComponent]
 public class Boat : MonoBehaviour {
-
-	[SerializeField] bool isTeam1;
+    
+	[SerializeField] int team;
 	[SerializeField] Transform flipCheck;
     [SerializeField] TrailRenderer trail;
     
@@ -73,14 +73,7 @@ public class Boat : MonoBehaviour {
 
     void Score()
     {
-        if (isTeam1)
-        {
-            GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(1, 1);
-        }
-        else
-        {
-            GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(0, 1);
-        }
+        GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(team, 1);
     }
 
     void OnTriggerEnter(Collider other)
