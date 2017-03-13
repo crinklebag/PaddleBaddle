@@ -16,10 +16,10 @@ public class TutorialController : MonoBehaviour {
 	}
 
     IEnumerator DelayNextScene() {
-        yield return new WaitForSeconds(20);
+        yield return new WaitForSeconds(10);
 
         if (PlayerPrefs.GetInt("numPlayers") == 2) {
-            SceneManager.LoadScene("Two Player Battle Arena");
+            SceneManager.LoadScene("Cyclone Zone");
         } else {
             SceneManager.LoadScene("Four Player Battle Arena");
         }

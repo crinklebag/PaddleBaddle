@@ -26,6 +26,7 @@ public class ControllerInput : MonoBehaviour {
     [SerializeField] float mudEffect = 0.5f;
     [SerializeField] float shortRumble = 0.5f;
     [SerializeField] float longRumble = 2.0f;
+    [SerializeField] bool raft;
     float slowMod = 1f;
 
     //creating an selectable object.
@@ -204,23 +205,27 @@ public class ControllerInput : MonoBehaviour {
             if (player.GetButtonDown("+Right Paddle"))
             {
                 //Go Forward
-                MoveCanoe(1,1);
+                if (raft) { MoveCanoe(1, 1); }
+                else { MoveCanoe(1,-1); }
             }
             else if (player.GetButtonDown("-Right Paddle"))
             {
                 // Go Backward
-                MoveCanoe(1,-1);
+                if (raft) { MoveCanoe(1, -1); }
+                else { MoveCanoe(1, 1); }
 
             }
             else if (player.GetButtonDown("+Left Paddle"))
             {
                 //Go Forward
-                MoveCanoe(-1,1);
+                if (raft) { MoveCanoe(-1, 1); }
+                else { MoveCanoe(-1, -1); }
             }
             else if (player.GetButtonDown("-Left Paddle"))
             {
                 // Go Backward
-                MoveCanoe(-1,-1);
+                if (raft) { MoveCanoe(-1, -1); }
+                else { MoveCanoe(-1, 1); }
             }
             else
             {

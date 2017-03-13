@@ -306,7 +306,12 @@ public class GameController : MonoBehaviour
             Vector3 spawnPoint = UnityEngine.Random.insideUnitSphere;
             spawnPoint.Scale(new Vector3(respawnArea.radius, 0, respawnArea.radius));
             spawnPoint += respawnArea.transform.position;
-            Instantiate(coinPrefab, spawnPoint, Quaternion.identity);
+            GameObject newPickup = Instantiate(coinPrefab, spawnPoint, Quaternion.identity) as GameObject;
+
+            // use the reference to set up the buoyancy of the object
+            newPickup.GetComponent<RealisticBuoyancy>().setup();
+            // hack fix the water level
+            newPickup.GetComponent<RealisticBuoyancy>().waterLevelOverride = RealisticWaterPhysics.currentWaterLevel;
 
             yield return new WaitForSeconds(spawnRate);
         } 

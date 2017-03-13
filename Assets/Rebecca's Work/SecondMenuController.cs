@@ -104,11 +104,13 @@ public class SecondMenuController : MonoBehaviour {
                 greenPlayerLevelBoard.SetActive(true);
                 greenPlayerLevelBoard.GetComponent<LevelSelectBoard>().SetText(level);
                 // Lower it down - Call a function on it?
+                greenPlayerLevelBoard.GetComponent<LevelSelectBoard>().Activate();
                 break;
             case 1:
                 playerTwoChoice = level;
                 redPlayerLevelBoard.SetActive(true);
                 redPlayerLevelBoard.GetComponent<LevelSelectBoard>().SetText(level);
+                redPlayerLevelBoard.GetComponent<LevelSelectBoard>().Activate();
                 break;
         }
     }
@@ -119,9 +121,11 @@ public class SecondMenuController : MonoBehaviour {
         switch (playerID) {
             case 0:
                 playerOneChoice = " ";
+                greenPlayerLevelBoard.GetComponent<LevelSelectBoard>().Deactivate();
                 break;
             case 1:
                 playerTwoChoice = " ";
+                redPlayerLevelBoard.GetComponent<LevelSelectBoard>().Deactivate();
                 break;
         }
     }
