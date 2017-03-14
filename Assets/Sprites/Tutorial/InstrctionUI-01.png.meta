@@ -1,4 +1,5 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 42b298563866b494c9eb5ee7fe0fb897
 timeCreated: 1489463960
 licenseType: Free
@@ -8,6 +9,21 @@ TextureImporter:
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
+=======
+guid: edf2500cc34fdec41a6a6b4212ef90b2
+timeCreated: 1489458242
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: InstrctionUI-01_0
+    21300002: InstrctionUI-01_1
+    21300004: InstrctionUI-01_2
+    21300006: InstrctionUI-01_3
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+>>>>>>> 32129801f29927ca9cbba17c510d034a8039c962
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -30,11 +46,19 @@ TextureImporter:
     filterMode: -1
     aniso: -1
     mipBias: -1
+<<<<<<< HEAD
     wrapMode: -1
   nPOTScale: 1
   lightmap: 0
   compressionQuality: 50
   spriteMode: 0
+=======
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+>>>>>>> 32129801f29927ca9cbba17c510d034a8039c962
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -42,9 +66,15 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaUsage: 1
+<<<<<<< HEAD
   alphaIsTransparency: 0
   spriteTessellationDetail: -1
   textureType: 0
+=======
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+>>>>>>> 32129801f29927ca9cbba17c510d034a8039c962
   textureShape: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
@@ -58,9 +88,83 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+<<<<<<< HEAD
   spriteSheet:
     serializedVersion: 2
     sprites: []
+=======
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: InstrctionUI-01_0
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 1454
+        width: 1492
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: InstrctionUI-01_1
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 1062
+        width: 1307
+        height: 301
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: InstrctionUI-01_2
+      rect:
+        serializedVersion: 2
+        x: 604
+        y: 699
+        width: 775
+        height: 289
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: InstrctionUI-01_3
+      rect:
+        serializedVersion: 2
+        x: 658
+        y: 371
+        width: 696
+        height: 216
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+>>>>>>> 32129801f29927ca9cbba17c510d034a8039c962
     outline: []
   spritePackingTag: 
   userData: 

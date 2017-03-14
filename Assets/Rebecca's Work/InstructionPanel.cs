@@ -1,16 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InstructionPanel : MonoBehaviour {
+    
 
     [SerializeField] GameObject triggerPrompts;
     [SerializeField] GameObject bumperPrompts;
+    GameObject currentPrompt;
 
-    bool playerOneTrigger = false;
-    bool playerTwoTrigger = false;
-    bool playerOneBumper = false;
-    bool playerTwoBumper = false;
+    bool fadeInstructions = false;
+    bool fadeIn = true;
+    bool showTriggers = true;
+
+    // UI Fade Variables
+    float startTime;
+    float journeyLength;
+    float speed = 1;
 
     // Use this for initialization
     void Start () {
@@ -19,46 +26,68 @@ public class InstructionPanel : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		
+        /* if (Input.GetKeyDown(KeyCode.Space)) {
+            StartInstructions();
+        } */
+
+        if (fadeInstructions && showTriggers) {
+            if (fadeIn) {
+                FadeIn(triggerPrompts);
+            } else {
+                FadeOut(triggerPrompts);
+            }
+        }
+
+        if (fadeInstructions && !showTriggers) {
+            if (fadeIn) {
+                FadeIn(bumperPrompts);
+            } else {
+                FadeOut(bumperPrompts);
+            }
+        }
 	}
 
-    void CheckForNextInstrction() {
-        if (playerOneTrigger && playerTwoTrigger) {
-            // Fade these in and out
-            bumperPrompts.SetActive(true);
-            triggerPrompts.SetActive(false);
-        }
-        if (playerOneBumper && playerTwoBumper) {
-            bumperPrompts.SetActive(false);
-            this.gameObject.SetActive(false);
+    void FadeIn(GameObject UIPiece) {
+        float distCovered = (Time.time - startTime) * speed;
+        float fracJourney = distCovered / journeyLength;
+
+        UIPiece.GetComponent<Image>().color = Color.Lerp(Color.clear, Color.white, fracJourney);
+        // If it is finished fading in
+        if (fracJourney >= 1) {
+            StartCoroutine(FadeDelay());
+            fadeInstructions = false;
+            fadeIn = false;
         }
     }
 
-    // Call from player - check if this object is active or not first
-    public void PulledTrigger(int playerID) {
-        switch (playerID) {
-            case 0:
-                playerOneTrigger = true;
-                break;
-            case 1:
-                playerTwoTrigger = true;
-                break;
+    void FadeOut(GameObject UIPiece) {
+        float distCovered = (Time.time - startTime) * speed;
+        float fracJourney = distCovered / journeyLength;
+
+        UIPiece.GetComponent<Image>().color = Color.Lerp(Color.white, Color.clear, fracJourney);
+        // If it is finished fading in
+        if (fracJourney >= 1) {
+            // StartCoroutine(FadeDelay());
+            startTime = Time.time;
+            journeyLength = Vector3.Distance(Vector3.one, Vector3.zero);
+            fadeIn = true;
+            if (showTriggers) { showTriggers = false; }
+            else { fadeInstructions = false; }
         }
-        CheckForNextInstrction();
     }
 
-    public void PulledBumper(int playerID) {
-        if (playerOneTrigger && playerTwoTrigger) {
-            switch (playerID)
-            {
-                case 0:
-                    playerOneBumper = true;
-                    break;
-                case 1:
-                    playerTwoBumper = true;
-                    break;
-            }
-            CheckForNextInstrction();
-        }
+    // Show this from the menu controller after both players have selected a boat
+    public void StartInstructions() {
+        fadeInstructions = true;
+        startTime = Time.time;
+        journeyLength = Vector3.Distance(Vector3.one, Vector3.zero);
+    }
+
+    IEnumerator FadeDelay() {
+        yield return new WaitForSeconds(7);
+
+        startTime = Time.time;
+        journeyLength = Vector3.Distance(Vector3.one, Vector3.zero);
+        fadeInstructions = true;
     }
 }
