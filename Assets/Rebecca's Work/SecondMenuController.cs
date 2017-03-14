@@ -88,6 +88,9 @@ public class SecondMenuController : MonoBehaviour {
         boardOne.GetComponent<RectTransform>().anchoredPosition = Vector3.Lerp(boardOneStartMarker, boardOneEndMarker, fracJourney * 2);
         boardTwo.GetComponent<RectTransform>().anchoredPosition = Vector3.Lerp(boardTwoStartMarker, boardTwoEndMarker, fracJourney * 2);
 
+        // Start The Instructions
+        instructionPanel.GetComponent<InstructionPanel>().StartInstructions();
+
         if (fracJourney >= 0.9f) {
             // turn on blocking wall
             blockingWall.SetActive(true);
@@ -133,7 +136,8 @@ public class SecondMenuController : MonoBehaviour {
     public void LoadLevel(int playerID, string level) {
         SetPlayerChoice(playerID, level);
         if ((playersIn == maxPlayers) && (playerOneChoice == playerTwoChoice)) {
-            StartCoroutine(StartLevelLoad(level));
+            // StartCoroutine(StartLevelLoad(level));
+            loadingPanel.GetComponent<LevelSelectLoadPanel>().StartLevelLoad(level);
         }
     }
     
@@ -164,7 +168,7 @@ public class SecondMenuController : MonoBehaviour {
         return canMove;
     }
 
-    IEnumerator StartLevelLoad(string level) {
+    /* IEnumerator StartLevelLoad(string level) {
         loadingPanel.SetActive(true);
 
         yield return new WaitForSeconds(3);
@@ -172,5 +176,5 @@ public class SecondMenuController : MonoBehaviour {
         // Call this function 3 times and load the dots
 
         SceneManager.LoadScene(level);
-    }
+    }*/
 }

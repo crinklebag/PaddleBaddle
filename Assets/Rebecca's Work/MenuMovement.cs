@@ -18,6 +18,8 @@ public class MenuMovement : MonoBehaviour {
     [Header("Boat Selection Variables")]
     [SerializeField] Image[] boatUI;
     [SerializeField] GameObject boatSelectedUI;
+    [SerializeField] GameObject pressAUI;
+    [SerializeField] GameObject pressBUI;
     [SerializeField] GameObject[] boatBody;
     [SerializeField] GameObject boatContents;
        
@@ -58,22 +60,18 @@ public class MenuMovement : MonoBehaviour {
         {
             if (player.GetButtonDown("+Right Paddle") && canPaddle) {
                 // Debug.Log("+Right Paddle");
-                if (instructionsPanel.gameObject.activeSelf) { instructionsPanel.PulledTrigger(playerID); }
                 if (selectedBoat == "canoe") { MoveCanoe(1, -1); }
                 else { MoveCanoe(1, 1); }
             }
             else if (player.GetButtonDown("-Right Paddle") && canPaddle) {
-                if (instructionsPanel.gameObject.activeSelf) { instructionsPanel.PulledBumper(playerID); }
                 if (selectedBoat == "canoe") { MoveCanoe(1, 1); }
                 else { MoveCanoe(1, -1); }
             }
             else if (player.GetButtonDown("+Left Paddle") && canPaddle) {
-                if (instructionsPanel.gameObject.activeSelf) { instructionsPanel.PulledTrigger(playerID); }
                 if (selectedBoat == "canoe") { MoveCanoe(-1, -1); }
                 else { MoveCanoe(-1, 1); }
             }
             else if (player.GetButtonDown("-Left Paddle") && canPaddle) {
-                if (instructionsPanel.gameObject.activeSelf) { instructionsPanel.PulledBumper(playerID); }
                 if (selectedBoat == "canoe") { MoveCanoe(-1, 1); }
                 else { MoveCanoe(-1, -1); }
             }
@@ -133,6 +131,8 @@ public class MenuMovement : MonoBehaviour {
         selectingBoat = false;
         // Set the UI
         boatSelectedUI.SetActive(true);
+        pressBUI.SetActive(true);
+        pressAUI.SetActive(false);
     }
 
     void DeselectBoat() {
@@ -145,6 +145,8 @@ public class MenuMovement : MonoBehaviour {
         selectingBoat = true;
         // Reset the UI
         boatSelectedUI.SetActive(false);
+        pressBUI.SetActive(false);
+        pressAUI.SetActive(true);
     }
 
     void MoveCanoe(int paddleSide, int paddleDirection)
