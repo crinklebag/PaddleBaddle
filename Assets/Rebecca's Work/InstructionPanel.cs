@@ -27,7 +27,8 @@ public class InstructionPanel : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         /* if (Input.GetKeyDown(KeyCode.Space)) {
-            StartInstructions();
+            // StartInstructions();
+
         } */
 
         if (fadeInstructions && showTriggers) {

@@ -143,19 +143,50 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private Transform raceGoal;
 
+    /* TEMP - I'M SORRY THIS IS TERRIBLE PLEASE FORGIVE ME*/
+    [SerializeField] GameObject greenTeamCanoe;
+    [SerializeField] GameObject greenTeamRaft;
+    [SerializeField] GameObject redTeamCanoe;
+    [SerializeField] GameObject redTeamRaft;
+
     /// <summary>
     /// MonoBehaviour Awake Event
     /// </summary>
     void Awake ()
     {
+        SetUpTeams();    
 		firstPlayer = ReInput.players.GetPlayer(0);
 	}
+
+    /* TEMP "SPAWN" functionality */
+    void SetUpTeams() {
+        // Player One Boat
+        if (PlayerPrefs.GetString("teamOneBoat") == "canoe") {
+            greenTeamRaft.SetActive(false);
+            greenTeamCanoe.SetActive(true);
+        }
+        if (PlayerPrefs.GetString("teamOneBoat") == "raft") {
+            greenTeamRaft.SetActive(true);
+            greenTeamCanoe.SetActive(false);
+        }
+
+        // Player Two Boat
+        if (PlayerPrefs.GetString("teamTwoBoat") == "canoe") {
+            redTeamRaft.SetActive(false);
+            redTeamCanoe.SetActive(true);
+        }
+        if (PlayerPrefs.GetString("teamTwoBoat") == "raft") {
+            redTeamRaft.SetActive(true);
+            redTeamCanoe.SetActive(false);
+        }
+    }
 
     /// <summary>
     /// MonoBehaviour Start Event
     /// </summary>
     void Start ()
     {
+        teamBoats = GameObject.FindGameObjectsWithTag("Player");
         respawnArea = GameObject.Find("Respawn Area").GetComponent<SphereCollider>();
         StartCoroutine(StartRound());
     }
@@ -332,7 +363,9 @@ public class GameController : MonoBehaviour
         roundEndTimerText.gameObject.SetActive(false);
         roundBeginTimerText.gameObject.SetActive(true);
         roundBeginTimerText.text = "Finished!";
-        SceneManager.LoadScene("Credits");
+        PlayerPrefs.SetInt("teamOneScore", teamPoints[0]);
+        PlayerPrefs.SetInt("teamTwoScore", teamPoints[1]);
+        SceneManager.LoadScene("GameOver");
         yield return new WaitForSecondsRealtime(2);
 
         if (mode == Modes.Race)
@@ -356,9 +389,9 @@ public class GameController : MonoBehaviour
         else
         {
             roundBeginTimerText.text = "Tie Game!";
-            SceneManager.LoadScene("Credits");
-            yield return new WaitForSecondsRealtime(3);
-            SceneManager.LoadScene("Lobby Design", LoadSceneMode.Single);
+            SceneManager.LoadScene("GameOver");
+            // yield return new WaitForSecondsRealtime(3);
+            // SceneManager.LoadScene("Lobby Design", LoadSceneMode.Single);
         }
     }
 

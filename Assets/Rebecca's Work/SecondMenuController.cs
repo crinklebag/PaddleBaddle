@@ -51,6 +51,13 @@ public class SecondMenuController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            // Green Canoe
+            PlayerPrefs.SetString("teamOneBoat", "raft");
+            // Red Raft
+            PlayerPrefs.SetString("teamTwoBoat", "canoe");
+        }
+
         if (teamOneSelected && teamTwoSelected && !canMove) {
             canMove = true;
             startTime = Time.time;

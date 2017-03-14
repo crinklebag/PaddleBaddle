@@ -31,11 +31,11 @@ public class LevelSelectLoadPanel : MonoBehaviour {
 	void Update () {
         /* if (Input.GetKeyDown(KeyCode.Space)) {
             StartLevelLoad("Fake Level");
-        }
+        } */
 
         if (lowerBoard) {
             LowerBoard();
-        } */
+        }
 	}
 
     void LowerBoard() {
