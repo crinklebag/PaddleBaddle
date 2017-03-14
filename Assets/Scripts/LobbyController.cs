@@ -12,7 +12,10 @@ public class LobbyController : MonoBehaviour {
     public enum MainMenuState { INTRO, CHOOSE_PLAYER, READY, START_GAME };
     [SerializeField] MainMenuState currentState;
 
+    [Header ("UI References:")]
     [SerializeField] GameObject startGameUI;
+    [SerializeField] GameObject playerOneUI;
+    [SerializeField] GameObject playerTwoUI;
 
     [Header("Intro References:")]
     [SerializeField] GameObject gameNameUI;
@@ -21,8 +24,6 @@ public class LobbyController : MonoBehaviour {
     [SerializeField] GameObject playerCountUI;
     [SerializeField] GameObject twoPlayerUI;
     [SerializeField] GameObject fourPlayerUI;
-    [SerializeField] Sprite selectedBanner;
-    [SerializeField] Sprite deselectedBanner;
     int selectedPlayerCount;
 
     [Header("Choose Player References:")]
@@ -41,7 +42,7 @@ public class LobbyController : MonoBehaviour {
     // UI Fade Variables
     float startTime;
     float journeyLength;
-    float speed = 10; 
+    float speed = 1; 
 
     // Use this for initialization
     void Start() {
@@ -143,6 +144,8 @@ public class LobbyController : MonoBehaviour {
         settingUpReady = true;
         currentState = MainMenuState.READY;
         startGameUI.SetActive(true);
+        playerOneUI.SetActive(false);
+        playerTwoUI.SetActive(false);
         startTime = Time.time;
         journeyLength = Vector3.Distance(Vector3.one, Vector3.zero);
         startGame = true;
@@ -180,6 +183,7 @@ public class LobbyController : MonoBehaviour {
 
         startGameUI.GetComponent<Image>().color = Color.Lerp(Color.clear, Color.white, fracJourney);
         startGameUI.transform.GetChild(0).GetComponent<Image>().color = Color.Lerp(Color.clear, Color.white, fracJourney);
+        startGameUI.transform.GetChild(1).GetComponent<Image>().color = Color.Lerp(Color.clear, Color.white, fracJourney);
     }
 
     void FadeOutStartGame() {
@@ -188,6 +192,12 @@ public class LobbyController : MonoBehaviour {
 
         startGameUI.GetComponent<Image>().color = Color.Lerp(Color.white, Color.clear, fracJourney);
         startGameUI.transform.GetChild(0).GetComponent<Image>().color = Color.Lerp(Color.white, Color.clear, fracJourney);
+        startGameUI.transform.GetChild(1).GetComponent<Image>().color = Color.Lerp(Color.white, Color.clear, fracJourney);
+
+        if (fracJourney >= 1) {
+            playerOneUI.SetActive(true);
+            playerTwoUI.SetActive(true);
+        }
     }
 
     public void StartGame() {
@@ -199,7 +209,7 @@ public class LobbyController : MonoBehaviour {
         Debug.Log(playersIn);
     }
     public void RemovePlayer() {
-        playersIn--;
+        if (playersIn > 0) { playersIn--; }
     }
 
     public void ToggleOffCharacters() {
