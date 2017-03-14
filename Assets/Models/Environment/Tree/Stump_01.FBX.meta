@@ -1,22 +1,17 @@
 fileFormatVersion: 2
-guid: 2eefa46452db39c4d895d3282c39842d
-timeCreated: 1482623228
+guid: f2c64649272fdd146aaa622c91d478d5
+timeCreated: 1489529538
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: hum_body
-    100002: hum_eye
-    100004: //RootNode
-    400000: hum_body
-    400002: hum_eye
-    400004: //RootNode
-    2300000: hum_body
-    2300002: hum_eye
-    3300000: hum_body
-    3300002: hum_eye
-    4300000: hum_body
-    4300002: hum_eye
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Cylinder001
+    7400000: Take 001
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -59,7 +54,7 @@ ModelImporter:
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
-    tangentImportMode: 3
+    tangentImportMode: 0
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
@@ -77,9 +72,9 @@ ModelImporter:
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0
-    skeletonHasParents: 0
+    skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
