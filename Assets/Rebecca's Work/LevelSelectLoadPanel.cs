@@ -31,11 +31,11 @@ public class LevelSelectLoadPanel : MonoBehaviour {
 	void Update () {
         /* if (Input.GetKeyDown(KeyCode.Space)) {
             StartLevelLoad("Fake Level");
-        }
+        } */
 
         if (lowerBoard) {
             LowerBoard();
-        } */
+        }
 	}
 
     void LowerBoard() {
@@ -73,6 +73,7 @@ public class LevelSelectLoadPanel : MonoBehaviour {
     }
 
     public void StartLevelLoad(string level) {
+        Debug.Log("StartLevelLoad() Called");
         startTime = Time.time;
         journeyLength = Vector3.Distance(startMarker, endMarker);
         lowerBoard = true;

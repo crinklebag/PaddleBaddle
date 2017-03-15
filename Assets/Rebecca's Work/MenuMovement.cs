@@ -127,6 +127,15 @@ public class MenuMovement : MonoBehaviour {
         else {
             menuController.TeamTwoSelect(selectedBoat);
         }
+
+        if (selectedBoat == "canoe") {
+            paddleForwardForce = 400;
+            paddleTorque = 300;
+        } else {
+            paddleForwardForce = 200;
+            paddleTorque = 150;
+        }
+
         // Disallow Selection Input
         selectingBoat = false;
         // Set the UI

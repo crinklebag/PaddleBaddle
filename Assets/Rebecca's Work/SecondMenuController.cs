@@ -21,6 +21,7 @@ public class SecondMenuController : MonoBehaviour {
     bool canMove = false;
     bool teamOneSelected = false;
     bool teamTwoSelected = false;
+    bool instructionsStarted = false;
 
     [Header("Movement Markers")]
     [SerializeField] GameObject blockingWall;
@@ -51,6 +52,13 @@ public class SecondMenuController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+       /* if (Input.GetKeyDown(KeyCode.Space)) {
+            // Green Canoe
+            PlayerPrefs.SetString("teamOneBoat", "raft");
+            // Red Raft
+            PlayerPrefs.SetString("teamTwoBoat", "canoe");
+        } */
+
         if (teamOneSelected && teamTwoSelected && !canMove) {
             canMove = true;
             startTime = Time.time;
@@ -58,12 +66,12 @@ public class SecondMenuController : MonoBehaviour {
             // Turn on wall to stop them from going back to the dock - wait first so they boost past it
 
             // Add a small force to the boats
-            float forceValue = 0;
-            if (PlayerPrefs.GetString("teamOneBoat") == "canoe") { forceValue = 5000; }
-            else { forceValue = 25000; }
+            float forceValue = 5000;
+            // if (PlayerPrefs.GetString("teamOneBoat") == "canoe") { forceValue = 5000; }
+            // else { forceValue = 2500; }
             boatOne.GetComponentInChildren<Rigidbody>().AddForce(boatOne.transform.forward * forceValue, ForceMode.Impulse);
-            if (PlayerPrefs.GetString("teamTwoBoat") == "canoe") { forceValue = 5000; }
-            else { forceValue = 25000; }
+            // if (PlayerPrefs.GetString("teamTwoBoat") == "canoe") { forceValue = 5000; }
+            // else { forceValue = 2500; }
             boatTwo.GetComponentInChildren<Rigidbody>().AddForce(boatOne.transform.forward * forceValue, ForceMode.Impulse);
         }
 
@@ -89,7 +97,11 @@ public class SecondMenuController : MonoBehaviour {
         boardTwo.GetComponent<RectTransform>().anchoredPosition = Vector3.Lerp(boardTwoStartMarker, boardTwoEndMarker, fracJourney * 2);
 
         // Start The Instructions
-        instructionPanel.GetComponent<InstructionPanel>().StartInstructions();
+        if (!instructionsStarted) {
+            instructionPanel.GetComponent<InstructionPanel>().StartInstructions();
+            instructionsStarted = true;
+            Debug.Log("Starting Instructions in Menu Controller");
+        }
 
         if (fracJourney >= 0.9f) {
             // turn on blocking wall

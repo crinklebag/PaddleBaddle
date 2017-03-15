@@ -27,7 +27,8 @@ public class InstructionPanel : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         /* if (Input.GetKeyDown(KeyCode.Space)) {
-            StartInstructions();
+            // StartInstructions();
+
         } */
 
         if (fadeInstructions && showTriggers) {
@@ -78,13 +79,14 @@ public class InstructionPanel : MonoBehaviour {
 
     // Show this from the menu controller after both players have selected a boat
     public void StartInstructions() {
+        Debug.Log("Starting Instructions in Instruction Panel");
         fadeInstructions = true;
         startTime = Time.time;
         journeyLength = Vector3.Distance(Vector3.one, Vector3.zero);
     }
 
     IEnumerator FadeDelay() {
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(4);
 
         startTime = Time.time;
         journeyLength = Vector3.Distance(Vector3.one, Vector3.zero);
