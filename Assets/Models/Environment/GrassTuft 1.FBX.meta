@@ -1,47 +1,16 @@
 fileFormatVersion: 2
-guid: f6b4cd9956dc041498fe47eeb059f1d4
-timeCreated: 1485672239
+guid: 0361b0d5465645a49a6f9e88b11c9520
+timeCreated: 1489551462
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Canadian_Tent_Cilindro1
-    100004: Canadian_Tent_Cilindro_1
-    100006: Canadian_Tent_TENDA_CANADESE
-    100008: Igloo_Tent_Cilindro
-    100010: Igloo_Tent_Cilindro_11
-    100012: Igloo_Tent_Disco
-    100014: Igloo_Tent_Piano
     400000: //RootNode
-    400002: Canadian_Tent_Cilindro1
-    400004: Canadian_Tent_Cilindro_1
-    400006: Canadian_Tent_TENDA_CANADESE
-    400008: Igloo_Tent_Cilindro
-    400010: Igloo_Tent_Cilindro_11
-    400012: Igloo_Tent_Disco
-    400014: Igloo_Tent_Piano
-    2300000: Canadian_Tent_Cilindro1
-    2300002: Canadian_Tent_Cilindro_1
-    2300004: Canadian_Tent_TENDA_CANADESE
-    2300006: Igloo_Tent_Cilindro
-    2300008: Igloo_Tent_Cilindro_11
-    2300010: Igloo_Tent_Disco
-    2300012: Igloo_Tent_Piano
-    3300000: Canadian_Tent_Cilindro1
-    3300002: Canadian_Tent_Cilindro_1
-    3300004: Canadian_Tent_TENDA_CANADESE
-    3300006: Igloo_Tent_Cilindro
-    3300008: Igloo_Tent_Cilindro_11
-    3300010: Igloo_Tent_Disco
-    3300012: Igloo_Tent_Piano
-    4300000: Canadian_Tent_Cilindro1
-    4300002: Canadian_Tent_Cilindro_1
-    4300004: Canadian_Tent_TENDA_CANADESE
-    4300006: Igloo_Tent_Cilindro
-    4300008: Igloo_Tent_Cilindro_11
-    4300010: Igloo_Tent_Disco
-    4300012: Igloo_Tent_Piano
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Plane002
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -66,7 +35,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.001
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
@@ -104,7 +73,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
