@@ -18,13 +18,13 @@ public class SecondMenuController : MonoBehaviour {
     [SerializeField] GameObject boatOne;
     [SerializeField] GameObject boatTwo;
 
-    bool canMove = false;
+    bool canMove = false;    [SerializeField] GameObject blockingWall;
+
     bool teamOneSelected = false;
     bool teamTwoSelected = false;
     bool instructionsStarted = false;
 
     [Header("Movement Markers")]
-    [SerializeField] GameObject blockingWall;
     [SerializeField] Vector3 camStartMarker;
     [SerializeField] Vector3 boardOneStartMarker;
     [SerializeField] Vector3 boardTwoStartMarker;
@@ -67,11 +67,10 @@ public class SecondMenuController : MonoBehaviour {
 
             // Add a small force to the boats
             float forceValue = 5000;
-            // if (PlayerPrefs.GetString("teamOneBoat") == "canoe") { forceValue = 5000; }
-            // else { forceValue = 2500; }
+            if (PlayerPrefs.GetString("teamOneBoat") == "canoe") { forceValue = 5000; }
+            else { forceValue = 2500; }
             boatOne.GetComponentInChildren<Rigidbody>().AddForce(boatOne.transform.forward * forceValue, ForceMode.Impulse);
-            // if (PlayerPrefs.GetString("teamTwoBoat") == "canoe") { forceValue = 5000; }
-            // else { forceValue = 2500; }
+            
             boatTwo.GetComponentInChildren<Rigidbody>().AddForce(boatOne.transform.forward * forceValue, ForceMode.Impulse);
         }
 

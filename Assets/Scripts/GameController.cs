@@ -160,6 +160,14 @@ public class GameController : MonoBehaviour
 
     /* TEMP "SPAWN" functionality */
     void SetUpTeams() {
+
+        /* if (Input.GetKeyDown(KeyCode.Space)) {
+            // Green Canoe
+            PlayerPrefs.SetString("teamOneBoat", "raft");
+            // Red Raft
+            PlayerPrefs.SetString("teamTwoBoat", "raft");
+        } */
+
         // Player One Boat
         if (PlayerPrefs.GetString("teamOneBoat") == "canoe") {
             greenTeamRaft.SetActive(false);
