@@ -28,8 +28,8 @@ public class MenuMovement : MonoBehaviour {
     [SerializeField] GameObject paddlePivot;
     [SerializeField] GameObject paddle;
     [SerializeField] int playerID;
-    float paddleForwardForce = 500;
-    float paddleTorque = 250;
+    float paddleForwardForce = 400;
+    float paddleTorque = 200;
     float paddleRoationSpeed = 2400;
 
     Player player;
@@ -94,8 +94,6 @@ public class MenuMovement : MonoBehaviour {
                     currentBoatBody = boatBody[(int)currentBoat];
                     selectedBoat = "raft";
                     // Set the forces for raft
-                    paddleTorque = 50;
-                    paddleForwardForce = 400;
                 } else {
                     currentBoat = BoatType.CANOE;
                     boatUI[(int)currentBoat].gameObject.SetActive(true);
@@ -105,9 +103,6 @@ public class MenuMovement : MonoBehaviour {
                     boatContents.transform.parent = boatBody[(int)currentBoat].transform;
                     currentBoatBody = boatBody[(int)currentBoat];
                     selectedBoat = "canoe";
-                    // Set the forces for canoe
-                    paddleTorque = 150;
-                    paddleForwardForce = 200;
                 }
 
                 StartCoroutine(WaitForInput());
@@ -136,9 +131,9 @@ public class MenuMovement : MonoBehaviour {
 
         if (selectedBoat == "canoe") {
             paddleForwardForce = 400;
-            paddleTorque = 300;
+            paddleTorque = 200;
         } else {
-            paddleForwardForce = 200;
+            paddleForwardForce = 600;
             paddleTorque = 150;
         }
 
