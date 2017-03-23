@@ -9,7 +9,7 @@ abstract public class GameMode : MonoBehaviour {
     /// Optional winCon can be used instead of 
     /// score over time.
     /// </summary>
-    public bool winCon;
+    public bool winCon = false;
 
     /// <summary>
     /// Property mode.
@@ -24,7 +24,7 @@ abstract public class GameMode : MonoBehaviour {
     /// <summary>
     /// init used if this mode requires special setup.
     /// </summary>
-    public void init()
+    virtual public void init()
     { }
 
     /// <summary>
@@ -34,6 +34,16 @@ abstract public class GameMode : MonoBehaviour {
     protected GameMode()
     { }
 
+    /// <summary>
+    /// Logic for a game that can end 
+    /// before time runs out
+    /// </summary>
+    virtual public void earlyWin()
+    { }
+
+    /// <summary>
+    /// Rules for the Flip mode
+    /// </summary>
     internal class Flip : GameMode
     {
         public override GameController.Modes mode
@@ -45,6 +55,9 @@ abstract public class GameMode : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Rules for the Pickup mode
+    /// </summary>
     internal class Pickup : GameMode
     {
         public override GameController.Modes mode
@@ -56,6 +69,9 @@ abstract public class GameMode : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Rules for the Race mode
+    /// </summary>
     internal class Race : GameMode
     {
         public override GameController.Modes mode
@@ -64,6 +80,11 @@ abstract public class GameMode : MonoBehaviour {
             {
                 return GameController.Modes.Race;
             }
+        }
+
+        public override void earlyWin()
+        {
+
         }
     }
 }

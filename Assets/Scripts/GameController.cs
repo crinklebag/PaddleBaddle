@@ -16,8 +16,6 @@ public class GameController : MonoBehaviour
     [SerializeField] public GameObject pauseMenu;
     public float TeamOneScore;
     public float TeamTwoScore;
-    [Obsolete("Please use teamBoats[0] instead")] GameObject team1Boat { get { return teamBoats[0]; } }
-    [Obsolete("Please use teamBoats[1] instead")] GameObject team2Boat { get { return teamBoats[1]; } }
 
     /// <summary>
     /// The different winning screens for each team.
@@ -169,8 +167,8 @@ public class GameController : MonoBehaviour
 	void Update ()
     {
 
-        if (mode == Modes.Race && raceOver)
-        { RaceWin(); }
+        if (game[mode].winCon)
+            game[mode].earlyWin();
 
 		if (waitingForEndPrompt && firstPlayer.GetButtonDown("Attack"))
         {
