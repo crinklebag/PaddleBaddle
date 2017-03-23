@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 [DisallowMultipleComponent]
 public class GameController : MonoBehaviour
@@ -55,11 +56,12 @@ public class GameController : MonoBehaviour
 
     /// <summary>
     /// The modes available to the controller
-    /// Private by default
     /// Default mode is Flip
     /// </summary>
     [HideInInspector] public enum Modes { Flip, Pickup, Race };
+    private Dictionary<Modes, GameMode> game;
     public Modes mode = Modes.Flip;
+    
 
     /// <summary>
     /// Will be true when the entire end prompt has been displayed (including the "Press 'A' to Continue" notification)
@@ -158,6 +160,7 @@ public class GameController : MonoBehaviour
     {
         respawnArea = GameObject.Find("Respawn Area").GetComponent<SphereCollider>();
         StartCoroutine(StartRound());
+        game.Add(Modes.Flip, Flip);
     }
 
 	void Update ()
