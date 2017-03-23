@@ -55,7 +55,12 @@ public class PickupMode : GameMode {
             Vector3 spawnPoint = UnityEngine.Random.insideUnitSphere;
             spawnPoint.Scale(new Vector3(respawnArea.radius, 0, respawnArea.radius));
             spawnPoint += respawnArea.transform.position;
-            Object.Instantiate(coinPrefab, spawnPoint, Quaternion.identity);
+            GameObject thisPickup = Object.Instantiate(coinPrefab, spawnPoint, Quaternion.identity);
+
+            // use the reference to set up the buoyancy of the object
+            thisPickup.GetComponent<RealisticBuoyancy>().setup();
+            // hack fix the water level
+            thisPickup.GetComponent<RealisticBuoyancy>().waterLevelOverride = RealisticWaterPhysics.currentWaterLevel;
 
             yield return new WaitForSeconds(spawnRate);
         }
