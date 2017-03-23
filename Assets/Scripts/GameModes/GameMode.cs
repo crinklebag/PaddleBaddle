@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-abstract public class GameMode : MonoBehaviour {
+abstract public class GameMode {
 
     /// <summary>
     /// Optional winCon can be used instead of 
@@ -51,71 +51,5 @@ abstract public class GameMode : MonoBehaviour {
         }
 
         return -1;
-    }
-
-    /*
-    /// <summary>
-    /// Rules for the Flip mode
-    /// </summary>
-    internal class Flip : GameMode
-    {
-        public override GameController.Modes mode
-        {
-            get
-            {
-                return GameController.Modes.Flip;
-            }
-        }
-    }*/
-
-    /// <summary>
-    /// Rules for the Pickup mode
-    /// </summary>
-    internal class Pickup : GameMode
-    {
-        public override GameController.Modes mode
-        {
-            get
-            {
-                return GameController.Modes.Pickup;
-            }
-        }
-    }
-
-    /// <summary>
-    /// Rules for the Race mode
-    /// </summary>
-    internal class Race : GameMode
-    {
-        public override GameController.Modes mode
-        {
-            get
-            {
-                return GameController.Modes.Race;
-            }
-        }
-
-        public override int getWinner(Team[] team, Transform target)
-        {
-            float minDistance = float.MaxValue;
-            int winner = -1;
-
-            for (int i = 0; i < team.Length; i++)
-            {
-                float thisDistance = Vector3.Distance(team[i].boat.transform.position
-                    , target.position);
-
-                // closest is winner
-                if (thisDistance < minDistance)
-                {
-                    minDistance = thisDistance;
-                    winner = i;
-                }
-            }
-
-            ++team[winner].score;
-
-            return winner;
-        }
     }
 }

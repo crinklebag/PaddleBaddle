@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Flip : GameMode {
+public class FlipMode : GameMode {
     public override GameController.Modes mode
     {
         get
@@ -10,7 +10,4 @@ public class Flip : GameMode {
             return GameController.Modes.Flip;
         }
     }
-
-    public Flip()
-    { }
 }

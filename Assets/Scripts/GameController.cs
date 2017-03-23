@@ -165,31 +165,26 @@ public class GameController : MonoBehaviour
         if (raceGoal == null)
             raceGoal = transform;
 
-        //game.Add(Modes.Flip, new GameMode.Flip());
-        Flip flipMode = new Flip();
-        Debug.Log(flipMode);
-        Debug.Break();
+        game = new Dictionary<Modes, GameMode>();
+        game.Add(Modes.Flip, new FlipMode());
+        game.Add(Modes.Pickup, new PickupMode());
+        game.Add(Modes.Race, new RaceMode());
 
-        game.Add(Modes.Flip, flipMode);
         Debug.Log(game[Modes.Flip]);
-        Debug.Break();
-    
-        game.Add(Modes.Pickup, new GameMode.Pickup());
-        game.Add(Modes.Race, new GameMode.Race());
-        
         Debug.Log(game[Modes.Pickup]);
         Debug.Log(game[Modes.Race]);
         Debug.Break();
+
     }
 
-	void Update ()
+    void Update ()
     {
         // Early win condition met
-        if (game[mode].winCon)
-        {
-            //TeamWin(game[mode].getWinner(teamBoats, raceGoal));
-            TeamWin(game[mode].getWinner(Teams, raceGoal));
-        }
+        //if (game[mode].winCon)
+        //{
+        //    //TeamWin(game[mode].getWinner(teamBoats, raceGoal));
+        //    TeamWin(game[mode].getWinner(Teams, raceGoal));
+        //}
 
         if (waitingForEndPrompt && firstPlayer.GetButtonDown("Attack"))
         {
@@ -416,6 +411,7 @@ public class GameController : MonoBehaviour
 
     public void AltWin()
     {
+        Debug.Log("AltWin called");
         game[mode].winCon = true;
     }
 }
