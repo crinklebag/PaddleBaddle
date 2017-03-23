@@ -4,6 +4,19 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+
+[Serializable]
+public class Team
+{
+    public GameObject boat;
+    public int score = 0;
+
+    public Team()
+    {
+        // nothing here yet
+    }
+}
 
 [DisallowMultipleComponent]
 public class GameController : MonoBehaviour
@@ -11,20 +24,16 @@ public class GameController : MonoBehaviour
     /// <summary>
     /// Array of currently active boats.
     /// </summary>
-    [SerializeField] private GameObject[] teamBoats;
+    //[SerializeField] private GameObject[] teamBoats;
+    [SerializeField] private Team[] Teams = { new Team(), new Team()};
     [SerializeField] public GameObject pauseMenu;
-    public float TeamOneScore;
-    public float TeamTwoScore;
-    [Obsolete("Please use teamBoats[0] instead")] GameObject team1Boat { get { return teamBoats[0]; } }
-    [Obsolete("Please use teamBoats[1] instead")] GameObject team2Boat { get { return teamBoats[1]; } }
+    [HideInInspector] public float TeamOneScore;
+    [HideInInspector] public float TeamTwoScore;
 
     /// <summary>
     /// The different winning screens for each team.
     /// </summary>
     [SerializeField] private GameObject[] teamWinBoards;
-
-    [Obsolete("Please use teamWinBoards[0] instead")] GameObject team1WinBoard { get { return teamWinBoards[0]; } }
-    [Obsolete("Please use teamWinBoards[1] instead")] GameObject team2WinBoard { get { return teamWinBoards[1]; } }
 
     /// <summary>
     /// In-game HUD score boards for each team.
@@ -49,22 +58,28 @@ public class GameController : MonoBehaviour
     /// <summary>
     /// Serialized vars for spawning coins
     /// </summary>
-    [SerializeField] GameObject coinPrefab;
-    [SerializeField] float spawnRate = 3f;
-    SphereCollider respawnArea;
+    public GameObject coinPrefab;
+    public float spawnRate = 3f;
+    public SphereCollider respawnArea;
 
     /// <summary>
     /// The modes available to the controller
-    /// Private by default
     /// Default mode is Flip
     /// </summary>
     [HideInInspector] public enum Modes { Flip, Pickup, Race };
+    public Dictionary<Modes, GameMode> game;
     public Modes mode = Modes.Flip;
+
+    /// <summary>
+    /// Reference to the race goal
+    /// </summary>
+    [SerializeField]
+    private Transform raceGoal;
 
     /// <summary>
     /// Will be true when the entire end prompt has been displayed (including the "Press 'A' to Continue" notification)
     /// </summary>
-	private bool waitingForEndPrompt = false;
+    private bool waitingForEndPrompt = false;
 
     /// <summary>
     /// Current team points. Whoever has the most at the end of the round wins
@@ -131,18 +146,6 @@ public class GameController : MonoBehaviour
     /// </summary>
     private float shakeScale = 0.034f;
 
-    /// <summary>
-    /// bool to tell if a team has arrived at the race goal
-    /// </summary>
-    [HideInInspector]
-    public bool raceOver;
-
-    /// <summary>
-    /// Reference to the race goal
-    /// </summary>
-    [SerializeField]
-    private Transform raceGoal;
-
     /* TEMP - I'M SORRY THIS IS TERRIBLE PLEASE FORGIVE ME*/
     [SerializeField] GameObject greenTeamCanoe;
     [SerializeField] GameObject greenTeamRaft;
@@ -187,18 +190,35 @@ public class GameController : MonoBehaviour
     /// </summary>
     void Start ()
     {
-        teamBoats = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] teamBoats = GameObject.FindGameObjectsWithTag("Player");
+        for (int i = 0; i < teamBoats.Length; i++)
+        {
+            Teams[i].boat = teamBoats[i];
+        }
+
         respawnArea = GameObject.Find("Respawn Area").GetComponent<SphereCollider>();
         StartCoroutine(StartRound());
+
+        if (raceGoal == null)
+            raceGoal = transform;
+
+        game = new Dictionary<Modes, GameMode>();
+        game.Add(Modes.Flip, new FlipMode());
+        game.Add(Modes.Pickup, new PickupMode());
+        game.Add(Modes.Race, new RaceMode());
     }
 
-	void Update ()
+    void Update ()
     {
+        // Early win condition met
+        if (game[mode].winCon)
+        {
+            //TeamWin(game[mode].getWinner(teamBoats, raceGoal));
+            TeamWin(game[mode].getWinner(Teams, raceGoal));
+            AddTeamPoint(0, 0);
+        }
 
-        if (mode == Modes.Race && raceOver)
-        { RaceWin(); }
-
-		if (waitingForEndPrompt && firstPlayer.GetButtonDown("Attack"))
+        if (waitingForEndPrompt && firstPlayer.GetButtonDown("Attack"))
         {
             Time.timeScale = 1.0f;
 			SceneManager.LoadScene ("Character Select", LoadSceneMode.Single);
@@ -219,6 +239,12 @@ public class GameController : MonoBehaviour
             pauseMenu.SetActive(true);
         }
     }
+
+    private void endRound()
+    {
+        throw new NotImplementedException();
+    }
+
     /// <summary>
     /// Designates that a team has won.
     /// </summary>
@@ -265,23 +291,33 @@ public class GameController : MonoBehaviour
 
     public void AddTeamPoint (int team, int points)
     {
-        if (team >= 0 && team < teamBoats.Length && RoundStarted && !RoundFinished)
+        //if (team >= 0 && team < teamBoats.Length && RoundStarted && !RoundFinished)
+        if (team >= 0 && team < Teams.Length && RoundStarted && !RoundFinished)
         {
-            teamPoints[team] += points;
-            TeamOneScore = teamPoints[0];
-            TeamTwoScore = teamPoints[1];
+            //teamPoints[team] += points;
+            //TeamOneScore = teamPoints[0];
+            //TeamTwoScore = teamPoints[1];
+            //Text teamScoreDisplay = teamScoreBoards[team].GetComponentInChildren<Text>();
+            //teamScoreDisplay.text = teamPoints[team].ToString();
+
+            Teams[team].score += points;
+            TeamOneScore = Teams[0].score;
+            TeamTwoScore = Teams[1].score;
             Text teamScoreDisplay = teamScoreBoards[team].GetComponentInChildren<Text>();
-            teamScoreDisplay.text = teamPoints[team].ToString();
+            teamScoreDisplay.text = Teams[team].score.ToString();
         }
     }
 
-    void RaceWin()
+
+    [Obsolete("Use game[mode].getWinner instead")]void RaceWin()
     {
         float minDistance = float.MaxValue;
 
-        for (int i = 0; i < teamBoats.Length; i++)
+        //for (int i = 0; i < teamBoats.Length; i++)
+        for (int i = 0; i < Teams.Length; i++)
         {
-            float thisDistance = Vector3.Distance(teamBoats[i].transform.position
+            //float thisDistance = Vector3.Distance(teamBoats[i].transform.position
+            float thisDistance = Vector3.Distance(Teams[i].boat.transform.position
                 , raceGoal.position);
 
             // closest is winner
@@ -315,13 +351,8 @@ public class GameController : MonoBehaviour
         roundBeginTimerText.text = "Start!";
         yield return new WaitForSecondsRealtime(1);
 
-        // Switch to perform mode specific setup
-        // Flip doesn't need anything extra
-        // Neither does race, now we're using an if
-        if (mode == Modes.Pickup)
-        {
-                StartCoroutine(SpawnCoins());
-        }
+        // Run mode specific init
+        game[mode].init(this);
 
         roundStarted = true;
         roundBeginTimerText.gameObject.SetActive(false);
@@ -329,26 +360,6 @@ public class GameController : MonoBehaviour
 
         StartCoroutine(RoundSecondTick());
     }
-
-    IEnumerator SpawnCoins()
-    {
-        // For simplicity we'll use Respawn area for now
-       while (!RoundFinished)
-        {
-            Vector3 spawnPoint = UnityEngine.Random.insideUnitSphere;
-            spawnPoint.Scale(new Vector3(respawnArea.radius, 0, respawnArea.radius));
-            spawnPoint += respawnArea.transform.position;
-            GameObject newPickup = Instantiate(coinPrefab, spawnPoint, Quaternion.identity) as GameObject;
-
-            // use the reference to set up the buoyancy of the object
-            newPickup.GetComponent<RealisticBuoyancy>().setup();
-            // hack fix the water level
-            newPickup.GetComponent<RealisticBuoyancy>().waterLevelOverride = RealisticWaterPhysics.currentWaterLevel;
-
-            yield return new WaitForSeconds(spawnRate);
-        } 
-    }
-
     IEnumerator RoundSecondTick()
     {
         while (timeUntilRoundEnd >= 0 && !RoundFinished)
@@ -369,30 +380,20 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene("GameOver");
         yield return new WaitForSecondsRealtime(2);
 
-        if (mode == Modes.Race)
-        {
-            RaceWin();
-            yield break;
-        }
+        winningTeam = game[mode].getWinner(Teams, raceGoal);
 
-        if (teamPoints[0] > teamPoints[1])
-        {
-            Debug.Log("Team 1 won");
-            TeamWin(0);
-            teamBoats[1].SendMessage("FlipBoat");
-        }
-        else if (teamPoints[1] > teamPoints[0])
-        {
-            Debug.Log("Team 2 won");
-            TeamWin(1);
-            teamBoats[0].SendMessage("FlipBoat");
-        }
-        else
+        if (winningTeam == -1)
         {
             roundBeginTimerText.text = "Tie Game!";
             SceneManager.LoadScene("GameOver");
             // yield return new WaitForSecondsRealtime(3);
             // SceneManager.LoadScene("Lobby Design", LoadSceneMode.Single);
+        }
+        else
+        {
+            TeamWin(winningTeam);
+            Teams[(winningTeam + 1) % Teams.Length].boat
+                .SendMessage("FlipBoat");
         }
     }
 
@@ -404,9 +405,10 @@ public class GameController : MonoBehaviour
 
 		while (camera.transform.position.y > 35) {
 
-			Vector3 cameraTarget = (winningTeam == 1) ? teamBoats[0].transform.position : teamBoats[1].transform.position;
+            //Vector3 cameraTarget = (winningTeam == 1) ? teamBoats[0].transform.position : teamBoats[1].transform.position;
+            Vector3 cameraTarget = (winningTeam == 1) ? Teams[0].boat.transform.position : Teams[1].boat.transform.position;
 
-			camera.transform.position = Vector3.MoveTowards (camera.transform.position, cameraTarget, 0.5f);
+            camera.transform.position = Vector3.MoveTowards (camera.transform.position, cameraTarget, 0.5f);
 			//camera.transform.Translate (camera.transform.forward);
 			Debug.Log ("camera: " + camera.transform.position);
 			yield return null;
@@ -423,5 +425,16 @@ public class GameController : MonoBehaviour
 		endPromptText.gameObject.SetActive (true);
 		waitingForEndPrompt = true;
 	}
+
+    public void runCR(IEnumerator CR)
+    {
+        StartCoroutine(CR);
+    }
+
+    //public void AltWin()
+    //{
+    //    Debug.Log("AltWin called");
+    //    game[mode].winCon = true;
+    //}
 }
 
