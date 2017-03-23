@@ -13,10 +13,13 @@ public class MenuMovement : MonoBehaviour {
     [SerializeField] TeamNumber teamNumber;
 
     [SerializeField] SecondMenuController menuController;
+    [SerializeField] InstructionPanel instructionsPanel;
 
     [Header("Boat Selection Variables")]
     [SerializeField] Image[] boatUI;
     [SerializeField] GameObject boatSelectedUI;
+    [SerializeField] GameObject pressAUI;
+    [SerializeField] GameObject pressBUI;
     [SerializeField] GameObject[] boatBody;
     [SerializeField] GameObject boatContents;
        
@@ -25,9 +28,9 @@ public class MenuMovement : MonoBehaviour {
     [SerializeField] GameObject paddlePivot;
     [SerializeField] GameObject paddle;
     [SerializeField] int playerID;
-    [SerializeField] float paddleForwardForce = 500;
-    [SerializeField] float paddleTorque = 250;
-    [SerializeField] float paddleRoationSpeed;
+    float paddleForwardForce = 400;
+    float paddleTorque = 200;
+    float paddleRoationSpeed = 2400;
 
     Player player;
     GameObject boat;
@@ -56,7 +59,7 @@ public class MenuMovement : MonoBehaviour {
         if (menuController.CanMove())
         {
             if (player.GetButtonDown("+Right Paddle") && canPaddle) {
-                Debug.Log("+Right Paddle");
+                // Debug.Log("+Right Paddle");
                 if (selectedBoat == "canoe") { MoveCanoe(1, -1); }
                 else { MoveCanoe(1, 1); }
             }
@@ -90,6 +93,7 @@ public class MenuMovement : MonoBehaviour {
                     boatContents.transform.parent = boatBody[(int)currentBoat].transform;
                     currentBoatBody = boatBody[(int)currentBoat];
                     selectedBoat = "raft";
+                    // Set the forces for raft
                 } else {
                     currentBoat = BoatType.CANOE;
                     boatUI[(int)currentBoat].gameObject.SetActive(true);
@@ -124,10 +128,21 @@ public class MenuMovement : MonoBehaviour {
         else {
             menuController.TeamTwoSelect(selectedBoat);
         }
+
+        if (selectedBoat == "canoe") {
+            paddleForwardForce = 400;
+            paddleTorque = 200;
+        } else {
+            paddleForwardForce = 600;
+            paddleTorque = 150;
+        }
+
         // Disallow Selection Input
         selectingBoat = false;
         // Set the UI
         boatSelectedUI.SetActive(true);
+        pressBUI.SetActive(true);
+        pressAUI.SetActive(false);
     }
 
     void DeselectBoat() {
@@ -140,12 +155,14 @@ public class MenuMovement : MonoBehaviour {
         selectingBoat = true;
         // Reset the UI
         boatSelectedUI.SetActive(false);
+        pressBUI.SetActive(false);
+        pressAUI.SetActive(true);
     }
 
     void MoveCanoe(int paddleSide, int paddleDirection)
     {
         // Add force to boat by the paddle
-        Debug.Log("Adding Forward Force");
+        // Debug.Log("Adding Forward Force");
         canPaddle = false;
 
         Vector3 finalForwardForce = paddleDirection * paddleForwardForce * currentBoatBody.transform.forward;
@@ -159,7 +176,7 @@ public class MenuMovement : MonoBehaviour {
 
         if (playerCharacter)
         {
-            Debug.Log("Found Player");
+            // Debug.Log("Found Player");
             Animator playerAnimator = playerCharacter.GetComponent<Animator>();
 
             if (playerAnimator)
@@ -216,5 +233,9 @@ public class MenuMovement : MonoBehaviour {
 
         canInput = true;
 
+    }
+
+    public int GetPlayerID() {
+        return playerID;
     }
 }

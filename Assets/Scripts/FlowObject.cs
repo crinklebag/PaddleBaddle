@@ -61,35 +61,40 @@ public class FlowObject : MonoBehaviour {
 	{
 		if (thingsInRange.Count < 1)
 			return;
-		
-		foreach (GameObject thing in thingsInRange)
-		{
-			// Get a vector going from thing to center of whirlpool
-			Vector3 toCentre;
-			toCentre = transform.position - thing.transform.position;
 
-			// Find the tangent vector
-			Vector3 centreNormal = Vector3.Cross (transform.up, toCentre);
-			if (toCentre.magnitude > whirlpool.effectRadius) {
-				toCentre.Normalize ();
-				toCentre *= whirlpool.effectRadius;
-			}
+        foreach (GameObject thing in thingsInRange)
+        {
+            if (thing)
+            {
+                // Get a vector going from thing to center of whirlpool
+                Vector3 toCentre;
+                toCentre = transform.position - thing.transform.position;
 
-			// Calculate the percentage of the "way into the whirlpool"
-			float inPercent = 1 - (toCentre.magnitude / whirlpool.effectRadius);
-			toCentre.Normalize (); // Normalize vectors now to simplify calculations
-			centreNormal.Normalize ();
-			// Add expontial pull force and linear normal force
-			Vector3 pullForce = toCentre * inPercent * inPercent * whirlpool.pullStrength;
-			Vector3 normalForce = centreNormal * inPercent * whirlpool.rotateStrength;
-			Vector3 resultingForce = pullForce + normalForce;
+                // Find the tangent vector
+                Vector3 centreNormal = Vector3.Cross(transform.up, toCentre);
+                if (toCentre.magnitude > whirlpool.effectRadius)
+                {
+                    toCentre.Normalize();
+                    toCentre *= whirlpool.effectRadius;
+                }
 
-			// Apply force ONCE to parent rigidbody
-			Rigidbody[] rigidbodies = thing.GetComponentsInChildren<Rigidbody> ();
-			if (rigidbodies.Length > 0) {
-				rigidbodies [0].AddForce (resultingForce);
-			}
-		}
+                // Calculate the percentage of the "way into the whirlpool"
+                float inPercent = 1 - (toCentre.magnitude / whirlpool.effectRadius);
+                toCentre.Normalize(); // Normalize vectors now to simplify calculations
+                centreNormal.Normalize();
+                // Add expontial pull force and linear normal force
+                Vector3 pullForce = toCentre * inPercent * inPercent * whirlpool.pullStrength;
+                Vector3 normalForce = centreNormal * inPercent * whirlpool.rotateStrength;
+                Vector3 resultingForce = pullForce + normalForce;
+
+                // Apply force ONCE to parent rigidbody
+                Rigidbody[] rigidbodies = thing.GetComponentsInChildren<Rigidbody>();
+                if (rigidbodies.Length > 0)
+                {
+                    rigidbodies[0].AddForce(resultingForce);
+                }
+            }
+        }
 	}
 		
 	void currentEffect()
@@ -120,5 +125,13 @@ public class FlowObject : MonoBehaviour {
 			thingsInRange.Remove (other.gameObject);
 		}
 	}
+
+    public void ChangeCurrentDirection() {
+        whirlpool.rotateStrength *= -1;
+    }
+
+    public float GetCurrentDirection() {
+        return whirlpool.rotateStrength;
+    }
 
 }

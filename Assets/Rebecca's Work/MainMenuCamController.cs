@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MainMenuCamController : MonoBehaviour {
 
+    LobbyController menuController;
+
     public enum CameraState { MAIN_MENU, CHARACTER_SELECT };
     CameraState currentState;
 
@@ -22,6 +24,7 @@ public class MainMenuCamController : MonoBehaviour {
 
     bool gameStarted = false;
     bool moveCam = false;
+    bool toggledPlayer = false;
     Transform destination;
     Color targetSkyColor;
     float targetLightIntensity1 = 0;
@@ -34,7 +37,9 @@ public class MainMenuCamController : MonoBehaviour {
     Player[] players = new Player[4];
 
     void Start () {
-        
+
+        menuController = GameObject.FindGameObjectWithTag("GameController").GetComponent<LobbyController>();
+
         for (int i = 0; i < players.Length; i++)
         {
             players[i] = ReInput.players.GetPlayer(i);
@@ -46,18 +51,6 @@ public class MainMenuCamController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        /*if ((players[0].GetButtonDown("Attack") || players[1].GetButtonDown("Attack") || players[2].GetButtonDown("Attack") || players[3].GetButtonDown("Attack")) && !gameStarted) {
-            gameStarted = true;
-            if (currentState == CameraState.MAIN_MENU && destination != characterSelectDestination) {
-                MoveToCharacterSelect();
-            }
-            else if (currentState == CameraState.CHARACTER_SELECT) {
-                MoveToMainMenu();
-            }
-
-             
-            moveCam = true;
-        }*/
 
         if (moveCam) {
            MoveCamera();
@@ -74,14 +67,21 @@ public class MainMenuCamController : MonoBehaviour {
     void MoveCamera() {
         float distCovered = (Time.time - startTime) * speed;
         float fracJourney = distCovered / journeyLength;
+         
         this.transform.position = Vector3.Lerp(this.transform.position, destination.transform.position, fracJourney);
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, destination.transform.rotation, fracJourney);
         this.GetComponent<Camera>().backgroundColor = Color.Lerp(this.GetComponent<Camera>().backgroundColor, targetSkyColor, fracJourney);
         mainLight.intensity = Mathf.Lerp(mainLight.intensity, targetLightIntensity1, fracJourney);
         secondaryLight.intensity = Mathf.Lerp(secondaryLight.intensity, targetLightIntensity2, fracJourney);
+
+        if (fracJourney >= 0.1f && !toggledPlayer) {
+            toggledPlayer = true;
+            menuController.ToggleOffCharacters();
+        }
     }
 
     public void MoveToMainMenu() {
+        toggledPlayer = false;
         destination = mainMenuDestination;
         targetSkyColor = nightSkyColor;
         targetLightIntensity1 = nightLightIntensity;
@@ -93,6 +93,7 @@ public class MainMenuCamController : MonoBehaviour {
     }
 
     public void MoveToCharacterSelect() {
+        toggledPlayer = false;
         destination = characterSelectDestination;
         targetSkyColor = daySkyColor;
         targetLightIntensity1 = dayLightIntensity1;
