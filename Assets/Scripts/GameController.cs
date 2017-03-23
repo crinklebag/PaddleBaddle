@@ -322,8 +322,6 @@ public class GameController : MonoBehaviour
 
         // Run mode specific init
         game[mode].init(this);
-        if (game[mode].hasCoroutine)
-            handleCoroutine(game[mode].CR);
 
         roundStarted = true;
         roundBeginTimerText.gameObject.SetActive(false);
@@ -400,7 +398,7 @@ public class GameController : MonoBehaviour
 		waitingForEndPrompt = true;
 	}
 
-    public void handleCoroutine(IEnumerator CR)
+    public void runCR(IEnumerator CR)
     {
         StartCoroutine(CR);
     }

@@ -15,7 +15,7 @@ public class PickupMode : GameMode {
     {
         get
         {
-            return true;
+            return false;
         }
     }
 
@@ -27,18 +27,22 @@ public class PickupMode : GameMode {
         }
     }
 
+    GameController GC;
     private IEnumerator coinSpawner;
     GameObject coinPrefab;
     float spawnRate = 3f;
-
     SphereCollider respawnArea;
 
-    public override void init(MonoBehaviour GC)
+    public override void init(MonoBehaviour _GC)
     {
+        GC = _GC.GetComponent<GameController>();
+
         coinSpawner = SpawnCoins();
-        coinPrefab = GC.GetComponent<GameController>().coinPrefab;
-        spawnRate = GC.GetComponent<GameController>().spawnRate;
-        respawnArea = GC.GetComponent<GameController>().respawnArea;
+        coinPrefab = GC.coinPrefab;
+        spawnRate = GC.spawnRate;
+        respawnArea = GC.respawnArea;
+
+        GC.runCR(coinSpawner);
     }
 
 
