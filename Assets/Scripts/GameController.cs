@@ -375,8 +375,8 @@ public class GameController : MonoBehaviour
         roundEndTimerText.gameObject.SetActive(false);
         roundBeginTimerText.gameObject.SetActive(true);
         roundBeginTimerText.text = "Finished!";
-        PlayerPrefs.SetInt("teamOneScore", teamPoints[0]);
-        PlayerPrefs.SetInt("teamTwoScore", teamPoints[1]);
+        PlayerPrefs.SetInt("teamOneScore", Teams[0].score);
+        PlayerPrefs.SetInt("teamTwoScore", Teams[1].score);
         SceneManager.LoadScene("GameOver");
         yield return new WaitForSecondsRealtime(2);
 
