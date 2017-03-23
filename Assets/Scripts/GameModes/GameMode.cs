@@ -38,8 +38,8 @@ abstract public class GameMode : MonoBehaviour {
     /// Logic for a game that can end 
     /// before time runs out
     /// </summary>
-    virtual public void earlyWin()
-    { }
+    virtual public int earlyWin(GameObject[] teamBoats, Transform target)
+    { return -1; }
 
     /// <summary>
     /// Rules for the Flip mode
@@ -82,9 +82,24 @@ abstract public class GameMode : MonoBehaviour {
             }
         }
 
-        public override void earlyWin()
+        public override int earlyWin(GameObject[] teamBoats, Transform target)
         {
+            float minDistance = float.MaxValue;
+            int winner = -1;
 
-        }
+            for (int i = 0; i < teamBoats.Length; i++)
+            {
+                float thisDistance = Vector3.Distance(teamBoats[i].transform.position
+                    , target.position);
+
+                // closest is winner
+                if (thisDistance < minDistance)
+                {
+                    minDistance = thisDistance;
+                    winner = i;
+                }
+            }
+
+            return winner;
     }
 }

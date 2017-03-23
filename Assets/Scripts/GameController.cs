@@ -22,9 +22,6 @@ public class GameController : MonoBehaviour
     /// </summary>
     [SerializeField] private GameObject[] teamWinBoards;
 
-    [Obsolete("Please use teamWinBoards[0] instead")] GameObject team1WinBoard { get { return teamWinBoards[0]; } }
-    [Obsolete("Please use teamWinBoards[1] instead")] GameObject team2WinBoard { get { return teamWinBoards[1]; } }
-
     /// <summary>
     /// In-game HUD score boards for each team.
     /// </summary>
@@ -59,12 +56,17 @@ public class GameController : MonoBehaviour
     [HideInInspector] public enum Modes { Flip, Pickup, Race };
     public Dictionary<Modes, GameMode> game;
     public Modes mode = Modes.Flip;
-    
+
+    /// <summary>
+    /// Reference to the race goal
+    /// </summary>
+    [SerializeField]
+    private Transform raceGoal;
 
     /// <summary>
     /// Will be true when the entire end prompt has been displayed (including the "Press 'A' to Continue" notification)
     /// </summary>
-	private bool waitingForEndPrompt = false;
+    private bool waitingForEndPrompt = false;
 
     /// <summary>
     /// Current team points. Whoever has the most at the end of the round wins
@@ -132,18 +134,6 @@ public class GameController : MonoBehaviour
     private float shakeScale = 0.034f;
 
     /// <summary>
-    /// bool to tell if a team has arrived at the race goal
-    /// </summary>
-    [HideInInspector]
-    public bool raceOver;
-
-    /// <summary>
-    /// Reference to the race goal
-    /// </summary>
-    [SerializeField]
-    private Transform raceGoal;
-
-    /// <summary>
     /// MonoBehaviour Awake Event
     /// </summary>
     void Awake ()
@@ -168,7 +158,7 @@ public class GameController : MonoBehaviour
     {
 
         if (game[mode].winCon)
-            game[mode].earlyWin();
+            game[mode].earlyWin(teamBoats, raceGoal);
 
 		if (waitingForEndPrompt && firstPlayer.GetButtonDown("Attack"))
         {
