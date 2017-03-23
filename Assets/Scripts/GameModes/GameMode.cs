@@ -35,12 +35,25 @@ abstract public class GameMode : MonoBehaviour {
     { }
 
     /// <summary>
-    /// Logic for a game that can end 
-    /// before time runs out
+    /// Logic for what happens at the end of the game
     /// </summary>
-    virtual public int earlyWin(GameObject[] teamBoats, Transform target)
-    { return -1; }
+    virtual public int getWinner(Team[] team, Transform target)
+    {
+        if (team[0].score > team[1].score)
+        {
+            Debug.Log("Team 1 won");
+            return 0;
+        }
+        else if (team[1].score > team[0].score)
+        {
+            Debug.Log("Team 2 won");
+            return 1;
+        }
 
+        return -1;
+    }
+
+    /*
     /// <summary>
     /// Rules for the Flip mode
     /// </summary>
@@ -53,7 +66,7 @@ abstract public class GameMode : MonoBehaviour {
                 return GameController.Modes.Flip;
             }
         }
-    }
+    }*/
 
     /// <summary>
     /// Rules for the Pickup mode
@@ -82,14 +95,14 @@ abstract public class GameMode : MonoBehaviour {
             }
         }
 
-        public override int earlyWin(GameObject[] teamBoats, Transform target)
+        public override int getWinner(Team[] team, Transform target)
         {
             float minDistance = float.MaxValue;
             int winner = -1;
 
-            for (int i = 0; i < teamBoats.Length; i++)
+            for (int i = 0; i < team.Length; i++)
             {
-                float thisDistance = Vector3.Distance(teamBoats[i].transform.position
+                float thisDistance = Vector3.Distance(team[i].boat.transform.position
                     , target.position);
 
                 // closest is winner
@@ -100,6 +113,9 @@ abstract public class GameMode : MonoBehaviour {
                 }
             }
 
+            ++team[winner].score;
+
             return winner;
+        }
     }
 }

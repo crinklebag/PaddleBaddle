@@ -6,16 +6,29 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+[Serializable]
+public class Team
+{
+    public GameObject boat;
+    public int score = 0;
+
+    public Team()
+    {
+        // nothing here yet
+    }
+}
+
 [DisallowMultipleComponent]
 public class GameController : MonoBehaviour
 {
     /// <summary>
     /// Array of currently active boats.
     /// </summary>
-    [SerializeField] private GameObject[] teamBoats;
+    //[SerializeField] private GameObject[] teamBoats;
+    [SerializeField] private Team[] Teams = { new Team(), new Team()};
     [SerializeField] public GameObject pauseMenu;
-    public float TeamOneScore;
-    public float TeamTwoScore;
+    [HideInInspector] public float TeamOneScore;
+    [HideInInspector] public float TeamTwoScore;
 
     /// <summary>
     /// The different winning screens for each team.
@@ -149,18 +162,36 @@ public class GameController : MonoBehaviour
         respawnArea = GameObject.Find("Respawn Area").GetComponent<SphereCollider>();
         StartCoroutine(StartRound());
 
-        game.Add(Modes.Flip, new GameMode.Flip());
+        if (raceGoal == null)
+            raceGoal = transform;
+
+        //game.Add(Modes.Flip, new GameMode.Flip());
+        Flip flipMode = new Flip();
+        Debug.Log(flipMode);
+        Debug.Break();
+
+        game.Add(Modes.Flip, flipMode);
+        Debug.Log(game[Modes.Flip]);
+        Debug.Break();
+    
         game.Add(Modes.Pickup, new GameMode.Pickup());
         game.Add(Modes.Race, new GameMode.Race());
+        
+        Debug.Log(game[Modes.Pickup]);
+        Debug.Log(game[Modes.Race]);
+        Debug.Break();
     }
 
 	void Update ()
     {
-
+        // Early win condition met
         if (game[mode].winCon)
-            game[mode].earlyWin(teamBoats, raceGoal);
+        {
+            //TeamWin(game[mode].getWinner(teamBoats, raceGoal));
+            TeamWin(game[mode].getWinner(Teams, raceGoal));
+        }
 
-		if (waitingForEndPrompt && firstPlayer.GetButtonDown("Attack"))
+        if (waitingForEndPrompt && firstPlayer.GetButtonDown("Attack"))
         {
             Time.timeScale = 1.0f;
 			SceneManager.LoadScene ("Character Select", LoadSceneMode.Single);
@@ -181,6 +212,12 @@ public class GameController : MonoBehaviour
             pauseMenu.SetActive(true);
         }
     }
+
+    private void endRound()
+    {
+        throw new NotImplementedException();
+    }
+
     /// <summary>
     /// Designates that a team has won.
     /// </summary>
@@ -227,7 +264,8 @@ public class GameController : MonoBehaviour
 
     public void AddTeamPoint (int team, int points)
     {
-        if (team >= 0 && team < teamBoats.Length && RoundStarted && !RoundFinished)
+        //if (team >= 0 && team < teamBoats.Length && RoundStarted && !RoundFinished)
+        if (team >= 0 && team < Teams.Length && RoundStarted && !RoundFinished)
         {
             teamPoints[team] += points;
             TeamOneScore = teamPoints[0];
@@ -241,9 +279,11 @@ public class GameController : MonoBehaviour
     {
         float minDistance = float.MaxValue;
 
-        for (int i = 0; i < teamBoats.Length; i++)
+        //for (int i = 0; i < teamBoats.Length; i++)
+        for (int i = 0; i < Teams.Length; i++)
         {
-            float thisDistance = Vector3.Distance(teamBoats[i].transform.position
+            //float thisDistance = Vector3.Distance(teamBoats[i].transform.position
+            float thisDistance = Vector3.Distance(Teams[i].boat.transform.position
                 , raceGoal.position);
 
             // closest is winner
@@ -323,31 +363,25 @@ public class GameController : MonoBehaviour
         roundBeginTimerText.text = "Finished!";
         SceneManager.LoadScene("Credits");
         yield return new WaitForSecondsRealtime(2);
+        StartCoroutine(EndRound());
+    }
 
-        if (mode == Modes.Race)
-        {
-            RaceWin();
-            yield break;
-        }
+    IEnumerator EndRound()
+    {
+        winningTeam = game[mode].getWinner(Teams, raceGoal);
 
-        if (teamPoints[0] > teamPoints[1])
-        {
-            Debug.Log("Team 1 won");
-            TeamWin(0);
-            teamBoats[1].SendMessage("FlipBoat");
-        }
-        else if (teamPoints[1] > teamPoints[0])
-        {
-            Debug.Log("Team 2 won");
-            TeamWin(1);
-            teamBoats[0].SendMessage("FlipBoat");
-        }
-        else
+        if (winningTeam == -1)
         {
             roundBeginTimerText.text = "Tie Game!";
             SceneManager.LoadScene("Credits");
             yield return new WaitForSecondsRealtime(3);
             SceneManager.LoadScene("Lobby Design", LoadSceneMode.Single);
+        }
+        else
+        {
+            TeamWin(winningTeam);
+            Teams[(winningTeam + 1) % Teams.Length].boat
+                .SendMessage("FlipBoat");
         }
     }
 
@@ -359,9 +393,10 @@ public class GameController : MonoBehaviour
 
 		while (camera.transform.position.y > 35) {
 
-			Vector3 cameraTarget = (winningTeam == 1) ? teamBoats[0].transform.position : teamBoats[1].transform.position;
+            //Vector3 cameraTarget = (winningTeam == 1) ? teamBoats[0].transform.position : teamBoats[1].transform.position;
+            Vector3 cameraTarget = (winningTeam == 1) ? Teams[0].boat.transform.position : Teams[1].boat.transform.position;
 
-			camera.transform.position = Vector3.MoveTowards (camera.transform.position, cameraTarget, 0.5f);
+            camera.transform.position = Vector3.MoveTowards (camera.transform.position, cameraTarget, 0.5f);
 			//camera.transform.Translate (camera.transform.forward);
 			Debug.Log ("camera: " + camera.transform.position);
 			yield return null;
@@ -378,5 +413,10 @@ public class GameController : MonoBehaviour
 		endPromptText.gameObject.SetActive (true);
 		waitingForEndPrompt = true;
 	}
+
+    public void AltWin()
+    {
+        game[mode].winCon = true;
+    }
 }
 
