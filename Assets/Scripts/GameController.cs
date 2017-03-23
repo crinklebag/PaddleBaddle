@@ -58,9 +58,9 @@ public class GameController : MonoBehaviour
     /// <summary>
     /// Serialized vars for spawning coins
     /// </summary>
-    [SerializeField] GameObject coinPrefab;
-    [SerializeField] float spawnRate = 3f;
-    SphereCollider respawnArea;
+    public GameObject coinPrefab;
+    public float spawnRate = 3f;
+    public SphereCollider respawnArea;
 
     /// <summary>
     /// The modes available to the controller
@@ -180,11 +180,12 @@ public class GameController : MonoBehaviour
     void Update ()
     {
         // Early win condition met
-        //if (game[mode].winCon)
-        //{
-        //    //TeamWin(game[mode].getWinner(teamBoats, raceGoal));
-        //    TeamWin(game[mode].getWinner(Teams, raceGoal));
-        //}
+        if (game[mode].winCon)
+        {
+            //TeamWin(game[mode].getWinner(teamBoats, raceGoal));
+            TeamWin(game[mode].getWinner(Teams, raceGoal));
+            AddTeamPoint(0, 0);
+        }
 
         if (waitingForEndPrompt && firstPlayer.GetButtonDown("Attack"))
         {
@@ -262,15 +263,22 @@ public class GameController : MonoBehaviour
         //if (team >= 0 && team < teamBoats.Length && RoundStarted && !RoundFinished)
         if (team >= 0 && team < Teams.Length && RoundStarted && !RoundFinished)
         {
-            teamPoints[team] += points;
-            TeamOneScore = teamPoints[0];
-            TeamTwoScore = teamPoints[1];
+            //teamPoints[team] += points;
+            //TeamOneScore = teamPoints[0];
+            //TeamTwoScore = teamPoints[1];
+            //Text teamScoreDisplay = teamScoreBoards[team].GetComponentInChildren<Text>();
+            //teamScoreDisplay.text = teamPoints[team].ToString();
+
+            Teams[team].score += points;
+            TeamOneScore = Teams[0].score;
+            TeamTwoScore = Teams[1].score;
             Text teamScoreDisplay = teamScoreBoards[team].GetComponentInChildren<Text>();
-            teamScoreDisplay.text = teamPoints[team].ToString();
+            teamScoreDisplay.text = Teams[team].score.ToString();
         }
     }
 
-    void RaceWin()
+
+    [Obsolete("Use game[mode].getWinner instead")]void RaceWin()
     {
         float minDistance = float.MaxValue;
 
@@ -312,33 +320,16 @@ public class GameController : MonoBehaviour
         roundBeginTimerText.text = "Start!";
         yield return new WaitForSecondsRealtime(1);
 
-        // Switch to perform mode specific setup
-        // Flip doesn't need anything extra
-        // Neither does race, now we're using an if
-        if (mode == Modes.Pickup)
-        {
-                StartCoroutine(SpawnCoins());
-        }
+        // Run mode specific init
+        game[mode].init(this);
+        if (game[mode].hasCoroutine)
+            handleCoroutine(game[mode].CR);
 
         roundStarted = true;
         roundBeginTimerText.gameObject.SetActive(false);
         roundEndTimerText.gameObject.SetActive(true);
 
         StartCoroutine(RoundSecondTick());
-    }
-
-    IEnumerator SpawnCoins()
-    {
-        // For simplicity we'll use Respawn area for now
-       while (!RoundFinished)
-        {
-            Vector3 spawnPoint = UnityEngine.Random.insideUnitSphere;
-            spawnPoint.Scale(new Vector3(respawnArea.radius, 0, respawnArea.radius));
-            spawnPoint += respawnArea.transform.position;
-            Instantiate(coinPrefab, spawnPoint, Quaternion.identity);
-
-            yield return new WaitForSeconds(spawnRate);
-        } 
     }
 
     IEnumerator RoundSecondTick()
@@ -408,6 +399,11 @@ public class GameController : MonoBehaviour
 		endPromptText.gameObject.SetActive (true);
 		waitingForEndPrompt = true;
 	}
+
+    public void handleCoroutine(IEnumerator CR)
+    {
+        StartCoroutine(CR);
+    }
 
     public void AltWin()
     {

@@ -10,6 +10,16 @@ abstract public class GameMode {
     /// score over time.
     /// </summary>
     public bool winCon = false;
+    
+    virtual public bool hasCoroutine
+    {
+        get { return false; }
+    }
+
+    virtual public IEnumerator CR
+    {
+        get { return null; }
+    }
 
     /// <summary>
     /// Property mode.
@@ -24,7 +34,7 @@ abstract public class GameMode {
     /// <summary>
     /// init used if this mode requires special setup.
     /// </summary>
-    virtual public void init()
+    virtual public void init(MonoBehaviour GC)
     { }
 
     /// <summary>
