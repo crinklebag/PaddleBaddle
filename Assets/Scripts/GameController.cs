@@ -59,7 +59,7 @@ public class GameController : MonoBehaviour
     /// Default mode is Flip
     /// </summary>
     [HideInInspector] public enum Modes { Flip, Pickup, Race };
-    private Dictionary<Modes, GameMode> game;
+    public Dictionary<Modes, GameMode> game;
     public Modes mode = Modes.Flip;
     
 
@@ -160,7 +160,10 @@ public class GameController : MonoBehaviour
     {
         respawnArea = GameObject.Find("Respawn Area").GetComponent<SphereCollider>();
         StartCoroutine(StartRound());
-        game.Add(Modes.Flip, Flip);
+
+        game.Add(Modes.Flip, new GameMode.Flip());
+        game.Add(Modes.Pickup, new GameMode.Pickup());
+        game.Add(Modes.Race, new GameMode.Race());
     }
 
 	void Update ()

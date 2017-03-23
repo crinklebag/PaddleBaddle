@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,4 +33,37 @@ abstract public class GameMode : MonoBehaviour {
     /// </summary>
     protected GameMode()
     { }
+
+    internal class Flip : GameMode
+    {
+        public override GameController.Modes mode
+        {
+            get
+            {
+                return GameController.Modes.Flip;
+            }
+        }
+    }
+
+    internal class Pickup : GameMode
+    {
+        public override GameController.Modes mode
+        {
+            get
+            {
+                return GameController.Modes.Pickup;
+            }
+        }
+    }
+
+    internal class Race : GameMode
+    {
+        public override GameController.Modes mode
+        {
+            get
+            {
+                return GameController.Modes.Race;
+            }
+        }
+    }
 }
