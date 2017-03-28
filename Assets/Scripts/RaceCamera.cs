@@ -50,6 +50,11 @@ public class RaceCamera : MonoBehaviour {
     private bool gate = false;
     private bool change = false;
 
+    [SerializeField] GameObject greenTeamCanoe;
+    [SerializeField] GameObject greenTeamRaft;
+    [SerializeField] GameObject redTeamCanoe;
+    [SerializeField] GameObject redTeamRaft;
+
     /// <summary>
     /// Get the original details of the object before we start
     /// In case we need them later
@@ -68,7 +73,7 @@ public class RaceCamera : MonoBehaviour {
         original = gameObject;
 
         myCam = gameObject.GetComponent<Camera>();
-        myCam.orthographic = true;
+        //myCam.orthographic = true;
     }
 
     /// <summary>
@@ -79,6 +84,26 @@ public class RaceCamera : MonoBehaviour {
     {
         if (on)
         { camSetup(); }
+
+        // Player One Boat
+        if (PlayerPrefs.GetString("teamOneBoat") == "canoe")
+        {
+            targets[0] = greenTeamCanoe;
+        }
+        if (PlayerPrefs.GetString("teamOneBoat") == "raft")
+        {
+            targets[0] = greenTeamRaft;
+        }
+
+        // Player Two Boat
+        if (PlayerPrefs.GetString("teamTwoBoat") == "canoe")
+        {
+            targets[1] = redTeamCanoe;
+        }
+        if (PlayerPrefs.GetString("teamTwoBoat") == "raft")
+        {
+            targets[1] = redTeamRaft;
+        }
     }
 
     /// <summary>
@@ -88,7 +113,7 @@ public class RaceCamera : MonoBehaviour {
     private void resize()
     {
         float distance = Vector3.Distance(targets[0].transform.position, targets[1].transform.position);
-        myCam.orthographicSize = Mathf.Clamp((myCam.orthographicSize + ((frac * distance) - myCam.orthographicSize) * Time.deltaTime * sizeRate),
+        myCam.fieldOfView = Mathf.Clamp((myCam.fieldOfView + ((frac * distance) - myCam.fieldOfView) * Time.deltaTime * sizeRate),
             minSize, maxSize);
     }
 
@@ -138,8 +163,7 @@ public class RaceCamera : MonoBehaviour {
         if (on)
         {
             findCameraTarget();
-            transform.position = Vector3.MoveTowards(target,
-                transform.position, Time.deltaTime * moveSpeed); 
+            transform.position = Vector3.MoveTowards(target,transform.position, Time.deltaTime * moveSpeed); 
             resize();
         }
     }

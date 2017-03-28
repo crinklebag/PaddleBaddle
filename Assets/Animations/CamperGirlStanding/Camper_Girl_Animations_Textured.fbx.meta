@@ -572,8 +572,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Defeat
       takeName: Take 001
-      firstFrame: 119
-      lastFrame: 150
+      firstFrame: 126
+      lastFrame: 148
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
