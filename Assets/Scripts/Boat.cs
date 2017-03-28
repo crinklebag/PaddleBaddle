@@ -154,7 +154,7 @@ public class Boat : MonoBehaviour {
                 body.angularVelocity = Vector3.zero;
             }
 
-            // GetComponent<TrailRenderer>().Clear();
+            GetComponent<TrailRenderer>().Clear();
 
             StartCoroutine(Invincibility());
 
