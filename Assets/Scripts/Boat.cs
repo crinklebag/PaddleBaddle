@@ -25,6 +25,11 @@ public class Boat : MonoBehaviour {
     // Use this for initialization
 	void Start ()
     {
+
+        // use the reference to set up the buoyancy of the object
+        this.GetComponent<RealisticBuoyancy>().setup();
+        // hack fix the water level
+        this.GetComponent<RealisticBuoyancy>().waterLevelOverride = RealisticWaterPhysics.currentWaterLevel;
         meshRenderer = GetComponent<MeshRenderer>();
         // Check what the gameMode is
         gameMode = GameObject.Find("GameController").GetComponent<GameController>().mode;
@@ -142,7 +147,7 @@ public class Boat : MonoBehaviour {
                 body.angularVelocity = Vector3.zero;
             }
 
-            // GetComponent<TrailRenderer>().Clear();
+            GetComponent<TrailRenderer>().Clear();
 
             StartCoroutine(Invincibility());
 

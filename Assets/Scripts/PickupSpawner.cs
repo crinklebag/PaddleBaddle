@@ -56,6 +56,11 @@ public class PickupSpawner : MonoBehaviour {
 				thisPickup.GetComponent<RealisticBuoyancy> ().setup ();
 				// hack fix the water level
 				thisPickup.GetComponent<RealisticBuoyancy> ().waterLevelOverride = RealisticWaterPhysics.currentWaterLevel;
+
+                //Debug.Log(thisPickup.GetComponent<RealisticBuoyancy>().isInWater);
+                //Debug.Log(thisPickup.transform.position.y);
+                //Debug.Log(RealisticWaterPhysics.currentWaterLevel);
+                //Debug.Break();
 			}
 			// wait a random time and spawn again
 			yield return new WaitForSeconds(Random.Range (spawnRateLowerBound, spawnRateUpperBound));

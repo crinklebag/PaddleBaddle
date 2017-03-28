@@ -19,7 +19,7 @@ public class SplashScreenController : MonoBehaviour {
 
     IEnumerator RunSplash() {
         yield return new WaitForSeconds(8);
-        SceneManager.LoadScene("Lobby Design");
+        SceneManager.LoadScene("Lobby");
     }
 
     IEnumerator FadeText() {
