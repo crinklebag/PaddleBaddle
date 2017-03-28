@@ -13,11 +13,11 @@ public class GlobalVariables : MonoBehaviour {
     }
     void Update()
     {
-        if (GameObject.Find("GameController") != null)
+       /* if (GameObject.Find("GameController") != null)
         {
             TeamOnePoints = target.GetComponent<GameController>().TeamOneScore;
             TeamTwoPoints = target.GetComponent<GameController>().TeamTwoScore;
-        }
+        }*/
     }
    public void ResetPoints()
     {

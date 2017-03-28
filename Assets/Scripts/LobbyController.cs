@@ -32,6 +32,7 @@ public class LobbyController : MonoBehaviour {
     [SerializeField] PlayerSelect PlayerThree;
     [SerializeField] PlayerSelect PlayerFour;
 
+
     int playersIn = 0;
     bool canInput = true;
     bool startGame = false;
@@ -127,6 +128,7 @@ public class LobbyController : MonoBehaviour {
 
     void SetUpIntro() {
         currentState = MainMenuState.INTRO;
+        StartCoroutine (LerpFade(0.06f , 1));
         // gameNameUI.SetActive(true);
         // playerOne.gameObject.SetActive(false);
         // playerTwo.gameObject.SetActive(false);
@@ -138,6 +140,7 @@ public class LobbyController : MonoBehaviour {
         // Set the current Menu State
         currentState = MainMenuState.CHOOSE_PLAYER;
         mmCamController.MoveToCharacterSelect();
+        StartCoroutine(LerpFade(0, 1));
     }
 
     void SetUpReady() {
@@ -230,5 +233,21 @@ public class LobbyController : MonoBehaviour {
 
         canInput = true;
     }
+    IEnumerator LerpFade(float endVal, float time)
+    {
+        //Determine how much to fade (per step):
+        float startVal = RenderSettings.fogDensity;
+        float currentTime = 0f;
 
+        //Keep upping the value and updating the LERP until we've reached target time
+        while (currentTime < time)
+        {
+            RenderSettings.fogDensity = Mathf.Lerp(startVal, endVal, currentTime / time);
+            currentTime += Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        //Set the value explicitly (to ensure it stops at what we want)
+        RenderSettings.fogDensity = endVal;
+    }
 }

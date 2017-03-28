@@ -66,12 +66,15 @@ public class SecondMenuController : MonoBehaviour {
             // Turn on wall to stop them from going back to the dock - wait first so they boost past it
 
             // Add a small force to the boats
-            float forceValue = 5000;
-            if (PlayerPrefs.GetString("teamOneBoat") == "canoe") { forceValue = 5000; }
-            else { forceValue = 2500; }
-            boatOne.GetComponentInChildren<Rigidbody>().AddForce(boatOne.transform.forward * forceValue, ForceMode.Impulse);
+            float teamOneForceValue = 5000;
+            float teamTwoForceValue = 5000;
+            if (PlayerPrefs.GetString("teamOneBoat") == "canoe") { teamOneForceValue = 5000; }
+            else { teamOneForceValue = 10000; }
+            if (PlayerPrefs.GetString("teamOneBoat") == "canoe") { teamTwoForceValue = 5000; }
+            else { teamTwoForceValue = 10000; }
+            boatOne.GetComponentInChildren<Rigidbody>().AddForce(boatOne.transform.forward * teamOneForceValue, ForceMode.Impulse);
             
-            boatTwo.GetComponentInChildren<Rigidbody>().AddForce(boatOne.transform.forward * forceValue, ForceMode.Impulse);
+            boatTwo.GetComponentInChildren<Rigidbody>().AddForce(boatOne.transform.forward * teamTwoForceValue, ForceMode.Impulse);
         }
 
         if (canMove) {
