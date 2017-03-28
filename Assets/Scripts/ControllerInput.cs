@@ -13,15 +13,16 @@ public class ControllerInput : MonoBehaviour {
     [SerializeField] int playerID;
     [SerializeField] GameObject paddle;
     [SerializeField] float maxDeltaAngle = 30f;
-    [SerializeField] float paddleRotationForce = 5000f;
-    [SerializeField] float paddleTorque = 30000f;
-    [SerializeField] float paddleForwardForce = 50000f;
+    [SerializeField] PaddleData paddleData;
+    //[SerializeField] float paddleRotationForce = 5000f;
+    //[SerializeField] float paddleTorque = 30000f;
+    //[SerializeField] float paddleForwardForce = 50000f;
     [SerializeField] float speedBoostForce = 150000f;
     [SerializeField] float strengthBoostForce = 200f;
-    [SerializeField] float attackForce = -1000f;
-    [SerializeField] float shoveForce = 10000f;
-    [SerializeField] float paddleRoationSpeed = 2500f;
-    [SerializeField] float attackRadius = 1f;
+    //[SerializeField] float attackForce = -1000f;
+    //[SerializeField] float shoveForce = 10000f;
+    //[SerializeField] float paddleRoationSpeed = 2500f;
+    //[SerializeField] float attackRadius = 1f;
     [SerializeField] float stunTime = 1f;
     [SerializeField] float mudEffect = 0.5f;
     [SerializeField] float shortRumble = 0.5f;
@@ -74,7 +75,7 @@ public class ControllerInput : MonoBehaviour {
 	void OnDrawGizmosSelected() {
         
 		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere (GetPaddlePosition(), attackRadius);
+		Gizmos.DrawWireSphere (GetPaddlePosition(), paddleData.reach);
 	}
 
     void FindUI() {
@@ -155,8 +156,8 @@ public class ControllerInput : MonoBehaviour {
     {
         if (!canPaddle)
         {
-            paddleRotationTimer += paddleRoationSpeed * Time.deltaTime;
-            if (paddleRotationTimer >= 360)
+            paddleRotationTimer += Time.deltaTime;
+            if (paddleRotationTimer >= paddleData.rotationTime)
             {
                 canPaddle = true;
                 paddleRotationTimer = 0;
@@ -170,10 +171,10 @@ public class ControllerInput : MonoBehaviour {
         Debug.Log("Adding Forward Force");
         canPaddle = false;
 
-        Vector3 finalForwardForce = paddleDirection * paddleForwardForce * boat.transform.forward * slowMod;
+        Vector3 finalForwardForce = paddleDirection * paddleData.forwardForce * boat.transform.forward * slowMod;
         boat.transform.GetComponentInChildren<Rigidbody>().AddForceAtPosition(finalForwardForce, boat.transform.position, ForceMode.Impulse);
         
-        Vector3 finalHorizontalForce = -paddleSide * paddleTorque * boat.transform.up;
+        Vector3 finalHorizontalForce = -paddleSide * paddleData.torque * boat.transform.up;
         boat.transform.GetComponentInChildren<Rigidbody>().AddTorque(finalHorizontalForce, ForceMode.Impulse);
 
         previousPaddleSide = paddleSide;
@@ -319,7 +320,7 @@ public class ControllerInput : MonoBehaviour {
             // Reset quandrant tracker
             quadrantsHit = new List<int>();
 
-            boat.transform.GetComponentInChildren<Rigidbody>().AddRelativeTorque(-paddleRotationForce * directionOfRotation * Vector3.up, ForceMode.Force);
+            boat.transform.GetComponentInChildren<Rigidbody>().AddRelativeTorque(-paddleData.rotationForce * directionOfRotation * Vector3.up, ForceMode.Force);
         }
         
     }
@@ -329,7 +330,7 @@ public class ControllerInput : MonoBehaviour {
         // Debug.Log("Can Attack");
         attackDisplay.SetActive(false);
 
-        Collider[] hitColliders = Physics.OverlapSphere(GetPaddlePosition(), attackRadius);
+        Collider[] hitColliders = Physics.OverlapSphere(GetPaddlePosition(), paddleData.reach);
         for (int i = 0; i < hitColliders.Length; i++)
         {
             if (hitColliders[i].gameObject != this.gameObject && hitColliders[i].GetComponent<Boat>())
@@ -344,7 +345,7 @@ public class ControllerInput : MonoBehaviour {
         // Check if attacking
         if (player.GetButtonDown("Attack")) {
 
-            Collider[] hitColliders = Physics.OverlapSphere(GetPaddlePosition(), attackRadius);
+            Collider[] hitColliders = Physics.OverlapSphere(GetPaddlePosition(), paddleData.reach);
 
             for (int i = 0; i < hitColliders.Length; i++)
             {
@@ -352,19 +353,19 @@ public class ControllerInput : MonoBehaviour {
                 if (hitColliders[i].gameObject != this.gameObject && otherBoat != null)
                 {
 
-                    if (otherBoat.Invincible == false)
+                    if (otherBoat.invincible == false)
                     {
                         playerCharacter.GetComponent<Animator>().SetTrigger("Attacking");
 
                         Vector3 differenceVector = otherBoat.transform.position - GetPaddlePosition();
 
-                    	hitColliders[i].GetComponent<Rigidbody>().AddForceAtPosition(attackForce * Vector3.down, differenceVector, ForceMode.Impulse);
-                    	Debug.Log("Attack force applied: "+ attackForce);
+                    	hitColliders[i].GetComponent<Rigidbody>().AddForceAtPosition(paddleData.attackForce * Vector3.down, differenceVector, ForceMode.Impulse);
+                    	Debug.Log("Attack force applied: "+ paddleData.attackForce);
 
 			            // Removing strength powerup effect if we just used the strong attack
-			            if (attackForce > strengthBoostForce) 
+			            if (paddleData.attackForce > strengthBoostForce) 
 			            {
-			            	attackForce -= strengthBoostForce;
+                            paddleData.attackForce -= strengthBoostForce;
 			            }
                     }
                 }
@@ -377,7 +378,7 @@ public class ControllerInput : MonoBehaviour {
         if (player.GetButtonDown("Shove"))
         {
 
-            Collider[] hitColliders = Physics.OverlapSphere(GetPaddlePosition(), attackRadius);
+            Collider[] hitColliders = Physics.OverlapSphere(GetPaddlePosition(), paddleData.reach);
 
             for (int i = 0; i < hitColliders.Length; i++)
             {
@@ -385,14 +386,14 @@ public class ControllerInput : MonoBehaviour {
                 if (hitColliders[i].gameObject != this.gameObject && otherBoat != null)
                 {
 
-                    if (otherBoat.Invincible == false)
+                    if (otherBoat.invincible == false)
                     {
                         Vector3 forceVector = otherBoat.transform.position - transform.position;
                         forceVector.y = 0.0f;
                         forceVector.Normalize();
 
-                        hitColliders[i].GetComponent<Rigidbody>().AddForceAtPosition(shoveForce * forceVector, otherBoat.transform.position, ForceMode.Impulse);
-                        Debug.Log("Shove force applied: " + shoveForce);
+                        hitColliders[i].GetComponent<Rigidbody>().AddForceAtPosition(paddleData.shoveForce * forceVector, otherBoat.transform.position, ForceMode.Impulse);
+                        Debug.Log("Shove force applied: " + paddleData.shoveForce);
                         
                     }
                 }
@@ -411,7 +412,7 @@ public class ControllerInput : MonoBehaviour {
 	// Add force for the next attack
 	void strengthBoost()
 	{
-		attackForce = (attackForce > strengthBoostForce) ? attackForce : attackForce + strengthBoostForce;
+        paddleData.attackForce = (paddleData.attackForce > strengthBoostForce) ? paddleData.attackForce : paddleData.attackForce + strengthBoostForce;
 		removePowerUp ();
 	}
 
