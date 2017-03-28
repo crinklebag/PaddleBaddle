@@ -3,18 +3,18 @@ using System.Collections;
 
 [DisallowMultipleComponent]
 public class Boat : MonoBehaviour {
-
-	[SerializeField] bool isTeam1;
+    
+	[SerializeField] int team;
 	[SerializeField] Transform flipCheck;
     [SerializeField] TrailRenderer trail;
     
 	// Information for powerups
-	bool isFlipped = false;
+	public bool isFlipped { get; private set; }
 	public bool hasPowerUp = false;
 	public string powerUpType = "";
    	MeshRenderer meshRenderer;
 
-    public bool Invincible { get; private set; }
+    public bool invincible { get; private set; }
 
     private float invincibleTime = 3.0f;
 
@@ -78,14 +78,7 @@ public class Boat : MonoBehaviour {
 
     void Score()
     {
-        if (isTeam1)
-        {
-            GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(1, 1);
-        }
-        else
-        {
-            GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(0, 1);
-        }
+        GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(team, 1);
     }
 
     void OnTriggerEnter(Collider other)
@@ -174,7 +167,7 @@ public class Boat : MonoBehaviour {
         Vector3 respawnPoint = Vector3.zero;
         bool excludedPoint = false;
 
-        ////////// do all of this
+        // do all of this
 
         do
         {
@@ -210,7 +203,7 @@ public class Boat : MonoBehaviour {
         }
         while (excludedPoint == true);
 
-////////// until the point no longer intersects with any exclude areas
+        // until the point no longer intersects with any exclude areas
 
         transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
         transform.position = respawnPoint;
@@ -232,7 +225,7 @@ public class Boat : MonoBehaviour {
 
     IEnumerator Invincibility()
     {
-        Invincible = true;
+        invincible = true;
 
         float t = 0.0f;
         while(t < invincibleTime)
@@ -245,6 +238,6 @@ public class Boat : MonoBehaviour {
         }
         meshRenderer.enabled = true;
 
-        Invincible = false;
+        invincible = false;
     }
 }
