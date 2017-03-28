@@ -60,7 +60,7 @@ public class GameController : MonoBehaviour
     /// </summary>
     public GameObject coinPrefab;
     public float spawnRate = 3f;
-    public SphereCollider respawnArea;
+    public GameObject respawnArea;
 
     /// <summary>
     /// The modes available to the controller
@@ -196,7 +196,8 @@ public class GameController : MonoBehaviour
             Teams[i].boat = teamBoats[i];
         }
 
-        respawnArea = GameObject.Find("Respawn Area").GetComponent<SphereCollider>();
+        //respawnArea = GameObject.Find("Respawn Area").GetComponent<SphereCollider>();
+        respawnArea = GameObject.Find("Respawn Area");
         StartCoroutine(StartRound());
 
         if (raceGoal == null)
