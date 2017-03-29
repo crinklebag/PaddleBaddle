@@ -28,6 +28,7 @@ public class MenuMovement : MonoBehaviour {
     [SerializeField] GameObject paddlePivot;
     [SerializeField] GameObject paddle;
     [SerializeField] int playerID;
+    [SerializeField] PaddleData paddleData;
     float paddleForwardForce = 400;
     float paddleTorque = 200;
     float paddleRoationSpeed = 2400;
@@ -165,10 +166,10 @@ public class MenuMovement : MonoBehaviour {
         // Debug.Log("Adding Forward Force");
         canPaddle = false;
 
-        Vector3 finalForwardForce = paddleDirection * paddleForwardForce * currentBoatBody.transform.forward;
+        Vector3 finalForwardForce = paddleDirection * paddleData.forwardForce * currentBoatBody.transform.forward;
         currentBoatBody.transform.GetComponentInChildren<Rigidbody>().AddForceAtPosition(finalForwardForce, currentBoatBody.transform.position, ForceMode.Impulse);
 
-        Vector3 finalHorizontalForce = -paddleSide * paddleTorque * currentBoatBody.transform.up;
+        Vector3 finalHorizontalForce = -paddleSide * paddleData.torque * currentBoatBody.transform.up;
         currentBoatBody.transform.GetComponentInChildren<Rigidbody>().AddTorque(finalHorizontalForce, ForceMode.Impulse);
 
         previousPaddleSide = paddleSide;
@@ -214,10 +215,8 @@ public class MenuMovement : MonoBehaviour {
     {
         if (!canPaddle)
         {
-            paddle.transform.RotateAround(paddlePivot.transform.position, paddlePivot.transform.right * (dir * -1), paddleRoationSpeed * Time.deltaTime);
-            paddle.transform.localRotation = initRot;
-            paddleRotationTimer += paddleRoationSpeed * Time.deltaTime;
-            if (paddleRotationTimer >= 360)
+            paddleRotationTimer += Time.deltaTime;
+            if (paddleRotationTimer >= paddleData.rotationTime)
             {
                 canPaddle = true;
                 paddleRotationTimer = 0;

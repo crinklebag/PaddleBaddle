@@ -24,7 +24,7 @@ public class ControllerInput : MonoBehaviour {
     float slowMod = 1f;
 
     //creating an selectable object.
-    public GameObject attackDisplay;
+    [SerializeField] GameObject attackDisplay;
 
     public bool stunned = false;
 
@@ -33,6 +33,9 @@ public class ControllerInput : MonoBehaviour {
 	Boat boatInfo;
 
     float paddleRotationTimer = 0;
+
+    // reference to the last player found within reach
+    GameObject foundPlayer = null;
 
     /// <summary>
     /// Represents the left and right facing of the paddle. -1 for left, 1 for right.
@@ -230,9 +233,7 @@ public class ControllerInput : MonoBehaviour {
         {
             SetPaddleSide(-1);
         }
-
-        //
-
+        
         float leftStickVertical = player.GetAxis("Vertical");
         float leftStickHorizontal = player.GetAxis("Horizontal");
 
@@ -301,21 +302,29 @@ public class ControllerInput : MonoBehaviour {
 
     void CanAttack()
     {
+        attackDisplay.SetActive(false);
+
         Collider[] hitColliders = Physics.OverlapSphere(GetPaddlePosition(), paddleData.reach);
         for (int i = 0; i < hitColliders.Length; i++)
         {
             if (hitColliders[i].gameObject != this.gameObject && hitColliders[i].GetComponent<Boat>())
             {
                 attackDisplay.SetActive(true);
+                foundPlayer = hitColliders[i].gameObject;
+                Debug.Log("Can Attack");
                 // Turn on the other players attack radius
                 // Turn on your own Attack Notice
             }
-            else {
-                attackDisplay.SetActive(false);
-                // Turn off the other players attack radius
-                // Turn off your own Attack Notice
-            }
         }
+
+        // Check now to see if the attack notice is on or off - if it is on turn on the other players attack radius
+        if (attackDisplay.activeSelf) {
+
+        }
+        else {
+            // Turn off the attack radius on the other player - use foundPlayer
+        }
+
     }
 
     void Attack()

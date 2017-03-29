@@ -2,38 +2,57 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
-
-    ATTATCH A TRIGGER TO THE BOAT, ADD THIS TO IT AND CALL THESE FUNCTIONS WHEN THE OTHER BOAT IS NEAR 
-     
-*/
-
 public class PlayerAttackUIController : MonoBehaviour {
 
-    [SerializeField] GameObject attackNotice;
+    public enum AttackState { OFF, START, PULSE, END };
+    AttackState currentState = AttackState.OFF;
+    
     [SerializeField] GameObject attackRadius;
 
     bool runAttackNotice = false;
     bool runAttackRadius = false;
 
+    float startTime = 0;
+    float journeyDistance = 0;
+
 	// Use this for initialization
 	void Start () {
-		
+        CheckState();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (runAttackNotice) { RunAttackNotice(); }
-        if (runAttackRadius) { RunAttackRadius(); }
+
 	}
 
     private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("Player")) {
+            // get the other player and turn on the attack radius
 
+            // Turn on your own Attack notice
+
+        }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
+    private void OnTriggerExit(Collider other) {
+        if (other.gameObject.CompareTag("Player")) {
 
+        }
+    }
+
+    void CheckState() {
+        switch (currentState) {
+            case AttackState.OFF:
+                // Set the transparency and size to 0
+                break;
+            case AttackState.START:
+                // Set transparency to full - make bigger
+                break;
+            case AttackState.PULSE:
+                break;
+            case AttackState.END:
+                break; 
+        }
     }
 
     public void TurnOnAttackNotice() {
