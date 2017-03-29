@@ -14,15 +14,8 @@ public class ControllerInput : MonoBehaviour {
     [SerializeField] GameObject paddle;
     [SerializeField] float maxDeltaAngle = 30f;
     [SerializeField] PaddleData paddleData;
-    //[SerializeField] float paddleRotationForce = 5000f;
-    //[SerializeField] float paddleTorque = 30000f;
-    //[SerializeField] float paddleForwardForce = 50000f;
     [SerializeField] float speedBoostForce = 150000f;
     [SerializeField] float strengthBoostForce = 200f;
-    //[SerializeField] float attackForce = -1000f;
-    //[SerializeField] float shoveForce = 10000f;
-    //[SerializeField] float paddleRoationSpeed = 2500f;
-    //[SerializeField] float attackRadius = 1f;
     [SerializeField] float stunTime = 1f;
     [SerializeField] float mudEffect = 0.5f;
     [SerializeField] float shortRumble = 0.5f;
@@ -61,7 +54,6 @@ public class ControllerInput : MonoBehaviour {
 	Dictionary<string, System.Action> powerupActions = new Dictionary<string, System.Action> ();
 
 	void Awake () {
-        // FindUI();
         player = ReInput.players.GetPlayer (playerID);
 		boat = this.GetComponentInParent<Boat> ().gameObject;
 		boatInfo = boat.GetComponent<Boat> ();       
@@ -77,24 +69,6 @@ public class ControllerInput : MonoBehaviour {
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireSphere (GetPaddlePosition(), paddleData.reach);
 	}
-
-    void FindUI() {
-        switch (playerID) {
-            case 0:
-                playerUIController = GameObject.FindGameObjectWithTag("Player 1 UI").GetComponent<PlayerUI>();
-                Debug.Log("Hii " + playerUIController);
-                break;
-            case 1:
-                playerUIController = GameObject.FindGameObjectWithTag("Player 2 UI").GetComponent<PlayerUI>();
-                break;
-            case 2:
-                playerUIController = GameObject.FindGameObjectWithTag("Player 3 UI").GetComponent<PlayerUI>();
-                break;
-            case 3:
-                playerUIController = GameObject.FindGameObjectWithTag("Player 4 UI").GetComponent<PlayerUI>();
-                break;
-        }
-    }
 
 	// Update is called once per frame
 	void Update () {
@@ -327,15 +301,19 @@ public class ControllerInput : MonoBehaviour {
 
     void CanAttack()
     {
-        // Debug.Log("Can Attack");
-        attackDisplay.SetActive(false);
-
         Collider[] hitColliders = Physics.OverlapSphere(GetPaddlePosition(), paddleData.reach);
         for (int i = 0; i < hitColliders.Length; i++)
         {
             if (hitColliders[i].gameObject != this.gameObject && hitColliders[i].GetComponent<Boat>())
             {
                 attackDisplay.SetActive(true);
+                // Turn on the other players attack radius
+                // Turn on your own Attack Notice
+            }
+            else {
+                attackDisplay.SetActive(false);
+                // Turn off the other players attack radius
+                // Turn off your own Attack Notice
             }
         }
     }
