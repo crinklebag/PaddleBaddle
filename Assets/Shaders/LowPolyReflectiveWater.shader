@@ -90,14 +90,11 @@ Shader "Custom/LowPolyReflectiveWater" {
 
 			v2g vert(appdata_full v)
 			{
-				float3 v0 = mul(unity_ObjectToWorld, v.vertex).xyz;
 
-				float phase0 = (_WaveHeight)* sin((_Time[1] * _WaveSpeed) + (v0.x * _WaveLength) + (v0.z * _WaveLength) + rand2(v0.xzz));
-				float phase0_1 = (_RandomHeight)* sin(cos(rand(v0.xzz) * _RandomHeight * cos(_Time[1] * _RandomSpeed * sin(rand(v0.xxz)))));
+				float phase0 = (_WaveHeight)* sin((_Time[1] * _WaveSpeed) + (v.vertex.x * _WaveLength) + (v.vertex.z * _WaveLength) + rand2(v.vertex.xzz));
+				float phase0_1 = (_RandomHeight)* sin(cos(rand(v.vertex.xzz) * _RandomHeight * cos(_Time[1] * _RandomSpeed * sin(rand(v.vertex.xxz)))));
 
-				v0.y = phase0 + phase0_1 - 0.91;
-
-				v.vertex.xyz = mul((float3x3)unity_WorldToObject, v0);
+				v.vertex.y = phase0 + phase0_1 - 0.91;
 
 				half4 pos0 = mul(unity_ObjectToWorld, v.vertex);
 				pos0 = mul(UNITY_MATRIX_VP, pos0);
@@ -195,7 +192,7 @@ Shader "Custom/LowPolyReflectiveWater" {
 				half diff = abs(sceneZ - IN.screenPos.z) / _ShoreDistance;
 				diff = smoothstep(_ShoreIntensity, 1, diff);
 				c = lerp(lerp(c, _ShoreColor, _ShoreColor.a), c, diff);
-
+				
 				UNITY_APPLY_FOG(OUT.fogCoord, c);
 
 				return c;
