@@ -481,6 +481,10 @@ public class ControllerInput : MonoBehaviour {
         }
     }
 
+	public void RumbleControllers(){
+		StartCoroutine (Bump (0.1f));
+	}
+
 	// Variable length low-intensity bump function
 	public IEnumerator Bump(float duration)
 	{

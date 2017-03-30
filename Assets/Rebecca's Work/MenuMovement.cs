@@ -128,7 +128,7 @@ public class MenuMovement : MonoBehaviour {
 
         RotatePaddle();
     }
-
+		
     void SelectBoat() {
         // Select Boat
         if (teamNumber == TeamNumber.TeamOne) {
@@ -260,4 +260,24 @@ public class MenuMovement : MonoBehaviour {
 		yield return new WaitForSeconds (delay);
 		splash.Play ();
 	}
+		
+	public void RumbleControllers(){
+		StartCoroutine (Bump (0.1f));
+	}
+
+	// Variable length low-intensity bump function
+	public IEnumerator Bump(float duration)
+	{
+		foreach (Joystick j in player.controllers.Joysticks)
+		{
+			if (!j.supportsVibration) continue;
+			j.SetVibration(0.25f, 0.25f);
+		}
+		yield return new WaitForSeconds(duration);
+		foreach (Joystick j in player.controllers.Joysticks)
+		{
+			j.StopVibration();
+		}
+	}
+
 }

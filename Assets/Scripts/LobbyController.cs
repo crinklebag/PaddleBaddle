@@ -72,7 +72,10 @@ public class LobbyController : MonoBehaviour {
             if (settingUpReady) { ResetReady(); }
         }
  
-        if (startGame) { FadeInStartGame(); }
+        if (startGame) { 
+			FadeInStartGame(); 
+			StartCoroutine(StartGameDelay());
+		}
         else { FadeOutStartGame(); }
 
         HandleInput();
@@ -181,12 +184,15 @@ public class LobbyController : MonoBehaviour {
 
     void FadeInStartGame() {
         
+		Debug.Log ("Fadin in");
+
         float distCovered = (Time.time - startTime) * speed;
         float fracJourney = distCovered / journeyLength;
 
         startGameUI.GetComponent<Image>().color = Color.Lerp(Color.clear, Color.white, fracJourney);
-        startGameUI.transform.GetChild(0).GetComponent<Image>().color = Color.Lerp(Color.clear, Color.white, fracJourney);
-        startGameUI.transform.GetChild(1).GetComponent<Image>().color = Color.Lerp(Color.clear, Color.white, fracJourney);
+        // startGameUI.transform.GetChild(0).GetComponent<Image>().color = Color.Lerp(Color.clear, Color.white, fracJourney);
+        // startGameUI.transform.GetChild(1).GetComponent<Image>().color = Color.Lerp(Color.clear, Color.white, fracJourney);
+
     }
 
     void FadeOutStartGame() {
@@ -194,8 +200,8 @@ public class LobbyController : MonoBehaviour {
         float fracJourney = distCovered / journeyLength;
 
         startGameUI.GetComponent<Image>().color = Color.Lerp(Color.white, Color.clear, fracJourney);
-        startGameUI.transform.GetChild(0).GetComponent<Image>().color = Color.Lerp(Color.white, Color.clear, fracJourney);
-        startGameUI.transform.GetChild(1).GetComponent<Image>().color = Color.Lerp(Color.white, Color.clear, fracJourney);
+        // startGameUI.transform.GetChild(0).GetComponent<Image>().color = Color.Lerp(Color.white, Color.clear, fracJourney);
+        // startGameUI.transform.GetChild(1).GetComponent<Image>().color = Color.Lerp(Color.white, Color.clear, fracJourney);
 
         if (fracJourney >= 1) {
             playerOneUI.SetActive(true);
@@ -228,11 +234,19 @@ public class LobbyController : MonoBehaviour {
         return canInput;
     }
 
+	IEnumerator StartGameDelay(){
+		
+		yield return new WaitForSeconds (2.5f);
+
+		StartGame ();
+	}
+
     IEnumerator JoystickInputCountdown() {
         yield return new WaitForSeconds(0.5f);
 
         canInput = true;
     }
+
     IEnumerator LerpFade(float endVal, float time)
     {
         //Determine how much to fade (per step):

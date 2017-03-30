@@ -1,9 +1,13 @@
 fileFormatVersion: 2
 guid: d34f09769f3a781419b1b07c94bc1b05
-timeCreated: 1490738518
+timeCreated: 1490885957
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: PaddleIntstructionUI-01_0
+    21300002: PaddleIntstructionUI-01_1
+    21300004: PaddleIntstructionUI-01_2
+    21300006: PaddleIntstructionUI-01_3
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -92,7 +96,59 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: PaddleIntstructionUI-01_0
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 638
+        width: 699
+        height: 412
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PaddleIntstructionUI-01_1
+      rect:
+        serializedVersion: 2
+        x: 942
+        y: 666
+        width: 733
+        height: 412
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PaddleIntstructionUI-01_2
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 105
+        width: 821
+        height: 302
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PaddleIntstructionUI-01_3
+      rect:
+        serializedVersion: 2
+        x: 939
+        y: 132
+        width: 844
+        height: 299
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 

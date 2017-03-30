@@ -66,6 +66,18 @@ public class Boat : MonoBehaviour {
         }
 	}
 
+	void OnCollisionEnter(Collision other){
+
+		// Debug.Log ("Colliding with: " + other);
+
+		if (other.gameObject.CompareTag ("Player")) {
+			Debug.Log ("Players Hit");
+			this.GetComponent<AudioSource> ().Play ();
+			this.GetComponent<ControllerInput> ().RumbleControllers ();
+			other.gameObject.GetComponent<ControllerInput> ().RumbleControllers ();
+		}
+	}
+
     public void FlipBoat()
     {
         Rigidbody rb = GetComponent<Rigidbody>();
