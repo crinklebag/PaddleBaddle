@@ -634,8 +634,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Paddle Right
       takeName: Take 001
-      firstFrame: 34
-      lastFrame: 53
+      firstFrame: 43
+      lastFrame: 68
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -838,8 +838,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Paddle Left
       takeName: Take 001
-      firstFrame: 62
-      lastFrame: 81
+      firstFrame: 78
+      lastFrame: 105
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1042,8 +1042,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Attack Right
       takeName: Take 001
-      firstFrame: 90
-      lastFrame: 107
+      firstFrame: 113
+      lastFrame: 134
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1246,8 +1246,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Attack Left
       takeName: Take 001
-      firstFrame: 116
-      lastFrame: 133
+      firstFrame: 146
+      lastFrame: 170
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1450,8 +1450,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Paddle Back Right
       takeName: Take 001
-      firstFrame: 142
-      lastFrame: 161
+      firstFrame: 178
+      lastFrame: 204
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1654,8 +1654,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Paddle Back Left
       takeName: Take 001
-      firstFrame: 170
-      lastFrame: 189
+      firstFrame: 213
+      lastFrame: 237
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1858,8 +1858,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Stun
       takeName: Take 001
-      firstFrame: 200
-      lastFrame: 218
+      firstFrame: 251
+      lastFrame: 272
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

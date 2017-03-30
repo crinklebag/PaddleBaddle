@@ -3,18 +3,18 @@ using System.Collections;
 
 [DisallowMultipleComponent]
 public class Boat : MonoBehaviour {
-
-	[SerializeField] bool isTeam1;
+    
+	[SerializeField] int team;
 	[SerializeField] Transform flipCheck;
     [SerializeField] TrailRenderer trail;
     
 	// Information for powerups
-	bool isFlipped = false;
+	public bool isFlipped { get; private set; }
 	public bool hasPowerUp = false;
 	public string powerUpType = "";
    	MeshRenderer meshRenderer;
 
-    public bool Invincible { get; private set; }
+    public bool invincible { get; private set; }
 
     private float invincibleTime = 3.0f;
 
@@ -55,7 +55,7 @@ public class Boat : MonoBehaviour {
 
             // Send data to game controller if it's relevant to the gameMode
             if (gameMode == GameController.Modes.Flip)
-                Score();
+                Score(1);
             
             StartCoroutine(Respawn());
 		}
@@ -76,25 +76,24 @@ public class Boat : MonoBehaviour {
         }
     }
 
-    void Score()
+	void Score(int points)
     {
-        if (isTeam1)
-        {
-            GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(1, 1);
-        }
-        else
-        {
-            GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(0, 1);
-        }
+        GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(team, points);
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Coin") && gameMode == GameController.Modes.Pickup)
+        if (other.CompareTag("Gold") && gameMode == GameController.Modes.Pickup)
         {
-            Score();
+            Score(3);
             Destroy(other.gameObject); // Don't pick up twice
-        }
+		} else if (other.CompareTag("Silver") && gameMode == GameController.Modes.Pickup){
+			Score(2);
+			Destroy(other.gameObject); // Don't pick up twice
+		} else if (other.CompareTag("Wood") && gameMode == GameController.Modes.Pickup){
+			Score(1);
+			Destroy(other.gameObject); // Don't pick up twice
+		}
             
     }
 
@@ -140,10 +139,10 @@ public class Boat : MonoBehaviour {
             yield break;
         }
 
-        // If it's a race
-        if (gameMode == GameController.Modes.Race)
+		// If it's a race - JUST TRYING SOMETHING OUT!!!!
+		if (gameMode == GameController.Modes.Pickup)
         {
-            // Run respawn code without picking a new position
+            // Run respawn code without picking a new position 
             transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
             transform.rotation = Quaternion.identity;
 
@@ -154,13 +153,16 @@ public class Boat : MonoBehaviour {
                 body.angularVelocity = Vector3.zero;
             }
 
-            GetComponent<TrailRenderer>().Clear();
+            trail.Clear();
+
+			Debug.Log ("Player Flipped");
+			Score (-1);
 
             StartCoroutine(Invincibility());
 
             isFlipped = false;
             yield break;
-        }
+		}
 
         GameObject respawnArea = GameObject.Find("Respawn Area");
 
@@ -174,7 +176,7 @@ public class Boat : MonoBehaviour {
         Vector3 respawnPoint = Vector3.zero;
         bool excludedPoint = false;
 
-        ////////// do all of this
+        // do all of this
 
         do
         {
@@ -210,7 +212,7 @@ public class Boat : MonoBehaviour {
         }
         while (excludedPoint == true);
 
-////////// until the point no longer intersects with any exclude areas
+        // until the point no longer intersects with any exclude areas
 
         transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
         transform.position = respawnPoint;
@@ -223,7 +225,7 @@ public class Boat : MonoBehaviour {
             rb.angularVelocity = Vector3.zero;
         }
 
-        // GetComponent<TrailRenderer>().Clear();
+        trail.Clear();
 
         StartCoroutine(Invincibility());
 
@@ -232,7 +234,7 @@ public class Boat : MonoBehaviour {
 
     IEnumerator Invincibility()
     {
-        Invincible = true;
+        invincible = true;
 
         float t = 0.0f;
         while(t < invincibleTime)
@@ -245,6 +247,6 @@ public class Boat : MonoBehaviour {
         }
         meshRenderer.enabled = true;
 
-        Invincible = false;
+        invincible = false;
     }
 }

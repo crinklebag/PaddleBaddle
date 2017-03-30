@@ -31,11 +31,6 @@ public class GameController : MonoBehaviour
     [HideInInspector] public float TeamTwoScore;
 
     /// <summary>
-    /// The different winning screens for each team.
-    /// </summary>
-    [SerializeField] private GameObject[] teamWinBoards;
-
-    /// <summary>
     /// In-game HUD score boards for each team.
     /// </summary>
     [SerializeField] private GameObject[] teamScoreBoards;
@@ -58,7 +53,9 @@ public class GameController : MonoBehaviour
     /// <summary>
     /// Serialized vars for spawning coins
     /// </summary>
-    public GameObject coinPrefab;
+    public GameObject goldChest;
+	public GameObject silverChest;
+	public GameObject woodChest;
     public float spawnRate = 3f;
     public GameObject respawnArea;
 
@@ -257,7 +254,7 @@ public class GameController : MonoBehaviour
             roundEndTimerText.gameObject.SetActive(false);
             Debug.Log("Win");
             roundFinished = true;
-            StartCoroutine(DelayEndPromptToggle(teamWinBoards[team]));
+            // StartCoroutine(DelayEndPromptToggle(teamWinBoards[team]));
         }
     }
 
@@ -268,7 +265,7 @@ public class GameController : MonoBehaviour
             roundEndTimerText.gameObject.SetActive(false);
             Debug.Log("Win");
             roundFinished = true;
-            StartCoroutine(DelayEndPromptToggle(teamWinBoards[0]));
+            // StartCoroutine(DelayEndPromptToggle(teamWinBoards[0]));
         }
 	}
 
@@ -279,7 +276,7 @@ public class GameController : MonoBehaviour
             roundEndTimerText.gameObject.SetActive(false);
             Debug.Log("Win");
             roundFinished = true;
-            StartCoroutine(DelayEndPromptToggle(teamWinBoards[1]));
+            // StartCoroutine(DelayEndPromptToggle(teamWinBoards[1]));
         }
 	}
 
@@ -302,6 +299,12 @@ public class GameController : MonoBehaviour
             //teamScoreDisplay.text = teamPoints[team].ToString();
 
             Teams[team].score += points;
+
+			// Ensure the player cannot get a negative score
+			if (Teams [team].score < 0) {
+				Teams [team].score = 0;
+			}
+
             TeamOneScore = Teams[0].score;
             TeamTwoScore = Teams[1].score;
             Text teamScoreDisplay = teamScoreBoards[team].GetComponentInChildren<Text>();
@@ -332,7 +335,6 @@ public class GameController : MonoBehaviour
         timeUntilRoundEnd = 0;
         if (teamPoints[winningTeam] == 0)
         { AddTeamPoint(winningTeam, 1); }
-        StartCoroutine(DelayEndPromptToggle(teamWinBoards[winningTeam]));
     }
 
     IEnumerator StartRound()
