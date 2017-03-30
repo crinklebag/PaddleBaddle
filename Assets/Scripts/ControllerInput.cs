@@ -414,7 +414,7 @@ public class ControllerInput : MonoBehaviour {
 	void speedBoost()
 	{
 		Debug.Log ("Adding " + speedBoostForce + " for speedboost!");
-		gameObject.GetComponent<Rigidbody> ().AddForce (transform.up * speedBoostForce, ForceMode.Impulse);
+		gameObject.GetComponent<Rigidbody> ().AddForce (-transform.forward * speedBoostForce, ForceMode.Impulse);
 		removePowerUp ();
 	}
 

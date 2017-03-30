@@ -8,6 +8,8 @@ public class Pickup : MonoBehaviour {
 	// Something touched me!
 	void OnTriggerEnter(Collider other)
 	{
+        Debug.Log("Colliding with " + other.name);
+
 		// It was a player
 		if (other.CompareTag ("Player"))
 		{
