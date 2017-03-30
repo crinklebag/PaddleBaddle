@@ -23,6 +23,14 @@ public class ControllerInput : MonoBehaviour {
     [SerializeField] bool raft;
     float slowMod = 1f;
 
+	[Header("Effects (Audio and Particles)")]
+	[SerializeField] AudioSource splash;
+	[SerializeField] AudioSource boatHit;
+	[SerializeField] ParticleSystem splashForwardParticles;
+	[SerializeField] ParticleSystem splashBackwardParticles;
+	[SerializeField] float splashBackDelay = 0.5f;
+	[SerializeField] float splashForwardDelay = 0.25f;
+
     //creating an selectable object.
     [SerializeField] GameObject attackDisplay;
 
@@ -167,10 +175,18 @@ public class ControllerInput : MonoBehaviour {
                 if(paddleDirection > 0)
                 {
                     playerAnimator.SetTrigger("Paddle Forward");
+					// Play Sound Effect
+					splash.Play();
+					// Play Splash Effect
+					StartCoroutine(PlaySplash(splashBackwardParticles, splashBackDelay));
                 }
                 else if (paddleDirection < 0)
                 {
                     playerAnimator.SetTrigger("Paddle Backward");
+					// Play Sound Effect
+					splash.Play();
+					// Play Splash Effect
+					StartCoroutine(PlaySplash(splashForwardParticles, splashForwardDelay));
                 }
             }
         }
@@ -312,17 +328,23 @@ public class ControllerInput : MonoBehaviour {
                 attackDisplay.SetActive(true);
                 foundPlayer = hitColliders[i].gameObject;
                 Debug.Log("Can Attack");
-                // Turn on the other players attack radius
-                // Turn on your own Attack Notice
             }
         }
 
         // Check now to see if the attack notice is on or off - if it is on turn on the other players attack radius
-        if (attackDisplay.activeSelf) {
-
+		if (attackDisplay.activeSelf) {
+			// If the current state is end(3) or off(0), activate
+			if(foundPlayer != null && (foundPlayer.GetComponent<PlayerAttackUIController>().GetState() == 0 || foundPlayer.GetComponent<PlayerAttackUIController>().GetState() == 3)){
+				foundPlayer.GetComponent<PlayerAttackUIController> ().ActivateRadius ();
+				Debug.Log ("Activate The Attack UI");
+			}
         }
         else {
-            // Turn off the attack radius on the other player - use foundPlayer
+			// If the current state is start(1) or pulse(2), end it
+			if(foundPlayer != null && (foundPlayer.GetComponent<PlayerAttackUIController>().GetState() == 1 || foundPlayer.GetComponent<PlayerAttackUIController>().GetState() == 2)){
+				foundPlayer.GetComponent<PlayerAttackUIController> ().DeactivateRadius ();
+				Debug.Log ("Deactivate The Attack UI");
+			}
         }
 
     }
@@ -495,5 +517,11 @@ public class ControllerInput : MonoBehaviour {
 
         return paddle.transform.position - paddle.transform.up.normalized * paddleBounds.extents.z * 0.33f;
     }
+
+	IEnumerator PlaySplash(ParticleSystem splash, float delay){
+
+		yield return new WaitForSeconds (delay);
+		splash.Play ();
+	}
 
 }

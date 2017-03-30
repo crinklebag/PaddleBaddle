@@ -68,10 +68,16 @@ public class SecondMenuController : MonoBehaviour {
             // Add a small force to the boats
             float teamOneForceValue = 5000;
             float teamTwoForceValue = 5000;
-            if (PlayerPrefs.GetString("teamOneBoat") == "canoe") { teamOneForceValue = 5000; }
-            else { teamOneForceValue = 10000; }
-            if (PlayerPrefs.GetString("teamOneBoat") == "canoe") { teamTwoForceValue = 5000; }
-            else { teamTwoForceValue = 10000; }
+            if (PlayerPrefs.GetString("teamOneBoat") == "canoe") { 
+				Debug.Log ("Team One Canoe Force");
+				teamOneForceValue = 7000; 
+			}
+            else {
+				Debug.Log ("Team One Raft Force");
+				teamOneForceValue = 8000; 
+			}
+            if (PlayerPrefs.GetString("teamTwoBoat") == "canoe") { teamTwoForceValue = 7000; }
+            else { teamTwoForceValue = 8000; }
             boatOne.GetComponentInChildren<Rigidbody>().AddForce(boatOne.transform.forward * teamOneForceValue, ForceMode.Impulse);
             
             boatTwo.GetComponentInChildren<Rigidbody>().AddForce(boatOne.transform.forward * teamTwoForceValue, ForceMode.Impulse);

@@ -33,6 +33,14 @@ public class MenuMovement : MonoBehaviour {
     float paddleTorque = 200;
     float paddleRoationSpeed = 2400;
 
+	[Header("Effects (Audio and Particles)")]
+	[SerializeField] AudioSource splash;
+	[SerializeField] AudioSource boatHit;
+	[SerializeField] ParticleSystem splashForwardParticles;
+	[SerializeField] ParticleSystem splashBackwardParticles;
+	[SerializeField] float splashBackDelay = 0.5f;
+	[SerializeField] float splashForwardDelay = 0.25f;
+
     Player player;
     GameObject boat;
     GameObject currentBoatBody;
@@ -186,10 +194,19 @@ public class MenuMovement : MonoBehaviour {
                 if (paddleDirection > 0)
                 {
                     playerAnimator.SetTrigger("Paddle Forward");
+					// Play Sound Effect
+					splash.Play();
+					// Play Splash Effect
+					StartCoroutine(PlaySplash(splashBackwardParticles, splashBackDelay));
+
                 }
                 else if (paddleDirection < 0)
                 {
                     playerAnimator.SetTrigger("Paddle Backward");
+					// Play Sound Effect
+					splash.Play();
+					// Play Splash Effect
+					StartCoroutine(PlaySplash(splashForwardParticles, splashForwardDelay));
                 }
             }
         }
@@ -237,4 +254,10 @@ public class MenuMovement : MonoBehaviour {
     public int GetPlayerID() {
         return playerID;
     }
+
+	IEnumerator PlaySplash(ParticleSystem splash, float delay){
+
+		yield return new WaitForSeconds (delay);
+		splash.Play ();
+	}
 }

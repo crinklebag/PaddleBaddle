@@ -55,7 +55,7 @@ public class Boat : MonoBehaviour {
 
             // Send data to game controller if it's relevant to the gameMode
             if (gameMode == GameController.Modes.Flip)
-                Score();
+                Score(1);
             
             StartCoroutine(Respawn());
 		}
@@ -76,18 +76,24 @@ public class Boat : MonoBehaviour {
         }
     }
 
-    void Score()
+	void Score(int points)
     {
-        GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(team, 1);
+        GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(team, points);
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Coin") && gameMode == GameController.Modes.Pickup)
+        if (other.CompareTag("Gold") && gameMode == GameController.Modes.Pickup)
         {
-            Score();
+            Score(3);
             Destroy(other.gameObject); // Don't pick up twice
-        }
+		} else if (other.CompareTag("Silver") && gameMode == GameController.Modes.Pickup){
+			Score(2);
+			Destroy(other.gameObject); // Don't pick up twice
+		} else if (other.CompareTag("Wood") && gameMode == GameController.Modes.Pickup){
+			Score(1);
+			Destroy(other.gameObject); // Don't pick up twice
+		}
             
     }
 
@@ -133,10 +139,10 @@ public class Boat : MonoBehaviour {
             yield break;
         }
 
-        // If it's a race
-        if (gameMode == GameController.Modes.Race)
+		// If it's a race - JUST TRYING SOMETHING OUT!!!!
+		if (gameMode == GameController.Modes.Pickup)
         {
-            // Run respawn code without picking a new position
+            // Run respawn code without picking a new position 
             transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
             transform.rotation = Quaternion.identity;
 
@@ -147,13 +153,16 @@ public class Boat : MonoBehaviour {
                 body.angularVelocity = Vector3.zero;
             }
 
-            GetComponent<TrailRenderer>().Clear();
+            trail.Clear();
+
+			Debug.Log ("Player Flipped");
+			Score (-1);
 
             StartCoroutine(Invincibility());
 
             isFlipped = false;
             yield break;
-        }
+		}
 
         GameObject respawnArea = GameObject.Find("Respawn Area");
 
@@ -216,7 +225,7 @@ public class Boat : MonoBehaviour {
             rb.angularVelocity = Vector3.zero;
         }
 
-        // GetComponent<TrailRenderer>().Clear();
+        trail.Clear();
 
         StartCoroutine(Invincibility());
 
