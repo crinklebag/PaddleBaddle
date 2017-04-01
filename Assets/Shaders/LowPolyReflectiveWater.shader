@@ -125,7 +125,7 @@
 				float3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
 				float attenuation = 1.0;
 
-				float4 ambientLighting = UNITY_LIGHTMODEL_AMBIENT.rgba * _Diffuse.rgba;
+				float4 ambientLighting = float4(0.5,0.5,0.5,1.0) * _Diffuse.rgba;
 
 				float4 diffuseReflection = attenuation * _LightColor0.rgba * _Diffuse.rgba * max(0.0, dot(normalDirection, lightDirection));
 
@@ -141,32 +141,16 @@
 
 				g2f output;
 
-				//
-				output.pos = mul(UNITY_MATRIX_MVP, i[0].pos);
-				output.screenPos = i[0].screenPos;
-				output.norm = vn;
-				output.uv = i[0].uv;
-				output.diffuseColor = ambientLighting + diffuseReflection;
-				output.specularColor = specularReflection;
-				triangles.Append(output);
-
-				//
-				output.pos = mul(UNITY_MATRIX_MVP, i[1].pos);
-				output.screenPos = i[1].screenPos;
-				output.norm = vn;
-				output.uv = i[1].uv;
-				output.diffuseColor = ambientLighting + diffuseReflection;
-				output.specularColor = specularReflection;
-				triangles.Append(output);
-
-				//
-				output.pos = mul(UNITY_MATRIX_MVP, i[2].pos);
-				output.screenPos = i[2].screenPos;
-				output.norm = vn;
-				output.uv = i[2].uv;
-				output.diffuseColor = ambientLighting + diffuseReflection;
-				output.specularColor = specularReflection;
-				triangles.Append(output);
+				for (int index = 0; index < 3; index++)
+				{
+					output.pos = mul(UNITY_MATRIX_MVP, i[index].pos);
+					output.screenPos = i[index].screenPos;
+					output.norm = vn;
+					output.uv = i[index].uv;
+					output.diffuseColor = ambientLighting + diffuseReflection;
+					output.specularColor = specularReflection;
+					triangles.Append(output);
+				}
 
 			}
 
