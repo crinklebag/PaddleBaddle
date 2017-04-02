@@ -17,6 +17,7 @@
 		_ShoreDistance("Shore Distance", Float) = 0.1
 		//
 		_DistortDistance("Distortion Distance", Float) = 0.12
+		_DistortIntensity("Distortion Intensity", Float) = 100
 	}
 
 	SubShader
@@ -68,6 +69,7 @@
 			float _RandomHeight;
 			float _RandomSpeed;
 			float _DistortDistance;
+			float _DistortIntensity;
 
 			uniform float4 _Diffuse;
 			uniform float4 _Specular;
@@ -79,7 +81,7 @@
 
 			struct v2g
 			{
-				float4 pos : SV_POSITION;
+				float4 pos : POSITION0;
 				float4 screenPos : TEXCOORD3;
 				float3 norm : NORMAL;
 				float2 uv : TEXCOORD0;
@@ -87,7 +89,7 @@
 
 			struct g2f
 			{
-				float4 pos : SV_POSITION;
+				float4 pos : POSITION0;
 				float3 norm : NORMAL;
 				float2 uv : TEXCOORD0;
 				float4 screenPos : TEXCOORD3;
@@ -164,6 +166,8 @@
 				{
 					o.pos = mul(UNITY_MATRIX_MVP, i[index].pos);
 					o.screenPos = i[index].screenPos;
+					o.screenPos.x += (sin(_Time[1] * _WaveSpeed * _WaveLength * i[index].screenPos.x) * (1/_DistortIntensity));
+					o.screenPos.y += (sin(_Time[1] * _WaveSpeed * _WaveLength * i[index].screenPos.y) * (1 / _DistortIntensity));
 					o.norm = vn;
 					o.uv = i[index].uv;
 					o.diffuseColor = ambientLighting + diffuseReflection;
@@ -176,15 +180,14 @@
 			float4 frag(g2f i) : COLOR
 			{
 				float ar = _ScreenParams.x / _ScreenParams.y;
-
-				float4 newScreenPos = float4(i.screenPos.x + _DistortDistance, i.screenPos.y + _DistortDistance, i.screenPos.z, i.screenPos.w);
-				float4 proj = UNITY_PROJ_COORD(newScreenPos);
+			
+				float4 distortOffset = float4(_DistortDistance, _DistortDistance, 0, 0);
+				float4 proj = UNITY_PROJ_COORD(i.screenPos) + distortOffset;
 
 				half4 distortionResult = half4(tex2Dproj(_GrabTex, proj).rgb, 1.0);
 
 				float4 c = float4(i.specularColor + i.diffuseColor);
 				c = lerp(float4(c.rgb, 1), distortionResult, c.a);
-				//c = (float4(c.rgb,1.0) * c.a + distortionResult * (1-c.a));
 
 				float sceneZ = SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, UNITY_PROJ_COORD(i.screenPos));
 
