@@ -27,7 +27,7 @@ public class DynamicCamera : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         targets = GameObject.FindGameObjectsWithTag("Player");
-        Boom = new GameObject("Boom");
+        Boom = new GameObject("Camera Boom");
         findCameraTarget();
         transform.SetParent(Boom.transform);
 	}
@@ -64,7 +64,8 @@ public class DynamicCamera : MonoBehaviour {
 
     void centreCamera()
     {
-        Boom.transform.position = Vector3.MoveTowards(target, Boom.transform.position, moveSpeed);
+        findCameraTarget();
+        Boom.transform.position = Vector3.MoveTowards(Boom.transform.position, target, Time.deltaTime * moveSpeed);
     }
 
     void resize()
