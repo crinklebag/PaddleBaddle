@@ -15,12 +15,19 @@
 		_ShoreColor("Shore Color", Color) = (1,1,1,1)
 		_ShoreIntensity("Shore Intensity", Range(-1,1)) = 0
 		_ShoreDistance("Shore Distance", Float) = 1
+		//
+		_DistortDistance("Distortion Distance", Float) = 0.1
 	}
 
 	SubShader
 	{
 		Tags { "Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent" }
 		Blend SrcAlpha OneMinusSrcAlpha
+
+		GrabPass
+		{
+			"_GrabTex"
+		}
 
 		Pass
 		{
@@ -60,6 +67,7 @@
 			float _WaveSpeed;
 			float _RandomHeight;
 			float _RandomSpeed;
+			float _DistortDistance;
 
 			uniform float4 _Diffuse;
 			uniform float4 _Specular;
@@ -67,6 +75,7 @@
 			sampler2D _CameraDepthTexture;
 			float _ShoreIntensity, _ShoreDistance;
 			float4 _ShoreColor;
+			sampler2D _GrabTex;
 
 			struct v2g
 			{
@@ -86,13 +95,23 @@
 				float4 specularColor : TEXCOORD2;
 			};
 
+			float waveRipple(float time, float3 vertex)
+			{
+				return _WaveHeight * sin((time * _WaveSpeed) + (vertex.x * _WaveLength) + (vertex.z * _WaveLength) + rand(vertex.xzz));
+			}
+
+			float randomRipple(float time, float3 vertex)
+			{
+				return _RandomHeight * sin(cos(rand2(vertex.xzz) * _RandomHeight * cos(time * _RandomSpeed * sin(rand2(vertex.xxz)))));
+			}
+
 			v2g vert(appdata_full i)
 			{
 
-				float phase1 = (_WaveHeight) * sin((_Time[1] * _WaveSpeed) + (i.vertex.x * _WaveLength) + (i.vertex.z * _WaveLength) + rand(i.vertex.xzz));
-				float phase2 = (_RandomHeight) * sin(cos(rand(i.vertex.xzz) * _RandomHeight * cos(_Time[1] * _RandomSpeed * sin(rand2(i.vertex.xxz)))));
+				float ripple1 = waveRipple(_Time[1], i.vertex);
+				float ripple2 = randomRipple(_Time[1], i.vertex);
 
-				i.vertex.y = phase1 + phase2 - 0.91 + (_WaveHeight);
+				i.vertex.y = ripple1 + ripple2 - 0.9 + _WaveHeight;
 
 				half4 vpos = mul(unity_ObjectToWorld, i.vertex);
 				vpos = mul(UNITY_MATRIX_VP, vpos);
@@ -156,8 +175,16 @@
 
 			float4 frag(g2f i) : COLOR
 			{
+				float ar = _ScreenParams.x / _ScreenParams.y;
+
+				float4 newScreenPos = float4(i.screenPos.x + _DistortDistance, i.screenPos.y + _DistortDistance, i.screenPos.z, i.screenPos.w);
+				float4 proj = UNITY_PROJ_COORD(newScreenPos);
+
+				half4 distortionResult = half4(tex2Dproj(_GrabTex, proj).rgb, 1.0);
 
 				float4 c = float4(i.specularColor + i.diffuseColor);
+				c = lerp(float4(c.rgb, 1), distortionResult, c.a);
+				//c = (float4(c.rgb,1.0) * c.a + distortionResult * (1-c.a));
 
 				float sceneZ = SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, UNITY_PROJ_COORD(i.screenPos));
 
@@ -172,6 +199,7 @@
 				difference = smoothstep(_ShoreIntensity, 1, difference);
 
 				c = lerp(lerp(c, _ShoreColor, _ShoreColor.a), c, difference);
+				c.a = 1.0;
 				
 				return c;
 			}
