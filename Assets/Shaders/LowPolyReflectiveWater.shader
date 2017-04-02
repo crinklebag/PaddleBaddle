@@ -1,22 +1,22 @@
 ﻿Shader "Custom/LowPolyReflectiveWater" {
 	Properties
 	{
-		_Diffuse("Diffuse Color", Color) = (1,1,1,1)
+		_Diffuse("Diffuse Color", Color) = (0,0.4431,0.7333,0.5)
 		_Specular("Specular Color", Color) = (1,1,1,1)
-		_Shininess("Shininess", Float) = 1.0
+		_Shininess("Shininess", Float) = 50.0
 		//
-		_WaveLength("Wave Length", Float) = 0.5
-		_WaveHeight("Wave Height", Float) = 0.5
-		_WaveSpeed("Wave Speed", Float) = 1.0
+		_WaveLength("Wave Length", Float) = 0.1
+		_WaveHeight("Wave Height", Float) = 0.1
+		_WaveSpeed("Wave Speed", Float) = 0.1
 		//
-		_RandomHeight("Random Height", Float) = 0.5
-		_RandomSpeed("Random Speed", Float) = 0.5
+		_RandomHeight("Random Height", Float) = 1
+		_RandomSpeed("Random Speed", Float) = 5
 		//
-		_ShoreColor("Shore Color", Color) = (1,1,1,1)
-		_ShoreIntensity("Shore Intensity", Range(-1,1)) = 0
-		_ShoreDistance("Shore Distance", Float) = 1
+		_ShoreColor("Shore Color", Color) = (0.8431,1,1,1)
+		_ShoreIntensity("Shore Intensity", Range(-1,1)) = 0.9
+		_ShoreDistance("Shore Distance", Float) = 0.1
 		//
-		_DistortDistance("Distortion Distance", Float) = 0.1
+		_DistortDistance("Distortion Distance", Float) = 0.12
 	}
 
 	SubShader
