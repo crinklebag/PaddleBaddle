@@ -20,13 +20,16 @@ public class DynamicCamera : MonoBehaviour {
 
     private GameObject[] targets;
 
-    private GameObject target;
+    private Vector3 target;
+
+    private GameObject Boom;
 
 	// Use this for initialization
 	void Start () {
         targets = GameObject.FindGameObjectsWithTag("Player");
-        target = new GameObject("CamTarget");
+        Boom = new GameObject("Boom");
         findCameraTarget();
+        transform.SetParent(Boom.transform);
 	}
 	
 	// Update is called once per frame
@@ -56,12 +59,12 @@ public class DynamicCamera : MonoBehaviour {
             sumZ += piece.transform.position.z;
         }
 
-        target.transform.position = new Vector3(sumX / numSteps, sumY / numSteps, sumZ / numSteps);
+        target = new Vector3(sumX / numSteps, sumY / numSteps, sumZ / numSteps);
     }
 
     void centreCamera()
     {
-
+        Boom.transform.position = Vector3.MoveTowards(target, Boom.transform.position, moveSpeed);
     }
 
     void resize()
