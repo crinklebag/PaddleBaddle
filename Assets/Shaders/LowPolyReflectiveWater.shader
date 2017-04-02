@@ -47,12 +47,12 @@
 			
 			float rand(float3 co)
 			{
-				return frac(sin(dot(co.xyz, float3(1, 5, 10))) * 20);
+				return frac(sin(dot(co.xyz, float3(21, 8, 14))) * 11);
 			}
 			
 			float rand2(float3 co)
 			{
-				return frac(sin(dot(co.xyz, float3(2, 6, 12))) * 24);
+				return frac(sin(dot(co.xyz, float3(20, 12, 23))) * 15);
 			}
 
 			float _WaveLength;
@@ -139,17 +139,17 @@
 					specularReflection = attenuation * _LightColor0.rgba * _Specular.rgba * pow(max(0.0, dot(reflect(-lightDirection, normalDirection), viewDirection)), _Shininess);
 				}
 
-				g2f output;
+				g2f o;
 
 				for (int index = 0; index < 3; index++)
 				{
-					output.pos = mul(UNITY_MATRIX_MVP, i[index].pos);
-					output.screenPos = i[index].screenPos;
-					output.norm = vn;
-					output.uv = i[index].uv;
-					output.diffuseColor = ambientLighting + diffuseReflection;
-					output.specularColor = specularReflection;
-					triangles.Append(output);
+					o.pos = mul(UNITY_MATRIX_MVP, i[index].pos);
+					o.screenPos = i[index].screenPos;
+					o.norm = vn;
+					o.uv = i[index].uv;
+					o.diffuseColor = ambientLighting + diffuseReflection;
+					o.specularColor = specularReflection;
+					triangles.Append(o);
 				}
 
 			}
@@ -160,6 +160,7 @@
 				float4 c = float4(i.specularColor + i.diffuseColor);
 
 				float sceneZ = SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, UNITY_PROJ_COORD(i.screenPos));
+
 				float perpectiveZ = LinearEyeDepth(sceneZ);
 				
 				float orthoZ = sceneZ * (_ProjectionParams.y - _ProjectionParams.z) - _ProjectionParams.y;
@@ -167,7 +168,9 @@
 				sceneZ = lerp(perpectiveZ, orthoZ, unity_OrthoParams.w);
 
 				float difference = abs(sceneZ - i.screenPos.z) / _ShoreDistance;
+
 				difference = smoothstep(_ShoreIntensity, 1, difference);
+
 				c = lerp(lerp(c, _ShoreColor, _ShoreColor.a), c, difference);
 				
 				return c;
