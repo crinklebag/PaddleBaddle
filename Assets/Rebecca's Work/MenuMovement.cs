@@ -22,24 +22,25 @@ public class MenuMovement : MonoBehaviour {
     [SerializeField] GameObject pressBUI;
     [SerializeField] GameObject[] boatBody;
     [SerializeField] GameObject boatContents;
-       
+
     [Header("Movement Variables")]
     [SerializeField] GameObject playerCharacter;
     [SerializeField] GameObject paddlePivot;
     [SerializeField] GameObject paddle;
     [SerializeField] int playerID;
-    [SerializeField] PaddleData paddleData;
+    [SerializeField] PaddleData paddleDataRaft;
+    [SerializeField] PaddleData paddleDataCanoe;
     float paddleForwardForce = 400;
     float paddleTorque = 200;
     float paddleRoationSpeed = 2400;
 
-	[Header("Effects (Audio and Particles)")]
-	[SerializeField] AudioSource splash;
-	[SerializeField] AudioSource boatHit;
-	[SerializeField] ParticleSystem splashForwardParticles;
-	[SerializeField] ParticleSystem splashBackwardParticles;
-	[SerializeField] float splashBackDelay = 0.5f;
-	[SerializeField] float splashForwardDelay = 0.25f;
+    [Header("Effects (Audio and Particles)")]
+    [SerializeField] AudioSource splash;
+    [SerializeField] AudioSource boatHit;
+    [SerializeField] ParticleSystem splashForwardParticles;
+    [SerializeField] ParticleSystem splashBackwardParticles;
+    [SerializeField] float splashBackDelay = 0.5f;
+    [SerializeField] float splashForwardDelay = 0.25f;
 
     Player player;
     GameObject boat;
@@ -50,21 +51,29 @@ public class MenuMovement : MonoBehaviour {
     int previousPaddleSide;
     int previousPaddleDirection;
     float paddleRotationTimer = 0;
+    bool canAttack = false;
     bool canPaddle = true;
     bool canInput = true;
     bool selectingBoat = true;
 
+    // reference to the last player found within reach
+    GameObject foundPlayer = null;
+
+    //creating an selectable object.
+    [SerializeField]  GameObject attackDisplay;
+    Collider[] hitColliders;
+
     // Use this for initialization
-    void Awake () {
+    void Awake() {
         player = ReInput.players.GetPlayer(playerID);
         boat = this.gameObject;
         currentBoat = BoatType.CANOE;
         currentBoatBody = boatBody[(int)currentBoat];
-        if(paddle != null) initRot = paddle.transform.localRotation;
+        if (paddle != null) initRot = paddle.transform.localRotation;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update() {
         if (menuController.CanMove())
         {
             if (player.GetButtonDown("+Right Paddle") && canPaddle) {
@@ -128,7 +137,7 @@ public class MenuMovement : MonoBehaviour {
 
         RotatePaddle();
     }
-		
+
     void SelectBoat() {
         // Select Boat
         if (teamNumber == TeamNumber.TeamOne) {
@@ -174,11 +183,22 @@ public class MenuMovement : MonoBehaviour {
         // Debug.Log("Adding Forward Force");
         canPaddle = false;
 
-        Vector3 finalForwardForce = paddleDirection * paddleData.forwardForce * currentBoatBody.transform.forward;
-        currentBoatBody.transform.GetComponentInChildren<Rigidbody>().AddForceAtPosition(finalForwardForce, currentBoatBody.transform.position, ForceMode.Impulse);
+        if (currentBoat == BoatType.RAFT)
+        {
+            Vector3 finalForwardForce = paddleDirection * paddleDataRaft.forwardForce * currentBoatBody.transform.forward;
+            currentBoatBody.transform.GetComponentInChildren<Rigidbody>().AddForceAtPosition(finalForwardForce, currentBoatBody.transform.position, ForceMode.Impulse);
 
-        Vector3 finalHorizontalForce = -paddleSide * paddleData.torque * currentBoatBody.transform.up;
-        currentBoatBody.transform.GetComponentInChildren<Rigidbody>().AddTorque(finalHorizontalForce, ForceMode.Impulse);
+            Vector3 finalHorizontalForce = -paddleSide * paddleDataRaft.torque * currentBoatBody.transform.up;
+            currentBoatBody.transform.GetComponentInChildren<Rigidbody>().AddTorque(finalHorizontalForce, ForceMode.Impulse);
+        }
+
+        else if (currentBoat == BoatType.CANOE) {
+            Vector3 finalForwardForce = paddleDirection * paddleDataCanoe.forwardForce * currentBoatBody.transform.forward;
+            currentBoatBody.transform.GetComponentInChildren<Rigidbody>().AddForceAtPosition(finalForwardForce, currentBoatBody.transform.position, ForceMode.Impulse);
+
+            Vector3 finalHorizontalForce = -paddleSide * paddleDataCanoe.torque * currentBoatBody.transform.up;
+            currentBoatBody.transform.GetComponentInChildren<Rigidbody>().AddTorque(finalHorizontalForce, ForceMode.Impulse);
+        }
 
         previousPaddleSide = paddleSide;
         previousPaddleDirection = paddleDirection;
@@ -194,19 +214,19 @@ public class MenuMovement : MonoBehaviour {
                 if (paddleDirection > 0)
                 {
                     playerAnimator.SetTrigger("Paddle Forward");
-					// Play Sound Effect
-					splash.Play();
-					// Play Splash Effect
-					StartCoroutine(PlaySplash(splashBackwardParticles, splashBackDelay));
+                    // Play Sound Effect
+                    splash.Play();
+                    // Play Splash Effect
+                    StartCoroutine(PlaySplash(splashBackwardParticles, splashBackDelay));
 
                 }
                 else if (paddleDirection < 0)
                 {
                     playerAnimator.SetTrigger("Paddle Backward");
-					// Play Sound Effect
-					splash.Play();
-					// Play Splash Effect
-					StartCoroutine(PlaySplash(splashForwardParticles, splashForwardDelay));
+                    // Play Sound Effect
+                    splash.Play();
+                    // Play Splash Effect
+                    StartCoroutine(PlaySplash(splashForwardParticles, splashForwardDelay));
                 }
             }
         }
@@ -233,12 +253,68 @@ public class MenuMovement : MonoBehaviour {
         if (!canPaddle)
         {
             paddleRotationTimer += Time.deltaTime;
-            if (paddleRotationTimer >= paddleData.rotationTime)
+            if (currentBoat == BoatType.RAFT)
             {
-                canPaddle = true;
-                paddleRotationTimer = 0;
+                if (paddleRotationTimer >= paddleDataRaft.rotationTime)
+                {
+                    canPaddle = true;
+                    paddleRotationTimer = 0;
+                }
+            }
+            else if (currentBoat == BoatType.CANOE) {
+                if (paddleRotationTimer >= paddleDataCanoe.rotationTime)
+                {
+                    canPaddle = true;
+                    paddleRotationTimer = 0;
+                }
             }
         }
+    }
+
+    void CanAttack()
+    {
+        attackDisplay.SetActive(false);
+
+        if (currentBoat == BoatType.CANOE) { hitColliders = Physics.OverlapSphere(GetPaddlePosition(), paddleDataCanoe.reach); }
+        else if (currentBoat == BoatType.RAFT) { hitColliders = Physics.OverlapSphere(GetPaddlePosition(), paddleDataRaft.reach); }
+
+        for (int i = 0; i < hitColliders.Length; i++)
+        {
+            if (hitColliders[i].gameObject != this.gameObject && hitColliders[i].GetComponent<MenuBoat>())
+            {
+                attackDisplay.SetActive(true);
+                foundPlayer = hitColliders[i].gameObject;
+                Debug.Log("Can Attack");
+            }
+        }
+
+        // Check now to see if the attack notice is on or off - if it is on turn on the other players attack radius
+        if (attackDisplay.activeSelf)
+        {
+            // If the current state is end(3) or off(0), activate
+            if (foundPlayer != null && (foundPlayer.GetComponent<PlayerAttackUIController>().GetState() == 0 || foundPlayer.GetComponent<PlayerAttackUIController>().GetState() == 3))
+            {
+                foundPlayer.GetComponent<PlayerAttackUIController>().ActivateRadius();
+                Debug.Log("Activate The Attack UI");
+            }
+        }
+        else
+        {
+            // If the current state is start(1) or pulse(2), end it
+            if (foundPlayer != null && (foundPlayer.GetComponent<PlayerAttackUIController>().GetState() == 1 || foundPlayer.GetComponent<PlayerAttackUIController>().GetState() == 2))
+            {
+                foundPlayer.GetComponent<PlayerAttackUIController>().DeactivateRadius();
+                Debug.Log("Deactivate The Attack UI");
+            }
+        }
+
+    }
+
+    Vector3 GetPaddlePosition()
+    {
+        Bounds paddleBounds = paddle.GetComponentInChildren<MeshFilter>().sharedMesh.bounds;
+
+        return paddle.transform.position - paddle.transform.up.normalized * paddleBounds.extents.z * 0.33f;
     }
 
     IEnumerator WaitForInput() {
@@ -255,29 +331,33 @@ public class MenuMovement : MonoBehaviour {
         return playerID;
     }
 
-	IEnumerator PlaySplash(ParticleSystem splash, float delay){
+    IEnumerator PlaySplash(ParticleSystem splash, float delay) {
 
-		yield return new WaitForSeconds (delay);
-		splash.Play ();
-	}
-		
-	public void RumbleControllers(){
-		StartCoroutine (Bump (0.1f));
-	}
+        yield return new WaitForSeconds(delay);
+        splash.Play();
+    }
 
-	// Variable length low-intensity bump function
-	public IEnumerator Bump(float duration)
-	{
-		foreach (Joystick j in player.controllers.Joysticks)
-		{
-			if (!j.supportsVibration) continue;
-			j.SetVibration(0.25f, 0.25f);
-		}
-		yield return new WaitForSeconds(duration);
-		foreach (Joystick j in player.controllers.Joysticks)
-		{
-			j.StopVibration();
-		}
-	}
+    public void RumbleControllers() {
+        StartCoroutine(Bump(0.1f));
+    }
+
+    // Variable length low-intensity bump function
+    public IEnumerator Bump(float duration)
+    {
+        foreach (Joystick j in player.controllers.Joysticks)
+        {
+            if (!j.supportsVibration) continue;
+            j.SetVibration(0.25f, 0.25f);
+        }
+        yield return new WaitForSeconds(duration);
+        foreach (Joystick j in player.controllers.Joysticks)
+        {
+            j.StopVibration();
+        }
+    }
+
+    public void AllowAttack() {
+        canAttack = true;
+    }
 
 }

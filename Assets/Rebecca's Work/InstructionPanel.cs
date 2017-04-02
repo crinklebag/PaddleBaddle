@@ -8,6 +8,7 @@ public class InstructionPanel : MonoBehaviour {
 
     [SerializeField] GameObject triggerPrompts;
     [SerializeField] GameObject bumperPrompts;
+    [SerializeField] GameObject floatingUI;
     GameObject currentPrompt;
 
     bool fadeInstructions = false;
@@ -55,6 +56,7 @@ public class InstructionPanel : MonoBehaviour {
         UIPiece.GetComponent<Image>().color = Color.Lerp(Color.clear, Color.white, fracJourney);
         // If it is finished fading in
         if (fracJourney >= 1) {
+            floatingUI.SetActive(true);
             StartCoroutine(FadeDelay());
             fadeInstructions = false;
             fadeIn = false;

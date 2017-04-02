@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class LevelSelectLoadPanel : MonoBehaviour {
 
     [SerializeField] Text loadingText;
+    [SerializeField] float lowerValue = 400;
 
     float startTime = 0;
     float journeyLength = 0;
@@ -24,7 +25,7 @@ public class LevelSelectLoadPanel : MonoBehaviour {
     // Use this for initialization
     void Start () {
         startMarker = gameObject.GetComponent<RectTransform>().anchoredPosition;
-        endMarker = new Vector3(startMarker.x, startMarker.y - 200, startMarker.z);
+        endMarker = new Vector3(startMarker.x, startMarker.y - lowerValue, startMarker.z);
     }
 	
 	// Update is called once per frame

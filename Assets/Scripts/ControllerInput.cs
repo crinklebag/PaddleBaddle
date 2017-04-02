@@ -229,9 +229,10 @@ public class ControllerInput : MonoBehaviour {
         }
 
         // Hit the powerup button && the boat has a powerup active
-        if (player.GetButtonDown("Powerup") && boatInfo.hasPowerUp)
+        if (player.GetButtonDown("Powerup") && boatInfo.GetHasPowerUp())
         {
-            powerupActions[boatInfo.powerUpType](); // call the function that matches the string the boat has
+            powerupActions[boatInfo.GetPowerUpType()](); // call the function that matches the string the boat has
+            this.GetComponent<Boat>().UsePickup();
         }
 
         if (player.GetButtonDown("Taunt") && !taunting)
@@ -415,22 +416,22 @@ public class ControllerInput : MonoBehaviour {
 	{
 		Debug.Log ("Adding " + speedBoostForce + " for speedboost!");
 		gameObject.GetComponent<Rigidbody> ().AddForce (-transform.forward * speedBoostForce, ForceMode.Impulse);
-		removePowerUp ();
+		// removePowerUp ();
 	}
 
 	// Add force for the next attack
 	void strengthBoost()
 	{
         paddleData.attackForce = (paddleData.attackForce > strengthBoostForce) ? paddleData.attackForce : paddleData.attackForce + strengthBoostForce;
-		removePowerUp ();
+		// removePowerUp ();
 	}
 
 	// Remove the powerup from the boat
-	void removePowerUp()
+	/* void removePowerUp()
 	{
 		boatInfo.hasPowerUp = false;
 		Destroy (transform.GetChild (transform.childCount - 1).gameObject);
-	}
+	} */
 
 	// Something went wrong
 	void missingAction()

@@ -18,11 +18,14 @@ public class SecondMenuController : MonoBehaviour {
     [SerializeField] GameObject boatOne;
     [SerializeField] GameObject boatTwo;
 
-    bool canMove = false;    [SerializeField] GameObject blockingWall;
+    bool canMove = false;
+
+    [SerializeField] GameObject blockingWall;
 
     bool teamOneSelected = false;
     bool teamTwoSelected = false;
     bool instructionsStarted = false;
+    bool raiseBoards = false;
 
     [Header("Movement Markers")]
     [SerializeField] Vector3 camStartMarker;
@@ -46,8 +49,10 @@ public class SecondMenuController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        boardOneEndMarker = new Vector3(boardOneStartMarker.x, 240, boardOneStartMarker.z);
-        boardTwoEndMarker = new Vector3(boardTwoStartMarker.x, 240, boardTwoStartMarker.z);
+        boardOneStartMarker = boardOne.GetComponent<RectTransform>().anchoredPosition;
+        boardTwoStartMarker = boardTwo.GetComponent<RectTransform>().anchoredPosition;
+        boardOneEndMarker = new Vector3(boardOne.GetComponent<RectTransform>().anchoredPosition.x, boardOne.GetComponent<RectTransform>().anchoredPosition.y + 500, 0);
+        boardTwoEndMarker = new Vector3(boardTwo.GetComponent<RectTransform>().anchoredPosition.x, boardTwo.GetComponent<RectTransform>().anchoredPosition.y + 500, 0);
     }
 	
 	// Update is called once per frame
@@ -79,8 +84,10 @@ public class SecondMenuController : MonoBehaviour {
             if (PlayerPrefs.GetString("teamTwoBoat") == "canoe") { teamTwoForceValue = 7000; }
             else { teamTwoForceValue = 8000; }
             boatOne.GetComponentInChildren<Rigidbody>().AddForce(boatOne.transform.forward * teamOneForceValue, ForceMode.Impulse);
-            
             boatTwo.GetComponentInChildren<Rigidbody>().AddForce(boatOne.transform.forward * teamTwoForceValue, ForceMode.Impulse);
+
+            boatOne.GetComponent<MenuMovement>().AllowAttack();
+            boatTwo.GetComponent<MenuMovement>().AllowAttack();
         }
 
         if (canMove) {
@@ -101,8 +108,8 @@ public class SecondMenuController : MonoBehaviour {
         // Move up the Camera
         Camera.main.transform.position = Vector3.Lerp(camStartMarker, camEndMarker, fracJourney);
         // Move up the boards
-        boardOne.GetComponent<RectTransform>().anchoredPosition = Vector3.Lerp(boardOneStartMarker, boardOneEndMarker, fracJourney * 2);
-        boardTwo.GetComponent<RectTransform>().anchoredPosition = Vector3.Lerp(boardTwoStartMarker, boardTwoEndMarker, fracJourney * 2);
+        boardOne.GetComponent<RectTransform>().anchoredPosition = Vector3.Lerp(boardOneStartMarker, boardOneEndMarker, fracJourney * 1.5f);
+        boardTwo.GetComponent<RectTransform>().anchoredPosition = Vector3.Lerp(boardTwoStartMarker, boardTwoEndMarker, fracJourney * 1.5f);
 
         // Start The Instructions
         if (!instructionsStarted) {
@@ -115,6 +122,7 @@ public class SecondMenuController : MonoBehaviour {
             // turn on blocking wall
             blockingWall.SetActive(true);
             ShowInstructions();
+            // canMove = false;
         }
     }
 
@@ -187,14 +195,4 @@ public class SecondMenuController : MonoBehaviour {
     public bool CanMove() {
         return canMove;
     }
-
-    /* IEnumerator StartLevelLoad(string level) {
-        loadingPanel.SetActive(true);
-
-        yield return new WaitForSeconds(3);
-
-        // Call this function 3 times and load the dots
-
-        SceneManager.LoadScene(level);
-    }*/
 }

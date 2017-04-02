@@ -99,6 +99,7 @@ public class FlowObject : MonoBehaviour {
 		
 	void currentEffect()
 	{
+        Debug.Log("Current");
 		foreach (GameObject thing in thingsInRange) {
 			// Only apply ONCE to parent game object
 			Rigidbody[] rigidbodies = thing.GetComponentsInChildren<Rigidbody> ();
