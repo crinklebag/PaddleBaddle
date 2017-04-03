@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerAttackUIController : MonoBehaviour {
 
@@ -10,13 +11,16 @@ public class PlayerAttackUIController : MonoBehaviour {
     [SerializeField] GameObject attackRadius;
 	[SerializeField] float speed = 10;
 
-	[Header("Size Varients")]
+    [Header("Size Varients")]
 	[SerializeField] Vector3 smallSize;
 	[SerializeField] Vector3 stretchSize;
 	Vector3 startMarker = Vector3.zero;
 	Vector3 endMarker = Vector3.zero;
 
 	bool grow = false;
+    bool hide = false;
+    bool startSignActivity = false;
+    bool canHide = false;
 
 	// Pulse Variables
 	float pulseStartTime = 0;
@@ -26,12 +30,16 @@ public class PlayerAttackUIController : MonoBehaviour {
 	float startTime = 0;
 	float journeyDistance = 0;
 
-	// Use this for initialization
-	void Start () {
-        // CheckState();
+    // Variables for sign movement 
+    float signStartTime = 0;
+    float signJourneyDistance = 0;
 
-	}
-	
+    private void Start()
+    {
+        startSignActivity = false;
+        hide = true;
+    }
+
 	// Update is called once per frame
 	void Update () {
 		CheckState ();

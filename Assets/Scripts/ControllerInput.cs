@@ -26,8 +26,10 @@ public class ControllerInput : MonoBehaviour {
 	[Header("Effects (Audio and Particles)")]
 	[SerializeField] AudioSource splash;
 	[SerializeField] AudioSource boatHit;
+    [SerializeField] AudioSource attackHit;
 	[SerializeField] ParticleSystem splashForwardParticles;
 	[SerializeField] ParticleSystem splashBackwardParticles;
+    [SerializeField] ParticleSystem dustParticles;
 	[SerializeField] float splashBackDelay = 0.5f;
 	[SerializeField] float splashForwardDelay = 0.25f;
 
@@ -57,6 +59,7 @@ public class ControllerInput : MonoBehaviour {
 
     bool canPaddle = true;
     bool taunting = false;
+    bool attacking = false;
 
 	System.TimeSpan timeStartedRotation;
 	List<int> quadrantsHit = new List<int>();
@@ -112,7 +115,7 @@ public class ControllerInput : MonoBehaviour {
     IEnumerator Taunt()
     {
         taunting = true;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         taunting = false;
     }
 
@@ -153,7 +156,7 @@ public class ControllerInput : MonoBehaviour {
     void MoveCanoe(int paddleSide, int paddleDirection)
     {
         // Add force to boat by the paddle
-        Debug.Log("Adding Forward Force");
+        // Debug.Log("Adding Forward Force");
         canPaddle = false;
 
         Vector3 finalForwardForce = paddleDirection * paddleData.forwardForce * boat.transform.forward * slowMod;
@@ -367,6 +370,15 @@ public class ControllerInput : MonoBehaviour {
                     {
                         playerCharacter.GetComponent<Animator>().SetTrigger("Attacking");
 
+                        // Play Audio and particle effects on the player paddle
+                        dustParticles.Play();
+                        attackHit.Play();
+
+                        // Set Attacking so the paddle knows to play particles and audio
+                        StopCoroutine(AttackDelay());
+                        attacking = true;
+                        StartCoroutine(AttackDelay());
+
                         Vector3 differenceVector = otherBoat.transform.position - GetPaddlePosition();
 
                     	hitColliders[i].GetComponent<Rigidbody>().AddForceAtPosition(paddleData.attackForce * Vector3.down, differenceVector, ForceMode.Impulse);
@@ -381,6 +393,16 @@ public class ControllerInput : MonoBehaviour {
                 }
             }
         }
+    }
+
+    IEnumerator AttackDelay() {
+        yield return new WaitForSeconds(1.5f);
+
+        attacking = false;
+    }
+
+    public bool IsAttacking() {
+        return attacking;
     }
 
     void Shove()
@@ -528,5 +550,9 @@ public class ControllerInput : MonoBehaviour {
 		yield return new WaitForSeconds (delay);
 		splash.Play ();
 	}
+
+    public void StartTaunt() {
+        StartCoroutine(Taunt());
+    }
 
 }

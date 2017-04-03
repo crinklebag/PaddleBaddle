@@ -13,6 +13,8 @@ public class Boat : MonoBehaviour {
     [SerializeField] GameObject strengthIcon;
     [SerializeField] GameObject speedIcon;
 
+    [SerializeField] ParticleSystem boostParticles;
+
     // Information for powerups
     public bool isFlipped { get; private set; }
     bool hasPowerUp = false;
@@ -104,12 +106,15 @@ public class Boat : MonoBehaviour {
         {
             Score(3);
             Destroy(other.gameObject); // Don't pick up twice
+            this.GetComponent<ControllerInput>().StartTaunt();
         } else if (other.CompareTag("Silver") && gameMode == GameController.Modes.Pickup) {
             Score(2);
             Destroy(other.gameObject); // Don't pick up twice
+            this.GetComponent<ControllerInput>().StartTaunt();
         } else if (other.CompareTag("Wood") && gameMode == GameController.Modes.Pickup) {
             Score(1);
             Destroy(other.gameObject); // Don't pick up twice
+            this.GetComponent<ControllerInput>().StartTaunt();
         }
 
     }
@@ -127,6 +132,8 @@ public class Boat : MonoBehaviour {
         powerUpType = newPowerUpType;
         fishHook.SetActive(false);
 
+        this.GetComponent<ControllerInput>().StartTaunt();
+
         if (powerUpType == "strength")
         {
             strengthIcon.SetActive(true);
@@ -137,6 +144,7 @@ public class Boat : MonoBehaviour {
     }
 
     public void UsePickup() {
+        if (speedIcon.activeSelf) { boostParticles.Play(); }
         hasPowerUp = false;
         fishHook.SetActive(true);
         strengthIcon.SetActive(false);

@@ -81,7 +81,7 @@ public class InstructionPanel : MonoBehaviour {
 
     // Show this from the menu controller after both players have selected a boat
     public void StartInstructions() {
-        Debug.Log("Starting Instructions in Instruction Panel");
+        // Debug.Log("Starting Instructions in Instruction Panel");
         fadeInstructions = true;
         startTime = Time.time;
         journeyLength = Vector3.Distance(Vector3.one, Vector3.zero);

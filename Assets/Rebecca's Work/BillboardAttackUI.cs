@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BillboardAttackUI : MonoBehaviour {
 
+public class BillboardAttackUI : MonoBehaviour {
+    
 	// Use this for initialization
 	void Start () {
 		

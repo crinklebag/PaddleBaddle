@@ -101,31 +101,42 @@ public class PickupMode : GameMode {
             //spawnPoint.Scale(new Vector3(respawnArea.radius, 0, respawnArea.radius));
             //spawnPoint += respawnArea.transform.position;
 
-			// Choose a random number between 0 - 10 and spawn a chest based off that
-			GameObject spawnObject;
-			int rand = Random.Range(0, 10);
-			// If 9+ spawn a golf chest
-			if(rand >= 9){
+            // Do anoverlap sphere to see if you should spawn even
+            Collider[] hitCols = Physics.OverlapSphere(spawnPoint, 2);
+            bool foundPlayer = false;
+            for (int i = 0; i < hitCols.Length; i++) {
+                if (hitCols[i].CompareTag("Player")) { foundPlayer = true; }
+            }
 
-				spawnObject = goldChest;
-			}
-			// If 5 - 8 spawn Silver Chest
-			else if (rand > 5 && rand < 9){
+            if (!foundPlayer)
+            {
+                // Choose a random number between 0 - 10 and spawn a chest based off that
+                GameObject spawnObject;
+                int rand = Random.Range(0, 10);
+                // If 9+ spawn a golf chest
+                if (rand >= 9)
+                {
+                    spawnObject = goldChest;
+                }
+                // If 5 - 8 spawn Silver Chest
+                else if (rand > 5 && rand < 9)
+                {
+                    spawnObject = silverChest;
+                }
+                // if 0 to 5 spawn wood chest
+                else
+                {
+                    spawnObject = woodChest;
+                }
 
-				spawnObject = silverChest;
-			}
-			// if 0 to 5 spawn wood chest
-			else {
+                spawnPoint = new Vector3(spawnPoint.x, 17, spawnPoint.z);
+                GameObject thisPickup = Object.Instantiate(spawnObject, spawnPoint, Quaternion.identity);
 
-				spawnObject = woodChest;
-			}
-
-			GameObject thisPickup = Object.Instantiate(spawnObject, spawnPoint, Quaternion.identity);
-
-            // use the reference to set up the buoyancy of the object
-            thisPickup.GetComponent<RealisticBuoyancy>().setup();
-            // hack fix the water level
-            thisPickup.GetComponent<RealisticBuoyancy>().waterLevelOverride = RealisticWaterPhysics.currentWaterLevel;
+                // use the reference to set up the buoyancy of the object
+                thisPickup.GetComponent<RealisticBuoyancy>().setup();
+                // hack fix the water level
+                thisPickup.GetComponent<RealisticBuoyancy>().waterLevelOverride = RealisticWaterPhysics.currentWaterLevel;
+            }
 
             yield return new WaitForSeconds(spawnRate);
         }

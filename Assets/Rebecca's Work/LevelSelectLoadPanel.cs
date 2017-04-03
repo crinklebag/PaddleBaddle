@@ -74,7 +74,7 @@ public class LevelSelectLoadPanel : MonoBehaviour {
     }
 
     public void StartLevelLoad(string level) {
-        Debug.Log("StartLevelLoad() Called");
+        // Debug.Log("StartLevelLoad() Called");
         startTime = Time.time;
         journeyLength = Vector3.Distance(startMarker, endMarker);
         lowerBoard = true;

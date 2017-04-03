@@ -15,7 +15,7 @@ public class PickupSpawner : MonoBehaviour {
 	// Turn it on
 	void Start()
 	{
-		Debug.Log ("Spawner is alive");
+		// Debug.Log ("Spawner is alive");
 		StartCoroutine (spawning());
 	}
 
@@ -32,7 +32,7 @@ public class PickupSpawner : MonoBehaviour {
 	// Spawning corouting
 	IEnumerator spawning()
 	{
-		Debug.Log ("Waiting to start for: " + timeBeforeStart);
+		// Debug.Log ("Waiting to start for: " + timeBeforeStart);
 		yield return new WaitForSeconds (timeBeforeStart); // wait this long before turning on
 		// while its on, keep doing this
 		while (running) {

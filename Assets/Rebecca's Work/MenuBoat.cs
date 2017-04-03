@@ -20,7 +20,7 @@ public class MenuBoat : MonoBehaviour {
 		// Debug.Log ("Colliding with: " + other);
 
 		if (other.gameObject.CompareTag ("Player")) {
-			Debug.Log ("Players Hit");
+			// Debug.Log ("Players Hit");
 			this.GetComponent<AudioSource> ().Play ();
 			this.GetComponentInParent<MenuMovement> ().RumbleControllers ();
 			other.gameObject.GetComponentInParent<MenuMovement> ().RumbleControllers ();

@@ -74,11 +74,11 @@ public class SecondMenuController : MonoBehaviour {
             float teamOneForceValue = 5000;
             float teamTwoForceValue = 5000;
             if (PlayerPrefs.GetString("teamOneBoat") == "canoe") { 
-				Debug.Log ("Team One Canoe Force");
+				// Debug.Log ("Team One Canoe Force");
 				teamOneForceValue = 7000; 
 			}
             else {
-				Debug.Log ("Team One Raft Force");
+				// Debug.Log ("Team One Raft Force");
 				teamOneForceValue = 8000; 
 			}
             if (PlayerPrefs.GetString("teamTwoBoat") == "canoe") { teamTwoForceValue = 7000; }
@@ -115,7 +115,7 @@ public class SecondMenuController : MonoBehaviour {
         if (!instructionsStarted) {
             instructionPanel.GetComponent<InstructionPanel>().StartInstructions();
             instructionsStarted = true;
-            Debug.Log("Starting Instructions in Menu Controller");
+            // Debug.Log("Starting Instructions in Menu Controller");
         }
 
         if (fracJourney >= 0.9f) {

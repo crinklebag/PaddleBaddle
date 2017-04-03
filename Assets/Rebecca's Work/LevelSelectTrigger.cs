@@ -20,7 +20,7 @@ public class LevelSelectTrigger : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Player")) {
-            Debug.Log("Found Player");
+            // Debug.Log("Found Player");
             // Tell the menu controller to add a readied player and which level 
             int playerID = other.GetComponentInParent<MenuMovement>().GetPlayerID();
             menuController.LoadLevel(playerID, levelToLoad);
