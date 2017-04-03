@@ -10,6 +10,12 @@ public class DynamicCamera : MonoBehaviour {
     public bool Dynamic = true;
 
     /// <summary>
+    /// Set the camera rotation to look directly at target
+    /// on start.
+    /// </summary>
+    public bool AutoCentre = true;
+
+    /// <summary>
     /// Exposed minimum zDistance cap.
     /// </summary>
     [SerializeField]
@@ -76,8 +82,14 @@ public class DynamicCamera : MonoBehaviour {
         targets = GameObject.FindGameObjectsWithTag("Player");
         Boom = new GameObject("Camera Boom");
         FOV = gameObject.GetComponent<Camera>().fieldOfView;
+
         findCameraTarget();
         transform.SetParent(Boom.transform);
+
+        if (AutoCentre)
+        {
+            transform.LookAt(target);
+        }
 	}
 	
 	/// <summary>
