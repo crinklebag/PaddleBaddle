@@ -13,17 +13,20 @@ public class DynamicCamera : MonoBehaviour {
     private float maxDistance = Mathf.Infinity;
 
     [SerializeField]
-    private float sizeRate = 1f;
+    private float sizeRate = 3f;
 
     [SerializeField]
-    private float moveSpeed = 1f;
+    private float moveSpeed = 5f;
 
-    private float distanceToTarget;
+    [SerializeField]
+    private float zoomMod = 1.5f;
 
-    private float tolerance = 0.15f;
+    private float tolerance = 0.05f;
 
     private float zDistance;
 
+    private float FOV;
+    
     private GameObject[] targets;
 
     private Vector3 target;
@@ -34,6 +37,7 @@ public class DynamicCamera : MonoBehaviour {
 	void Start () {
         targets = GameObject.FindGameObjectsWithTag("Player");
         Boom = new GameObject("Camera Boom");
+        FOV = gameObject.GetComponent<Camera>().fieldOfView;
         findCameraTarget();
         transform.SetParent(Boom.transform);
 	}
@@ -71,10 +75,9 @@ public class DynamicCamera : MonoBehaviour {
     void findZDistance()
     {
         float dist = Vector3.Distance(targets[0].transform.position, targets[1].transform.position);
-        float FOV = gameObject.GetComponent<Camera>().fieldOfView;
 
-        zDistance = Mathf.Abs(dist) / Mathf.Tan(FOV / 2);
-
+        zDistance = (dist/2) / Mathf.Tan(toRad(FOV / 2)) * zoomMod;
+        zDistance = Mathf.Clamp(zDistance, minDistance, maxDistance);
     }
 
     void centreCamera()
@@ -90,8 +93,6 @@ public class DynamicCamera : MonoBehaviour {
 
         float dist = Vector3.Distance(transform.position, Boom.transform.position);
 
-        distanceToTarget = dist;
-
         if (zDistance - tolerance < dist)
         {
             transform.position += transform.forward * sizeRate * Time.deltaTime;
@@ -101,5 +102,10 @@ public class DynamicCamera : MonoBehaviour {
         {
             transform.position -= transform.forward * sizeRate * Time.deltaTime;
         }
+    }
+
+    float toRad(float degrees)
+    {
+        return ((degrees * Mathf.PI) / 180f);
     }
 }
