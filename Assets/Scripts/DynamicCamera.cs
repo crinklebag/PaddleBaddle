@@ -7,7 +7,7 @@ public class DynamicCamera : MonoBehaviour {
     /// <summary>
     /// Public bool to turn on dynamic camera.
     /// </summary>
-    public bool Dynamic = false;
+    public bool Dynamic = true;
 
     /// <summary>
     /// Exposed minimum zDistance cap.
@@ -25,7 +25,7 @@ public class DynamicCamera : MonoBehaviour {
     /// Zoom rate.
     /// </summary>
     [SerializeField]
-    private float sizeRate = 3f;
+    private float zoomSpeed = 3f;
 
     /// <summary>
     /// Move rate.
@@ -147,12 +147,12 @@ public class DynamicCamera : MonoBehaviour {
 
         if (zDistance - tolerance < dist)
         {
-            transform.position += transform.forward * sizeRate * Time.deltaTime;
+            transform.position += transform.forward * zoomSpeed * Time.deltaTime;
         }
 
         if (dist < zDistance + tolerance)
         {
-            transform.position -= transform.forward * sizeRate * Time.deltaTime;
+            transform.position -= transform.forward * zoomSpeed * Time.deltaTime;
         }
     }
 
