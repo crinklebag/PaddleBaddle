@@ -24,10 +24,14 @@ public class Pickup : MonoBehaviour {
 			{
 
                 other.GetComponent<Boat>().PickupObject(type);
-
-                Destroy(gameObject);
+                other.GetComponent<Boat>().Cheer();
+                if (type == "strength") {
+                    other.GetComponent<ControllerInput>().strengthBoost();
+                }
                 
 			}
-		}
+
+            Destroy(gameObject);
+        }
 	}
 }

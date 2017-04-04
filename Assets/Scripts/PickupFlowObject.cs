@@ -103,7 +103,7 @@ public class PickupFlowObject : MonoBehaviour {
 		foreach (GameObject thing in thingsInRange) {
 			// Only apply ONCE to parent game object
 			Rigidbody[] rigidbodies = thing.GetComponentsInChildren<Rigidbody> ();
-			if (rigidbodies.Length > 0) {
+			if (rigidbodies.Length > 0 && rigidbodies[0] != null) {
                 
 				rigidbodies [0].AddForce (transform.forward *  current.magnitude, ForceMode.Force);
 			}

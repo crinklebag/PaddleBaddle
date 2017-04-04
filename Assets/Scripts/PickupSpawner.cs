@@ -36,32 +36,40 @@ public class PickupSpawner : MonoBehaviour {
 		yield return new WaitForSeconds (timeBeforeStart); // wait this long before turning on
 		// while its on, keep doing this
 		while (running) {
-			GameObject thisPickup;
 
-			// as long as nothing is in the way
-			if (nothingInTheWay) {
-				// if no powerups were set for the spawner, turn this off
-				if (powerups.Count == 0) { 
-					running = false;
-					yield break;
-				} else if (powerups.Count > 1) {
-					// spawn a random pickup, and get a reference to it
-					thisPickup = Instantiate (powerups [(int)(Random.value * 10) % powerups.Count],
-						transform.position, transform.rotation) as GameObject;
-				} else {
-					thisPickup = Instantiate (powerups [0], transform.position, transform.rotation) as GameObject;
-				}
+            GameObject[] scenePowerups = GameObject.FindGameObjectsWithTag("PowerUp");
 
-				// use the reference to set up the buoyancy of the object
-				thisPickup.GetComponent<RealisticBuoyancy> ().setup ();
-				// hack fix the water level
-				thisPickup.GetComponent<RealisticBuoyancy> ().waterLevelOverride = RealisticWaterPhysics.currentWaterLevel;
+            if (scenePowerups.Length < 2)
+            {
+                GameObject thisPickup;
 
-                //Debug.Log(thisPickup.GetComponent<RealisticBuoyancy>().isInWater);
-                //Debug.Log(thisPickup.transform.position.y);
-                //Debug.Log(RealisticWaterPhysics.currentWaterLevel);
-                //Debug.Break();
-			}
+                // as long as nothing is in the way
+                if (nothingInTheWay)
+                {
+                    // if no powerups were set for the spawner, turn this off
+                    if (powerups.Count == 0)
+                    {
+                        running = false;
+                        yield break;
+                    }
+                    else if (powerups.Count > 1)
+                    {
+                        // spawn a random pickup, and get a reference to it
+                        thisPickup = Instantiate(powerups[(int)(Random.value * 10) % powerups.Count],
+                            transform.position, transform.rotation) as GameObject;
+                    }
+                    else
+                    {
+                        thisPickup = Instantiate(powerups[0], transform.position, transform.rotation) as GameObject;
+                    }
+
+                    // use the reference to set up the buoyancy of the object
+                    thisPickup.GetComponent<RealisticBuoyancy>().setup();
+                    // Fix the water level
+                    thisPickup.GetComponent<RealisticBuoyancy>().waterLevelOverride = RealisticWaterPhysics.currentWaterLevel;
+                }
+            }
+
 			// wait a random time and spawn again
 			yield return new WaitForSeconds(Random.Range (spawnRateLowerBound, spawnRateUpperBound));
 		}

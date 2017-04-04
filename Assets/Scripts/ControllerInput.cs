@@ -74,7 +74,7 @@ public class ControllerInput : MonoBehaviour {
 
 		// Manually adding all of the functions to the dictionary
 		powerupActions.Add ("speed", speedBoost);
-		powerupActions.Add ("strength", strengthBoost);
+		// powerupActions.Add ("strength", strengthBoost);
 		powerupActions.Add ("", missingAction);
     }
 
@@ -310,7 +310,7 @@ public class ControllerInput : MonoBehaviour {
                 directionOfRotation = -1;
             }
 
-            Debug.Log("Direction of Rotation: " + directionOfRotation);
+            // Debug.Log("Direction of Rotation: " + directionOfRotation);
 
             // Reset quandrant tracker
             quadrantsHit = new List<int>();
@@ -331,7 +331,7 @@ public class ControllerInput : MonoBehaviour {
             {
                 attackDisplay.SetActive(true);
                 foundPlayer = hitColliders[i].gameObject;
-                Debug.Log("Can Attack");
+                // Debug.Log("Can Attack");
             }
         }
 
@@ -347,7 +347,7 @@ public class ControllerInput : MonoBehaviour {
 			// If the current state is start(1) or pulse(2), end it
 			if(foundPlayer != null && (foundPlayer.GetComponent<PlayerAttackUIController>().GetState() == 1 || foundPlayer.GetComponent<PlayerAttackUIController>().GetState() == 2)){
 				foundPlayer.GetComponent<PlayerAttackUIController> ().DeactivateRadius ();
-				Debug.Log ("Deactivate The Attack UI");
+				// Debug.Log ("Deactivate The Attack UI");
 			}
         }
 
@@ -382,12 +382,14 @@ public class ControllerInput : MonoBehaviour {
                         Vector3 differenceVector = otherBoat.transform.position - GetPaddlePosition();
 
                     	hitColliders[i].GetComponent<Rigidbody>().AddForceAtPosition(paddleData.attackForce * Vector3.down, differenceVector, ForceMode.Impulse);
-                    	Debug.Log("Attack force applied: "+ paddleData.attackForce);
+                    	// Debug.Log("Attack force applied: "+ paddleData.attackForce);
 
 			            // Removing strength powerup effect if we just used the strong attack
 			            if (paddleData.attackForce > strengthBoostForce) 
 			            {
+                            Debug.Log("Used the Strength Boost");
                             paddleData.attackForce -= strengthBoostForce;
+                            boat.GetComponent<Boat>().UsePickup();
 			            }
                     }
                 }
@@ -425,7 +427,7 @@ public class ControllerInput : MonoBehaviour {
                         forceVector.Normalize();
 
                         hitColliders[i].GetComponent<Rigidbody>().AddForceAtPosition(paddleData.shoveForce * forceVector, otherBoat.transform.position, ForceMode.Impulse);
-                        Debug.Log("Shove force applied: " + paddleData.shoveForce);
+                        // Debug.Log("Shove force applied: " + paddleData.shoveForce);
                         
                     }
                 }
@@ -436,24 +438,17 @@ public class ControllerInput : MonoBehaviour {
 	// Adding force to the boat for the speed boost
 	void speedBoost()
 	{
-		Debug.Log ("Adding " + speedBoostForce + " for speedboost!");
+		// Debug.Log ("Adding " + speedBoostForce + " for speedboost!");
 		gameObject.GetComponent<Rigidbody> ().AddForce (-transform.forward * speedBoostForce, ForceMode.Impulse);
 		// removePowerUp ();
 	}
 
 	// Add force for the next attack
-	void strengthBoost()
+	public void strengthBoost()
 	{
         paddleData.attackForce = (paddleData.attackForce > strengthBoostForce) ? paddleData.attackForce : paddleData.attackForce + strengthBoostForce;
 		// removePowerUp ();
 	}
-
-	// Remove the powerup from the boat
-	/* void removePowerUp()
-	{
-		boatInfo.hasPowerUp = false;
-		Destroy (transform.GetChild (transform.childCount - 1).gameObject);
-	} */
 
 	// Something went wrong
 	void missingAction()
@@ -555,4 +550,12 @@ public class ControllerInput : MonoBehaviour {
         StartCoroutine(Taunt());
     }
 
+    public int GetPlayerID() {
+        return playerID;
+    }
+
+
+    public void SetStunTime(int newStunTime) {
+        stunTime = newStunTime;
+    }
 }

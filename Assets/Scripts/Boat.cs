@@ -7,6 +7,7 @@ public class Boat : MonoBehaviour {
     [SerializeField] int team;
     [SerializeField] Transform flipCheck;
     [SerializeField] TrailRenderer trail;
+    [SerializeField] AudioSource characterAudio;
 
     // Pickup UI Information
     [SerializeField] GameObject fishHook;
@@ -56,10 +57,6 @@ public class Boat : MonoBehaviour {
                 player.StartCoroutine("Rumble", 0.5f);
             }
 
-            //// Detach players for the funnies
-            //if(player1) player1.transform.SetParent (null);
-            //if(player2) player2.transform.SetParent (null);
-
             // Send data to game controller if it's relevant to the gameMode
             if (gameMode == GameController.Modes.Flip)
                 Score(1);
@@ -78,7 +75,7 @@ public class Boat : MonoBehaviour {
         // Debug.Log ("Colliding with: " + other);
 
         if (other.gameObject.CompareTag("Player")) {
-            Debug.Log("Players Hit");
+            // Debug.Log("Players Hit");
             this.GetComponent<AudioSource>().Play();
             this.GetComponent<ControllerInput>().RumbleControllers();
             other.gameObject.GetComponent<ControllerInput>().RumbleControllers();
@@ -107,14 +104,17 @@ public class Boat : MonoBehaviour {
             Score(3);
             Destroy(other.gameObject); // Don't pick up twice
             this.GetComponent<ControllerInput>().StartTaunt();
+            Cheer();
         } else if (other.CompareTag("Silver") && gameMode == GameController.Modes.Pickup) {
             Score(2);
             Destroy(other.gameObject); // Don't pick up twice
             this.GetComponent<ControllerInput>().StartTaunt();
+            Cheer();
         } else if (other.CompareTag("Wood") && gameMode == GameController.Modes.Pickup) {
             Score(1);
             Destroy(other.gameObject); // Don't pick up twice
             this.GetComponent<ControllerInput>().StartTaunt();
+            Cheer();
         }
 
     }
@@ -209,7 +209,7 @@ public class Boat : MonoBehaviour {
 
             trail.Clear();
 
-			Debug.Log ("Player Flipped");
+			// Debug.Log ("Player Flipped");
 			Score (-1);
 
             StartCoroutine(Invincibility());
@@ -302,5 +302,9 @@ public class Boat : MonoBehaviour {
         meshRenderer.enabled = true;
 
         invincible = false;
+    }
+
+    public void Cheer() {
+        characterAudio.Play();
     }
 }

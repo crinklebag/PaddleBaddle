@@ -189,7 +189,7 @@ public class LobbyController : MonoBehaviour {
         float distCovered = (Time.time - startTime) * speed;
         float fracJourney = distCovered / journeyLength;
 
-        startGameUI.GetComponent<Image>().color = Color.Lerp(Color.clear, Color.white, fracJourney);
+        startGameUI.GetComponent<MeshRenderer>().material.color = Color.Lerp(Color.clear, Color.white, fracJourney);
         // startGameUI.transform.GetChild(0).GetComponent<Image>().color = Color.Lerp(Color.clear, Color.white, fracJourney);
         // startGameUI.transform.GetChild(1).GetComponent<Image>().color = Color.Lerp(Color.clear, Color.white, fracJourney);
 
@@ -199,7 +199,7 @@ public class LobbyController : MonoBehaviour {
         float distCovered = (Time.time - startTime) * speed;
         float fracJourney = distCovered / journeyLength;
 
-        startGameUI.GetComponent<Image>().color = Color.Lerp(Color.white, Color.clear, fracJourney);
+        startGameUI.GetComponent<MeshRenderer>().material.color = Color.Lerp(Color.white, Color.clear, fracJourney);
         // startGameUI.transform.GetChild(0).GetComponent<Image>().color = Color.Lerp(Color.white, Color.clear, fracJourney);
         // startGameUI.transform.GetChild(1).GetComponent<Image>().color = Color.Lerp(Color.white, Color.clear, fracJourney);
 
