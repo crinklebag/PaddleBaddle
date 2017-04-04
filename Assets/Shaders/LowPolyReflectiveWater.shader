@@ -180,7 +180,7 @@
 			float4 frag(g2f i) : COLOR
 			{
 				float ar = _ScreenParams.x / _ScreenParams.y;
-			
+
 				float4 distortOffset = float4(_DistortDistance, _DistortDistance, 0, 0);
 				float4 proj = UNITY_PROJ_COORD(i.screenPos) + distortOffset;
 
