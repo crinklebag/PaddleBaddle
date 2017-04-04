@@ -31,11 +31,6 @@ public class GameController : MonoBehaviour
     [HideInInspector] public float TeamTwoScore;
 
     /// <summary>
-    /// The different winning screens for each team.
-    /// </summary>
-    [SerializeField] private GameObject[] teamWinBoards;
-
-    /// <summary>
     /// In-game HUD score boards for each team.
     /// </summary>
     [SerializeField] private GameObject[] teamScoreBoards;
@@ -44,6 +39,7 @@ public class GameController : MonoBehaviour
     /// Round begin timer text. Large and in the center.
     /// </summary>
     [SerializeField] private Text roundBeginTimerText;
+    [SerializeField] private Text roundBeginTimerTextShadow;
 
     /// <summary>
     /// Round end timer text. Small and at the top.
@@ -58,7 +54,9 @@ public class GameController : MonoBehaviour
     /// <summary>
     /// Serialized vars for spawning coins
     /// </summary>
-    public GameObject coinPrefab;
+    public GameObject goldChest;
+	public GameObject silverChest;
+	public GameObject woodChest;
     public float spawnRate = 3f;
     public GameObject respawnArea;
 
@@ -152,11 +150,21 @@ public class GameController : MonoBehaviour
     [SerializeField] GameObject redTeamCanoe;
     [SerializeField] GameObject redTeamRaft;
 
+    [Header("Text Colours")]
+    [SerializeField] Color greenTextColor;
+    [SerializeField] Color redTextColor;
+    [SerializeField] Image fadePanel;
+    bool fadeToBlack = false;
+
+    GameObject cameraTarget;
+
     /// <summary>
     /// MonoBehaviour Awake Event
     /// </summary>
     void Awake ()
     {
+        PlayerPrefs.SetInt("teamOneScore", 0);
+        PlayerPrefs.SetInt("teamTwoScore", 0);
         SetUpTeams();    
 		firstPlayer = ReInput.players.GetPlayer(0);
 	}
@@ -239,6 +247,19 @@ public class GameController : MonoBehaviour
             Time.timeScale = 0.0f;
             pauseMenu.SetActive(true);
         }
+
+        // Zoom cam on game end 
+        if (cameraTarget) {
+            Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, new Vector3(cameraTarget.transform.position.x, cameraTarget.transform.position.y + 5, cameraTarget.transform.position.z - 5), 20 * Time.deltaTime);
+            Camera.main.transform.LookAt(cameraTarget.transform.position);
+        }
+
+        if (fadeToBlack) {
+            float newAlpha = fadePanel.color.a + Time.deltaTime;
+            fadePanel.color = new Color(0, 0, 0, newAlpha);
+
+            if (newAlpha >= 1) { fadeToBlack = false; }
+        }
     }
 
     private void endRound()
@@ -257,7 +278,7 @@ public class GameController : MonoBehaviour
             roundEndTimerText.gameObject.SetActive(false);
             Debug.Log("Win");
             roundFinished = true;
-            StartCoroutine(DelayEndPromptToggle(teamWinBoards[team]));
+            // StartCoroutine(DelayEndPromptToggle(teamWinBoards[team]));
         }
     }
 
@@ -268,7 +289,7 @@ public class GameController : MonoBehaviour
             roundEndTimerText.gameObject.SetActive(false);
             Debug.Log("Win");
             roundFinished = true;
-            StartCoroutine(DelayEndPromptToggle(teamWinBoards[0]));
+            // StartCoroutine(DelayEndPromptToggle(teamWinBoards[0]));
         }
 	}
 
@@ -279,7 +300,7 @@ public class GameController : MonoBehaviour
             roundEndTimerText.gameObject.SetActive(false);
             Debug.Log("Win");
             roundFinished = true;
-            StartCoroutine(DelayEndPromptToggle(teamWinBoards[1]));
+            // StartCoroutine(DelayEndPromptToggle(teamWinBoards[1]));
         }
 	}
 
@@ -295,13 +316,14 @@ public class GameController : MonoBehaviour
         //if (team >= 0 && team < teamBoats.Length && RoundStarted && !RoundFinished)
         if (team >= 0 && team < Teams.Length && RoundStarted && !RoundFinished)
         {
-            //teamPoints[team] += points;
-            //TeamOneScore = teamPoints[0];
-            //TeamTwoScore = teamPoints[1];
-            //Text teamScoreDisplay = teamScoreBoards[team].GetComponentInChildren<Text>();
-            //teamScoreDisplay.text = teamPoints[team].ToString();
 
             Teams[team].score += points;
+
+			// Ensure the player cannot get a negative score
+			if (Teams [team].score < 0) {
+				Teams [team].score = 0;
+			}
+
             TeamOneScore = Teams[0].score;
             TeamTwoScore = Teams[1].score;
             Text teamScoreDisplay = teamScoreBoards[team].GetComponentInChildren<Text>();
@@ -332,24 +354,26 @@ public class GameController : MonoBehaviour
         timeUntilRoundEnd = 0;
         if (teamPoints[winningTeam] == 0)
         { AddTeamPoint(winningTeam, 1); }
-        StartCoroutine(DelayEndPromptToggle(teamWinBoards[winningTeam]));
     }
 
     IEnumerator StartRound()
     {
         roundStarted = false;
         roundBeginTimerText.gameObject.SetActive(true);
+        roundBeginTimerTextShadow.gameObject.SetActive(true);
 
         while (timeUntilRoundStart > 0)
         {
             //
             roundBeginTimerText.text = timeUntilRoundStart.ToString() + "...";
+            roundBeginTimerTextShadow.text = timeUntilRoundStart.ToString() + "...";
             //
             yield return new WaitForSecondsRealtime(1);
             timeUntilRoundStart -= 1;
         }
 
         roundBeginTimerText.text = "Start!";
+        roundBeginTimerTextShadow.text = "Start!";
         yield return new WaitForSecondsRealtime(1);
 
         // Run mode specific init
@@ -357,10 +381,29 @@ public class GameController : MonoBehaviour
 
         roundStarted = true;
         roundBeginTimerText.gameObject.SetActive(false);
+        roundBeginTimerTextShadow.gameObject.SetActive(false);
         roundEndTimerText.gameObject.SetActive(true);
 
         StartCoroutine(RoundSecondTick());
     }
+
+    IEnumerator EndRound() {
+        timeUntilRoundStart = 3;
+        roundBeginTimerText.gameObject.SetActive(true);
+        roundBeginTimerTextShadow.gameObject.SetActive(true);
+
+        while (timeUntilRoundStart > 0)
+        {
+            //
+            roundBeginTimerText.color = redTextColor;
+            roundBeginTimerText.text = timeUntilRoundStart.ToString() + "...";
+            roundBeginTimerTextShadow.text = timeUntilRoundStart.ToString() + "...";
+            //
+            yield return new WaitForSecondsRealtime(1);
+            timeUntilRoundStart -= 1;
+        }
+    }
+
     IEnumerator RoundSecondTick()
     {
         while (timeUntilRoundEnd >= 0 && !RoundFinished)
@@ -369,33 +412,67 @@ public class GameController : MonoBehaviour
 
             roundEndTimerText.text = String.Format("{0}:{1:00}", t.Minutes, t.Seconds);
 
-            yield return new WaitForSecondsRealtime(1);
+            if(timeUntilRoundEnd > 0) yield return new WaitForSecondsRealtime(1);
+
             timeUntilRoundEnd -= 1;
+            if (TimeUntilRoundEnd == 3) { StartCoroutine(EndRound()); }
         }
 
         roundEndTimerText.gameObject.SetActive(false);
-        roundBeginTimerText.gameObject.SetActive(true);
-        roundBeginTimerText.text = "Finished!";
         PlayerPrefs.SetInt("teamOneScore", Teams[0].score);
         PlayerPrefs.SetInt("teamTwoScore", Teams[1].score);
+
+        // Get the teams present in the scene
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        // Green team Wins
+        if (PlayerPrefs.GetInt("teamOneScore") > PlayerPrefs.GetInt("teamTwoScore")) {
+            // Go through the players find player one and make them the cam target and play stun
+            for (int i = 0; i < players.Length; i++) {
+                if (players[i].GetComponent<ControllerInput>().GetPlayerID() == 0 && players[i].activeSelf) {
+                    players[i].GetComponent<ControllerInput>().StartTaunt();
+                    cameraTarget = players[i];
+                }
+            }
+            roundBeginTimerText.color = greenTextColor;
+            roundBeginTimerText.text = "Green Wins!";
+            roundBeginTimerTextShadow.text = "Green Wins!";
+
+        }
+        // Red Team Wins
+        else if (PlayerPrefs.GetInt("teamOneScore") < PlayerPrefs.GetInt("teamTwoScore")) {
+            // Go through the players find player two and make them the cam target and play stun
+            for (int i = 0; i < players.Length; i++) {
+                if (players[i].GetComponent<ControllerInput>().GetPlayerID() == 1 && players[i].activeSelf) {
+                    players[i].GetComponent<ControllerInput>().StartTaunt();
+                    cameraTarget = players[i];
+                }
+            }
+
+            roundBeginTimerText.color = redTextColor;
+            roundBeginTimerText.text = "Red Wins!";
+            roundBeginTimerTextShadow.text = "Red Wins!";
+        }
+        // Tie
+        else {
+            // Play Stun on both players - leave the camera where it is
+            for (int i = 0; i < players.Length; i++) {
+                 players[i].GetComponent<ControllerInput>().SetStunTime(5);
+                 players[i].GetComponent<ControllerInput>().StartTaunt();
+            }
+
+            roundBeginTimerText.color = Color.white;
+            roundBeginTimerText.text = "Tied!";
+            roundBeginTimerTextShadow.text = "Tied!";
+        }
+
+        yield return new WaitForSecondsRealtime(3);
+
+        fadeToBlack = true;
+
+        yield return new WaitForSecondsRealtime(1);
         SceneManager.LoadScene("GameOver");
-        yield return new WaitForSecondsRealtime(2);
-
-        winningTeam = game[mode].getWinner(Teams, raceGoal);
-
-        if (winningTeam == -1)
-        {
-            roundBeginTimerText.text = "Tie Game!";
-            SceneManager.LoadScene("GameOver");
-            // yield return new WaitForSecondsRealtime(3);
-            // SceneManager.LoadScene("Lobby Design", LoadSceneMode.Single);
-        }
-        else
-        {
-            TeamWin(winningTeam);
-            Teams[(winningTeam + 1) % Teams.Length].boat
-                .SendMessage("FlipBoat");
-        }
+   
     }
 
 	IEnumerator DelayEndPromptToggle(GameObject ToggleUI)
@@ -415,13 +492,9 @@ public class GameController : MonoBehaviour
 			yield return null;
 		}
 
+        // yield return new WaitForSecondsRealtime(2);
+
         yield return new WaitForSecondsRealtime(2);
-        //ToggleUI.SetActive(true);
-
-        //GameObject.Find("End Score Team 1").GetComponent<Text>().text = teamPoints[0] + " Points";
-        //GameObject.Find("End Score Team 2").GetComponent<Text>().text = teamPoints[1] + " Points";
-
-    yield return new WaitForSecondsRealtime(2);
 
 		endPromptText.gameObject.SetActive (true);
 		waitingForEndPrompt = true;

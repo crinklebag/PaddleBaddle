@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class RotateClouds : MonoBehaviour {
-
+    [SerializeField]
+    float speed = 1;
 	// Use this for initialization
 	void Start () {
 	
@@ -10,6 +11,6 @@ public class RotateClouds : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.Rotate(0, 0.01f, 0);
+        transform.Rotate(0, speed * -1f, 0);
 	}
 }

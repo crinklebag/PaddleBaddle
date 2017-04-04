@@ -3,16 +3,24 @@ using System.Collections;
 
 [DisallowMultipleComponent]
 public class Boat : MonoBehaviour {
-    
-	[SerializeField] int team;
-	[SerializeField] Transform flipCheck;
+
+    [SerializeField] int team;
+    [SerializeField] Transform flipCheck;
     [SerializeField] TrailRenderer trail;
-    
-	// Information for powerups
-	public bool isFlipped { get; private set; }
-	public bool hasPowerUp = false;
-	public string powerUpType = "";
-   	MeshRenderer meshRenderer;
+    [SerializeField] AudioSource characterAudio;
+
+    // Pickup UI Information
+    [SerializeField] GameObject fishHook;
+    [SerializeField] GameObject strengthIcon;
+    [SerializeField] GameObject speedIcon;
+
+    [SerializeField] ParticleSystem boostParticles;
+
+    // Information for powerups
+    public bool isFlipped { get; private set; }
+    bool hasPowerUp = false;
+    string powerUpType = "";
+    MeshRenderer meshRenderer;
 
     public bool invincible { get; private set; }
 
@@ -23,7 +31,7 @@ public class Boat : MonoBehaviour {
     private GameController.Modes gameMode;
 
     // Use this for initialization
-	void Start ()
+    void Start()
     {
 
         // use the reference to set up the buoyancy of the object
@@ -35,11 +43,11 @@ public class Boat : MonoBehaviour {
         gameMode = GameObject.Find("GameController").GetComponent<GameController>().mode;
     }
 
-	void Update () {
+    void Update() {
 
-		if (flipCheck.position.y < this.transform.position.y && isFlipped == false)
+        if (flipCheck.position.y < this.transform.position.y && isFlipped == false)
         {
-			isFlipped = true;
+            isFlipped = true;
 
             SetPlayerInput(false);
             ControllerInput[] players = GetComponents<ControllerInput>();
@@ -49,46 +57,66 @@ public class Boat : MonoBehaviour {
                 player.StartCoroutine("Rumble", 0.5f);
             }
 
-            //// Detach players for the funnies
-            //if(player1) player1.transform.SetParent (null);
-            //if(player2) player2.transform.SetParent (null);
-
             // Send data to game controller if it's relevant to the gameMode
             if (gameMode == GameController.Modes.Flip)
-                Score();
-            
+                Score(1);
+
             StartCoroutine(Respawn());
-		}
+        }
         else
         {
             SetPlayerInput(true);
             isFlipped = false;
         }
-	}
+    }
+
+    void OnCollisionEnter(Collision other) {
+
+        // Debug.Log ("Colliding with: " + other);
+
+        if (other.gameObject.CompareTag("Player")) {
+            // Debug.Log("Players Hit");
+            this.GetComponent<AudioSource>().Play();
+            this.GetComponent<ControllerInput>().RumbleControllers();
+            other.gameObject.GetComponent<ControllerInput>().RumbleControllers();
+        }
+    }
 
     public void FlipBoat()
     {
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
-        { 
+        {
             rb.AddForceAtPosition(Vector3.down * 175, transform.right, ForceMode.Impulse);
-            
+
         }
     }
 
-    void Score()
+    void Score(int points)
     {
-        GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(team, 1);
+        GameObject.Find("GameController").GetComponent<GameController>().AddTeamPoint(team, points);
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Coin") && gameMode == GameController.Modes.Pickup)
+        if (other.CompareTag("Gold") && gameMode == GameController.Modes.Pickup)
         {
-            Score();
+            Score(3);
             Destroy(other.gameObject); // Don't pick up twice
+            this.GetComponent<ControllerInput>().StartTaunt();
+            Cheer();
+        } else if (other.CompareTag("Silver") && gameMode == GameController.Modes.Pickup) {
+            Score(2);
+            Destroy(other.gameObject); // Don't pick up twice
+            this.GetComponent<ControllerInput>().StartTaunt();
+            Cheer();
+        } else if (other.CompareTag("Wood") && gameMode == GameController.Modes.Pickup) {
+            Score(1);
+            Destroy(other.gameObject); // Don't pick up twice
+            this.GetComponent<ControllerInput>().StartTaunt();
+            Cheer();
         }
-            
+
     }
 
     void SetPlayerInput(bool value)
@@ -97,6 +125,38 @@ public class Boat : MonoBehaviour {
         {
             controller.enabled = value;
         }
+    }
+
+    public void PickupObject(string newPowerUpType) {
+        hasPowerUp = true;
+        powerUpType = newPowerUpType;
+        fishHook.SetActive(false);
+
+        this.GetComponent<ControllerInput>().StartTaunt();
+
+        if (powerUpType == "strength")
+        {
+            strengthIcon.SetActive(true);
+        }
+        else {
+            speedIcon.SetActive(true);
+        }
+    }
+
+    public void UsePickup() {
+        if (speedIcon.activeSelf) { boostParticles.Play(); }
+        hasPowerUp = false;
+        fishHook.SetActive(true);
+        strengthIcon.SetActive(false);
+        speedIcon.SetActive(false);
+    }
+
+    public bool GetHasPowerUp() {
+        return hasPowerUp;
+    }
+
+    public string GetPowerUpType() {
+        return powerUpType;
     }
 
     static Vector3 GetRandomPointInCollider(SphereCollider collider)
@@ -133,10 +193,10 @@ public class Boat : MonoBehaviour {
             yield break;
         }
 
-        // If it's a race
-        if (gameMode == GameController.Modes.Race)
+		// If it's a race - JUST TRYING SOMETHING OUT!!!!
+		if (gameMode == GameController.Modes.Pickup)
         {
-            // Run respawn code without picking a new position
+            // Run respawn code without picking a new position 
             transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
             transform.rotation = Quaternion.identity;
 
@@ -147,13 +207,16 @@ public class Boat : MonoBehaviour {
                 body.angularVelocity = Vector3.zero;
             }
 
-            GetComponent<TrailRenderer>().Clear();
+            trail.Clear();
+
+			// Debug.Log ("Player Flipped");
+			Score (-1);
 
             StartCoroutine(Invincibility());
 
             isFlipped = false;
             yield break;
-        }
+		}
 
         GameObject respawnArea = GameObject.Find("Respawn Area");
 
@@ -216,7 +279,7 @@ public class Boat : MonoBehaviour {
             rb.angularVelocity = Vector3.zero;
         }
 
-        // GetComponent<TrailRenderer>().Clear();
+        trail.Clear();
 
         StartCoroutine(Invincibility());
 
@@ -239,5 +302,9 @@ public class Boat : MonoBehaviour {
         meshRenderer.enabled = true;
 
         invincible = false;
+    }
+
+    public void Cheer() {
+        characterAudio.Play();
     }
 }

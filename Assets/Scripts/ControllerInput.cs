@@ -14,15 +14,8 @@ public class ControllerInput : MonoBehaviour {
     [SerializeField] GameObject paddle;
     [SerializeField] float maxDeltaAngle = 30f;
     [SerializeField] PaddleData paddleData;
-    //[SerializeField] float paddleRotationForce = 5000f;
-    //[SerializeField] float paddleTorque = 30000f;
-    //[SerializeField] float paddleForwardForce = 50000f;
     [SerializeField] float speedBoostForce = 150000f;
     [SerializeField] float strengthBoostForce = 200f;
-    //[SerializeField] float attackForce = -1000f;
-    //[SerializeField] float shoveForce = 10000f;
-    //[SerializeField] float paddleRoationSpeed = 2500f;
-    //[SerializeField] float attackRadius = 1f;
     [SerializeField] float stunTime = 1f;
     [SerializeField] float mudEffect = 0.5f;
     [SerializeField] float shortRumble = 0.5f;
@@ -30,8 +23,18 @@ public class ControllerInput : MonoBehaviour {
     [SerializeField] bool raft;
     float slowMod = 1f;
 
+	[Header("Effects (Audio and Particles)")]
+	[SerializeField] AudioSource splash;
+	[SerializeField] AudioSource boatHit;
+    [SerializeField] AudioSource attackHit;
+	[SerializeField] ParticleSystem splashForwardParticles;
+	[SerializeField] ParticleSystem splashBackwardParticles;
+    [SerializeField] ParticleSystem dustParticles;
+	[SerializeField] float splashBackDelay = 0.5f;
+	[SerializeField] float splashForwardDelay = 0.25f;
+
     //creating an selectable object.
-    public GameObject attackDisplay;
+    [SerializeField] GameObject attackDisplay;
 
     public bool stunned = false;
 
@@ -40,6 +43,9 @@ public class ControllerInput : MonoBehaviour {
 	Boat boatInfo;
 
     float paddleRotationTimer = 0;
+
+    // reference to the last player found within reach
+    GameObject foundPlayer = null;
 
     /// <summary>
     /// Represents the left and right facing of the paddle. -1 for left, 1 for right.
@@ -53,6 +59,7 @@ public class ControllerInput : MonoBehaviour {
 
     bool canPaddle = true;
     bool taunting = false;
+    bool attacking = false;
 
 	System.TimeSpan timeStartedRotation;
 	List<int> quadrantsHit = new List<int>();
@@ -61,14 +68,13 @@ public class ControllerInput : MonoBehaviour {
 	Dictionary<string, System.Action> powerupActions = new Dictionary<string, System.Action> ();
 
 	void Awake () {
-        // FindUI();
         player = ReInput.players.GetPlayer (playerID);
 		boat = this.GetComponentInParent<Boat> ().gameObject;
 		boatInfo = boat.GetComponent<Boat> ();       
 
 		// Manually adding all of the functions to the dictionary
 		powerupActions.Add ("speed", speedBoost);
-		powerupActions.Add ("strength", strengthBoost);
+		// powerupActions.Add ("strength", strengthBoost);
 		powerupActions.Add ("", missingAction);
     }
 
@@ -77,24 +83,6 @@ public class ControllerInput : MonoBehaviour {
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireSphere (GetPaddlePosition(), paddleData.reach);
 	}
-
-    void FindUI() {
-        switch (playerID) {
-            case 0:
-                playerUIController = GameObject.FindGameObjectWithTag("Player 1 UI").GetComponent<PlayerUI>();
-                Debug.Log("Hii " + playerUIController);
-                break;
-            case 1:
-                playerUIController = GameObject.FindGameObjectWithTag("Player 2 UI").GetComponent<PlayerUI>();
-                break;
-            case 2:
-                playerUIController = GameObject.FindGameObjectWithTag("Player 3 UI").GetComponent<PlayerUI>();
-                break;
-            case 3:
-                playerUIController = GameObject.FindGameObjectWithTag("Player 4 UI").GetComponent<PlayerUI>();
-                break;
-        }
-    }
 
 	// Update is called once per frame
 	void Update () {
@@ -127,7 +115,7 @@ public class ControllerInput : MonoBehaviour {
     IEnumerator Taunt()
     {
         taunting = true;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         taunting = false;
     }
 
@@ -168,7 +156,7 @@ public class ControllerInput : MonoBehaviour {
     void MoveCanoe(int paddleSide, int paddleDirection)
     {
         // Add force to boat by the paddle
-        Debug.Log("Adding Forward Force");
+        // Debug.Log("Adding Forward Force");
         canPaddle = false;
 
         Vector3 finalForwardForce = paddleDirection * paddleData.forwardForce * boat.transform.forward * slowMod;
@@ -190,10 +178,18 @@ public class ControllerInput : MonoBehaviour {
                 if(paddleDirection > 0)
                 {
                     playerAnimator.SetTrigger("Paddle Forward");
+					// Play Sound Effect
+					splash.Play();
+					// Play Splash Effect
+					StartCoroutine(PlaySplash(splashBackwardParticles, splashBackDelay));
                 }
                 else if (paddleDirection < 0)
                 {
                     playerAnimator.SetTrigger("Paddle Backward");
+					// Play Sound Effect
+					splash.Play();
+					// Play Splash Effect
+					StartCoroutine(PlaySplash(splashForwardParticles, splashForwardDelay));
                 }
             }
         }
@@ -236,9 +232,10 @@ public class ControllerInput : MonoBehaviour {
         }
 
         // Hit the powerup button && the boat has a powerup active
-        if (player.GetButtonDown("Powerup") && boatInfo.hasPowerUp)
+        if (player.GetButtonDown("Powerup") && boatInfo.GetHasPowerUp())
         {
-            powerupActions[boatInfo.powerUpType](); // call the function that matches the string the boat has
+            powerupActions[boatInfo.GetPowerUpType()](); // call the function that matches the string the boat has
+            this.GetComponent<Boat>().UsePickup();
         }
 
         if (player.GetButtonDown("Taunt") && !taunting)
@@ -256,9 +253,7 @@ public class ControllerInput : MonoBehaviour {
         {
             SetPaddleSide(-1);
         }
-
-        //
-
+        
         float leftStickVertical = player.GetAxis("Vertical");
         float leftStickHorizontal = player.GetAxis("Horizontal");
 
@@ -315,7 +310,7 @@ public class ControllerInput : MonoBehaviour {
                 directionOfRotation = -1;
             }
 
-            Debug.Log("Direction of Rotation: " + directionOfRotation);
+            // Debug.Log("Direction of Rotation: " + directionOfRotation);
 
             // Reset quandrant tracker
             quadrantsHit = new List<int>();
@@ -327,7 +322,6 @@ public class ControllerInput : MonoBehaviour {
 
     void CanAttack()
     {
-        // Debug.Log("Can Attack");
         attackDisplay.SetActive(false);
 
         Collider[] hitColliders = Physics.OverlapSphere(GetPaddlePosition(), paddleData.reach);
@@ -336,8 +330,27 @@ public class ControllerInput : MonoBehaviour {
             if (hitColliders[i].gameObject != this.gameObject && hitColliders[i].GetComponent<Boat>())
             {
                 attackDisplay.SetActive(true);
+                foundPlayer = hitColliders[i].gameObject;
+                // Debug.Log("Can Attack");
             }
         }
+
+        // Check now to see if the attack notice is on or off - if it is on turn on the other players attack radius
+		if (attackDisplay.activeSelf) {
+			// If the current state is end(3) or off(0), activate
+			if(foundPlayer != null && (foundPlayer.GetComponent<PlayerAttackUIController>().GetState() == 0 || foundPlayer.GetComponent<PlayerAttackUIController>().GetState() == 3)){
+				foundPlayer.GetComponent<PlayerAttackUIController> ().ActivateRadius ();
+				Debug.Log ("Activate The Attack UI");
+			}
+        }
+        else {
+			// If the current state is start(1) or pulse(2), end it
+			if(foundPlayer != null && (foundPlayer.GetComponent<PlayerAttackUIController>().GetState() == 1 || foundPlayer.GetComponent<PlayerAttackUIController>().GetState() == 2)){
+				foundPlayer.GetComponent<PlayerAttackUIController> ().DeactivateRadius ();
+				// Debug.Log ("Deactivate The Attack UI");
+			}
+        }
+
     }
 
     void Attack()
@@ -357,20 +370,41 @@ public class ControllerInput : MonoBehaviour {
                     {
                         playerCharacter.GetComponent<Animator>().SetTrigger("Attacking");
 
+                        // Play Audio and particle effects on the player paddle
+                        dustParticles.Play();
+                        attackHit.Play();
+
+                        // Set Attacking so the paddle knows to play particles and audio
+                        StopCoroutine(AttackDelay());
+                        attacking = true;
+                        StartCoroutine(AttackDelay());
+
                         Vector3 differenceVector = otherBoat.transform.position - GetPaddlePosition();
 
                     	hitColliders[i].GetComponent<Rigidbody>().AddForceAtPosition(paddleData.attackForce * Vector3.down, differenceVector, ForceMode.Impulse);
-                    	Debug.Log("Attack force applied: "+ paddleData.attackForce);
+                    	// Debug.Log("Attack force applied: "+ paddleData.attackForce);
 
 			            // Removing strength powerup effect if we just used the strong attack
 			            if (paddleData.attackForce > strengthBoostForce) 
 			            {
+                            Debug.Log("Used the Strength Boost");
                             paddleData.attackForce -= strengthBoostForce;
+                            boat.GetComponent<Boat>().UsePickup();
 			            }
                     }
                 }
             }
         }
+    }
+
+    IEnumerator AttackDelay() {
+        yield return new WaitForSeconds(1.5f);
+
+        attacking = false;
+    }
+
+    public bool IsAttacking() {
+        return attacking;
     }
 
     void Shove()
@@ -393,7 +427,7 @@ public class ControllerInput : MonoBehaviour {
                         forceVector.Normalize();
 
                         hitColliders[i].GetComponent<Rigidbody>().AddForceAtPosition(paddleData.shoveForce * forceVector, otherBoat.transform.position, ForceMode.Impulse);
-                        Debug.Log("Shove force applied: " + paddleData.shoveForce);
+                        // Debug.Log("Shove force applied: " + paddleData.shoveForce);
                         
                     }
                 }
@@ -404,23 +438,16 @@ public class ControllerInput : MonoBehaviour {
 	// Adding force to the boat for the speed boost
 	void speedBoost()
 	{
-		Debug.Log ("Adding " + speedBoostForce + " for speedboost!");
-		gameObject.GetComponent<Rigidbody> ().AddForce (transform.up * speedBoostForce, ForceMode.Impulse);
-		removePowerUp ();
+		// Debug.Log ("Adding " + speedBoostForce + " for speedboost!");
+		gameObject.GetComponent<Rigidbody> ().AddForce (-transform.forward * speedBoostForce, ForceMode.Impulse);
+		// removePowerUp ();
 	}
 
 	// Add force for the next attack
-	void strengthBoost()
+	public void strengthBoost()
 	{
         paddleData.attackForce = (paddleData.attackForce > strengthBoostForce) ? paddleData.attackForce : paddleData.attackForce + strengthBoostForce;
-		removePowerUp ();
-	}
-
-	// Remove the powerup from the boat
-	void removePowerUp()
-	{
-		boatInfo.hasPowerUp = false;
-		Destroy (transform.GetChild (transform.childCount - 1).gameObject);
+		// removePowerUp ();
 	}
 
 	// Something went wrong
@@ -472,6 +499,10 @@ public class ControllerInput : MonoBehaviour {
         }
     }
 
+	public void RumbleControllers(){
+		StartCoroutine (Bump (0.1f));
+	}
+
 	// Variable length low-intensity bump function
 	public IEnumerator Bump(float duration)
 	{
@@ -509,4 +540,22 @@ public class ControllerInput : MonoBehaviour {
         return paddle.transform.position - paddle.transform.up.normalized * paddleBounds.extents.z * 0.33f;
     }
 
+	IEnumerator PlaySplash(ParticleSystem splash, float delay){
+
+		yield return new WaitForSeconds (delay);
+		splash.Play ();
+	}
+
+    public void StartTaunt() {
+        StartCoroutine(Taunt());
+    }
+
+    public int GetPlayerID() {
+        return playerID;
+    }
+
+
+    public void SetStunTime(int newStunTime) {
+        stunTime = newStunTime;
+    }
 }

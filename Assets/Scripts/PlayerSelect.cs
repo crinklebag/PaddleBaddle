@@ -39,6 +39,7 @@ public class PlayerSelect : MonoBehaviour {
 
     public void EnterGame() {
 
+        this.GetComponent<AudioSource>().Play();
         animator.SetBool("Selected", true);
         inText.SetActive(true);
         outText.SetActive(false);
