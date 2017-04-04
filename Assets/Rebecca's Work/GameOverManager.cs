@@ -13,6 +13,7 @@ public class GameOverManager : MonoBehaviour {
     [SerializeField] GameObject redTeam;
     [SerializeField] GameObject greenTeamSign;
     [SerializeField] GameObject redTeamSign;
+
     [SerializeField] Text redTeamPointUI;
     [SerializeField] Text greenTeamPointUI;
 
@@ -111,8 +112,6 @@ public class GameOverManager : MonoBehaviour {
 
     void SetUpWin(GameObject player, GameObject playerUI, Text pointUI) {
         Debug.Log("Setting up win");
-        // playerUI.GetComponent<RectTransform>().localPosition = winningUIpos.localPosition;
-        // playerUI.transform.GetChild(1).GetComponent<Text>().text = winningScore.ToString();
         playerUI.transform.localPosition = winningUIpos.position;
         playerUI.transform.rotation = Quaternion.Euler(0, 150, 0);
         pointUI.text = winningScore.ToString();
@@ -124,8 +123,6 @@ public class GameOverManager : MonoBehaviour {
 
     void SetUpLoss(GameObject player, GameObject playerUI, Text pointUI) {
         Debug.Log("Setting up lose");
-        // playerUI.GetComponent<RectTransform>().localPosition = losingUIPos.localPosition;
-        // playerUI.transform.GetChild(1).GetComponent<Text>().text = losingScore.ToString();
         playerUI.transform.localPosition = losingUIPos.position;
         playerUI.transform.rotation = Quaternion.Euler(0, 205, 0);
         pointUI.text = losingScore.ToString();

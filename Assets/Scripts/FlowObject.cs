@@ -101,12 +101,16 @@ public class FlowObject : MonoBehaviour {
 	{
         // Debug.Log("Current");
 		foreach (GameObject thing in thingsInRange) {
-			// Only apply ONCE to parent game object
-			Rigidbody[] rigidbodies = thing.GetComponentsInChildren<Rigidbody> ();
-			if (rigidbodies.Length > 0) {
-                
-				rigidbodies [0].AddForce (transform.forward *  current.magnitude, ForceMode.Force);
-			}
+            // Only apply ONCE to parent game object
+            if (thing != null)
+            {
+                Rigidbody[] rigidbodies = thing.GetComponentsInChildren<Rigidbody>();
+                if (rigidbodies.Length > 0)
+                {
+
+                    rigidbodies[0].AddForce(transform.forward * current.magnitude, ForceMode.Force);
+                }
+            }
 		}
 	}
 		
