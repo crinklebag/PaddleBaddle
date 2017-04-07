@@ -35,7 +35,7 @@ public class CreditsController : MonoBehaviour {
 
             creationCount++;
             if (creationCount == credits.Length) { running = false; }
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(3);
         }
     }
 

@@ -251,6 +251,8 @@ public class GameController : MonoBehaviour
         // Zoom cam on game end 
         if (cameraTarget) {
             Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, new Vector3(cameraTarget.transform.position.x, cameraTarget.transform.position.y + 5, cameraTarget.transform.position.z - 5), 20 * Time.deltaTime);
+            // Quaternion newLookAt = Quaternion.LookRotation(cameraTarget.transform.position);
+            // Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, newLookAt, Time.deltaTime * 5);
             Camera.main.transform.LookAt(cameraTarget.transform.position);
         }
 

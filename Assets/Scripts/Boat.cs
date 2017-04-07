@@ -13,6 +13,7 @@ public class Boat : MonoBehaviour {
     [SerializeField] GameObject fishHook;
     [SerializeField] GameObject strengthIcon;
     [SerializeField] GameObject speedIcon;
+    [SerializeField] GameObject minusOneBadge;
 
     [SerializeField] ParticleSystem boostParticles;
 
@@ -280,6 +281,11 @@ public class Boat : MonoBehaviour {
         }
 
         trail.Clear();
+
+        // Make the -1 badge
+        Vector3 newPos = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
+        GameObject newMinusOneText = Instantiate(minusOneBadge, newPos, Quaternion.Euler(0, -90, 0)) as GameObject;
+        Destroy(newMinusOneText, 1);
 
         StartCoroutine(Invincibility());
 
