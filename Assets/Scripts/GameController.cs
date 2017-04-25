@@ -250,7 +250,7 @@ public class GameController : MonoBehaviour
 
         // Zoom cam on game end 
         if (cameraTarget) {
-            Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, new Vector3(cameraTarget.transform.position.x, cameraTarget.transform.position.y + 5, cameraTarget.transform.position.z - 5), 20 * Time.deltaTime);
+            Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, new Vector3(cameraTarget.transform.position.x, cameraTarget.transform.position.y + 5, cameraTarget.transform.position.z - 5), 5 * Time.deltaTime);
             // Quaternion newLookAt = Quaternion.LookRotation(cameraTarget.transform.position);
             // Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, newLookAt, Time.deltaTime * 5);
             Camera.main.transform.LookAt(cameraTarget.transform.position);
@@ -432,6 +432,7 @@ public class GameController : MonoBehaviour
             // Go through the players find player one and make them the cam target and play stun
             for (int i = 0; i < players.Length; i++) {
                 if (players[i].GetComponent<ControllerInput>().GetPlayerID() == 0 && players[i].activeSelf) {
+                    players[i].GetComponent<ControllerInput>().SetStunTime(15);
                     players[i].GetComponent<ControllerInput>().StartTaunt();
                     cameraTarget = players[i];
                 }
@@ -446,6 +447,7 @@ public class GameController : MonoBehaviour
             // Go through the players find player two and make them the cam target and play stun
             for (int i = 0; i < players.Length; i++) {
                 if (players[i].GetComponent<ControllerInput>().GetPlayerID() == 1 && players[i].activeSelf) {
+                    players[i].GetComponent<ControllerInput>().SetStunTime(15);
                     players[i].GetComponent<ControllerInput>().StartTaunt();
                     cameraTarget = players[i];
                 }
@@ -459,7 +461,7 @@ public class GameController : MonoBehaviour
         else {
             // Play Stun on both players - leave the camera where it is
             for (int i = 0; i < players.Length; i++) {
-                 players[i].GetComponent<ControllerInput>().SetStunTime(5);
+                 players[i].GetComponent<ControllerInput>().SetStunTime(15);
                  players[i].GetComponent<ControllerInput>().StartTaunt();
             }
 

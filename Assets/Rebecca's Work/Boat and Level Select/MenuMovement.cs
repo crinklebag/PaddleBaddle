@@ -30,6 +30,7 @@ public class MenuMovement : MonoBehaviour {
     [SerializeField] int playerID;
     [SerializeField] PaddleData paddleDataRaft;
     [SerializeField] PaddleData paddleDataCanoe;
+    [SerializeField] float speedBoostForce = 150000f;
     float paddleForwardForce = 400;
     float paddleTorque = 200;
     float paddleRoationSpeed = 2400;
@@ -39,6 +40,7 @@ public class MenuMovement : MonoBehaviour {
     [SerializeField] AudioSource boatHit;
     [SerializeField] ParticleSystem splashForwardParticles;
     [SerializeField] ParticleSystem splashBackwardParticles;
+    [SerializeField] ParticleSystem boostParticles;
     [SerializeField] float splashBackDelay = 0.5f;
     [SerializeField] float splashForwardDelay = 0.25f;
 
@@ -55,6 +57,8 @@ public class MenuMovement : MonoBehaviour {
     bool canPaddle = true;
     bool canInput = true;
     bool selectingBoat = true;
+    bool attacking = false;
+    bool canBoost = true;
 
     // reference to the last player found within reach
     GameObject foundPlayer = null;
@@ -92,6 +96,12 @@ public class MenuMovement : MonoBehaviour {
             else if (player.GetButtonDown("-Left Paddle") && canPaddle) {
                 if (selectedBoat == "canoe") { MoveCanoe(-1, 1); }
                 else { MoveCanoe(-1, -1); }
+            }
+            else if (player.GetButtonDown("Attack")) {
+                playerCharacter.GetComponent<Animator>().SetTrigger("Attacking");
+            }
+            else if (player.GetButtonDown("Powerup") && canBoost) {
+                speedBoost();
             }
             else {
                 // Don't move
@@ -232,6 +242,15 @@ public class MenuMovement : MonoBehaviour {
         }
     }
 
+    // Adding force to the boat for the speed boost
+    void speedBoost()
+    {
+        // Debug.Log ("Adding " + speedBoostForce + " for speedboost!");
+        gameObject.GetComponentInChildren<Rigidbody>().AddForce(-currentBoatBody.transform.forward * speedBoostForce, ForceMode.Impulse);
+        boostParticles.Play();
+        StartCoroutine(BoostDelay());
+    }
+
     void SetPaddleSide(int side)
     {
         previousPaddleSide = side;
@@ -325,6 +344,14 @@ public class MenuMovement : MonoBehaviour {
 
         canInput = true;
 
+    }
+
+    IEnumerator BoostDelay() {
+        canBoost = false;
+
+        yield return new WaitForSeconds(3);
+
+        canBoost = true;
     }
 
     public int GetPlayerID() {

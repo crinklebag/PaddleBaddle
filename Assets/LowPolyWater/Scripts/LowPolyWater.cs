@@ -107,8 +107,10 @@ public class LowPolyWater : MonoBehaviour {
         var mfs = GetComponentsInChildren<MeshFilter>();
         for (int i = 0; i < mfs.Length; i++) {
             if (Application.isPlaying) {
+                Destroy(mfs[i].sharedMesh);
                 Destroy(mfs[i].gameObject);
             } else {
+                DestroyImmediate(mfs[i].sharedMesh);
                 DestroyImmediate(mfs[i].gameObject);
             }
         }
