@@ -115,7 +115,7 @@ public class ControllerInput : MonoBehaviour {
     IEnumerator Taunt()
     {
         taunting = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(stunTime);
         taunting = false;
     }
 

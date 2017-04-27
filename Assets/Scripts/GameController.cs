@@ -432,7 +432,7 @@ public class GameController : MonoBehaviour
             // Go through the players find player one and make them the cam target and play stun
             for (int i = 0; i < players.Length; i++) {
                 if (players[i].GetComponent<ControllerInput>().GetPlayerID() == 0 && players[i].activeSelf) {
-                    players[i].GetComponent<ControllerInput>().SetStunTime(15);
+                    players[i].GetComponent<ControllerInput>().SetStunTime(30);
                     players[i].GetComponent<ControllerInput>().StartTaunt();
                     cameraTarget = players[i];
                 }
@@ -447,7 +447,7 @@ public class GameController : MonoBehaviour
             // Go through the players find player two and make them the cam target and play stun
             for (int i = 0; i < players.Length; i++) {
                 if (players[i].GetComponent<ControllerInput>().GetPlayerID() == 1 && players[i].activeSelf) {
-                    players[i].GetComponent<ControllerInput>().SetStunTime(15);
+                    players[i].GetComponent<ControllerInput>().SetStunTime(30);
                     players[i].GetComponent<ControllerInput>().StartTaunt();
                     cameraTarget = players[i];
                 }
@@ -461,7 +461,7 @@ public class GameController : MonoBehaviour
         else {
             // Play Stun on both players - leave the camera where it is
             for (int i = 0; i < players.Length; i++) {
-                 players[i].GetComponent<ControllerInput>().SetStunTime(15);
+                 players[i].GetComponent<ControllerInput>().SetStunTime(30);
                  players[i].GetComponent<ControllerInput>().StartTaunt();
             }
 

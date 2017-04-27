@@ -13,6 +13,7 @@ public class CycloneZoneController : MonoBehaviour {
     [SerializeField] Sprite counterClockwiseSprite;
     [SerializeField] ParticleSystem[] counterClockwiseWaves;
     [SerializeField] ParticleSystem[] clockwiseWaves;
+    [SerializeField] float whirlpoolforce = 500;
 
     SpriteRenderer currentUIOne;
     SpriteRenderer currentUITwo;
@@ -123,13 +124,6 @@ public class CycloneZoneController : MonoBehaviour {
         
         ToggleWaves();
 
-        // Start Shrinking the Whirlpool - set start variables
-        /* if (startGame)
-        {
-            
-        }
-        else { startGame = true; } */
-
         startTime = Time.time;
         journeyLength = Vector3.Distance(Vector3.one, Vector3.zero);
         flashUI = true;
@@ -195,4 +189,5 @@ public class CycloneZoneController : MonoBehaviour {
         yield return new WaitForSeconds(5);
         flashUI = false;
     }
+    
 }

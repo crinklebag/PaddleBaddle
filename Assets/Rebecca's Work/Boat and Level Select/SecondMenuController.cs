@@ -79,10 +79,10 @@ public class SecondMenuController : MonoBehaviour {
 			}
             else {
 				// Debug.Log ("Team One Raft Force");
-				teamOneForceValue = 8000; 
+				teamOneForceValue = 3000; 
 			}
             if (PlayerPrefs.GetString("teamTwoBoat") == "canoe") { teamTwoForceValue = 7000; }
-            else { teamTwoForceValue = 8000; }
+            else { teamTwoForceValue = 3000; }
             boatOne.GetComponentInChildren<Rigidbody>().AddForce(boatOne.transform.forward * teamOneForceValue, ForceMode.Impulse);
             boatTwo.GetComponentInChildren<Rigidbody>().AddForce(boatOne.transform.forward * teamTwoForceValue, ForceMode.Impulse);
 

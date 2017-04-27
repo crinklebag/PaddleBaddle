@@ -30,7 +30,8 @@ public class MenuMovement : MonoBehaviour {
     [SerializeField] int playerID;
     [SerializeField] PaddleData paddleDataRaft;
     [SerializeField] PaddleData paddleDataCanoe;
-    [SerializeField] float speedBoostForce = 150000f;
+    [SerializeField] float speedBoostForceCanoe = -150000f;
+    [SerializeField] float speedBoostForceRaft = -1500f;
     float paddleForwardForce = 400;
     float paddleTorque = 200;
     float paddleRoationSpeed = 2400;
@@ -245,6 +246,15 @@ public class MenuMovement : MonoBehaviour {
     // Adding force to the boat for the speed boost
     void speedBoost()
     {
+        float speedBoostForce = 0;
+
+        if (currentBoat == BoatType.CANOE) {
+            speedBoostForce = speedBoostForceCanoe;
+        }
+        else {
+            speedBoostForce = speedBoostForceRaft;
+        }
+
         // Debug.Log ("Adding " + speedBoostForce + " for speedboost!");
         gameObject.GetComponentInChildren<Rigidbody>().AddForce(-currentBoatBody.transform.forward * speedBoostForce, ForceMode.Impulse);
         boostParticles.Play();
